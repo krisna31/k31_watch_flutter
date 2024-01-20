@@ -7,6 +7,7 @@ class MovieModel extends Equatable {
     required this.backdropPath,
     required this.genreIds,
     required this.id,
+    required this.originalLanguage,
     required this.originalTitle,
     required this.overview,
     required this.popularity,
@@ -22,6 +23,7 @@ class MovieModel extends Equatable {
   final String? backdropPath;
   final List<int> genreIds;
   final int id;
+  final String originalLanguage;
   final String originalTitle;
   final String overview;
   final double popularity;
@@ -37,6 +39,7 @@ class MovieModel extends Equatable {
         backdropPath: json["backdrop_path"],
         genreIds: List<int>.from(json["genre_ids"].map((x) => x)),
         id: json["id"],
+        originalLanguage: json["original_language"],
         originalTitle: json["original_title"],
         overview: json["overview"],
         popularity: json["popularity"].toDouble(),
@@ -53,6 +56,7 @@ class MovieModel extends Equatable {
         "backdrop_path": backdropPath,
         "genre_ids": List<dynamic>.from(genreIds.map((x) => x)),
         "id": id,
+        "original_language": originalLanguage,
         "original_title": originalTitle,
         "overview": overview,
         "popularity": popularity,
@@ -70,7 +74,7 @@ class MovieModel extends Equatable {
       backdropPath: backdropPath,
       genreIds: genreIds,
       id: id,
-      originalLanguage: originalTitle,
+      originalLanguage: originalLanguage,
       originalTitle: originalTitle,
       overview: overview,
       popularity: popularity,
@@ -89,7 +93,7 @@ class MovieModel extends Equatable {
         backdropPath,
         genreIds,
         id,
-        originalTitle,
+        originalLanguage,
         originalTitle,
         overview,
         popularity,
