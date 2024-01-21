@@ -7,7 +7,7 @@ import 'package:k31_watch_flutter/data/models/movie_response.dart';
 import '../../json_reader.dart';
 
 void main() {
-  const tMovieModel = TvSeriesModel(
+  const tMovieModel = MovieModel(
     adult: false,
     backdropPath: "/path.jpg",
     genreIds: [1, 2, 3, 4],
@@ -24,7 +24,7 @@ void main() {
     originalLanguage: 'en',
   );
   const tMovieResponseModel =
-      MovieResponse(movieList: <TvSeriesModel>[tMovieModel]);
+      MovieResponse(movieList: <MovieModel>[tMovieModel]);
   group('fromJson', () {
     test('should return a valid model from JSON', () async {
       // arrange
