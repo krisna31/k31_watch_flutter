@@ -39,9 +39,10 @@ class _HomeMoviePageState extends State<HomeMoviePage> {
         title: const Text('Movies'),
         actions: [
           IconButton(
-            onPressed: () {
-              Navigator.pushNamed(context, SearchPage.ROUTE_NAME);
-            },
+            onPressed: () => Navigator.pushNamed(
+              context,
+              SearchPage.ROUTE_NAME,
+            ),
             icon: const Icon(Icons.search),
           )
         ],
@@ -66,12 +67,11 @@ class _HomeMoviePageState extends State<HomeMoviePage> {
                 onTapFunction: () =>
                     Navigator.pushNamed(context, PopularMoviesPage.ROUTE_NAME),
               ),
-              Consumer<MovieListNotifier>(builder: (context, data, child) {
-                  return showMovieCardLogic(
+              Consumer<MovieListNotifier>(
+                builder: (context, data, child) => showMovieCardLogic(
                     data.popularMoviesState,
                     data.popularMovies,
-                  );
-                },
+                ),
               ),
               SubtitleWidget(
                 title: "Top Rated",
@@ -79,12 +79,10 @@ class _HomeMoviePageState extends State<HomeMoviePage> {
                     Navigator.pushNamed(context, TopRatedMoviesPage.ROUTE_NAME),
               ),
               Consumer<MovieListNotifier>(
-                builder: (context, data, child) {
-                  return showMovieCardLogic(
+                builder: (context, data, child) => showMovieCardLogic(
                     data.topRatedMoviesState,
                     data.topRatedMovies,
-                  );
-                },
+                ),
               ),
             ],
           ),

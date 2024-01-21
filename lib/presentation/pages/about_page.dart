@@ -16,6 +16,10 @@ class AboutPage extends StatelessWidget {
       body: Stack(
         children: [
           Column(
+            // mainAxisAlignment: MainAxisAlignment.center,
+            // crossAxisAlignment: CrossAxisAlignment.center,
+            // mainAxisSize: MainAxisSize.min,
+            // textDirection: TextDirection.ltr,
             children: [
               Expanded(
                 child: Container(
@@ -23,30 +27,27 @@ class AboutPage extends StatelessWidget {
                   child: Center(
                     child: Image.asset(
                       'assets/logo.jpg',
-                      width: 128,
+                      width: 120,
                     ),
                   ),
                 ),
               ),
               Expanded(
                 child: Container(
-                  padding: const EdgeInsets.all(32.0),
+                  padding: const EdgeInsets.all(24.0),
                   color: warning,
                   child: const Text(
                     'Aplikasi ini merupakan sebuah aplikasi katalog film yang dikembangkan oleh Dicoding Indonesia dan dilanjutkan oleh Jelvin Krisna Putra sebagai proyek aplikasi untuk kelas Menjadi Flutter Developer Expert.',
-                    style: TextStyle(color: Colors.black87, fontSize: 16),
+                    style: TextStyle(
+                      color: Colors.black87,
+                      fontSize: 16,
+                    ),
                     textAlign: TextAlign.justify,
                   ),
                 ),
               ),
             ],
           ),
-          SafeArea(
-            child: IconButton(
-              onPressed: () => Navigator.pop(context),
-              icon: const Icon(Icons.arrow_back),
-            ),
-          )
         ],
       ),
     );
