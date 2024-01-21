@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:k31_watch_flutter/common/constants.dart';
-import 'package:k31_watch_flutter/common/request_state.dart';
 import 'package:k31_watch_flutter/presentation/common/utils.dart';
+import 'package:k31_watch_flutter/presentation/pages/popular_tv_series_page.dart';
 import 'package:k31_watch_flutter/presentation/pages/search_page.dart';
+import 'package:k31_watch_flutter/presentation/pages/top_rated_tv_series_page.dart';
 import 'package:k31_watch_flutter/presentation/providers/tv_series_list_notifier.dart';
 import 'package:k31_watch_flutter/presentation/widgets/my_drawer.dart';
-import 'package:k31_watch_flutter/presentation/widgets/tv_series_list.dart';
+import 'package:k31_watch_flutter/presentation/widgets/subtitle_widget.dart';
 import 'package:provider/provider.dart';
 
 class HomeTvSeriesPage extends StatefulWidget {
@@ -25,9 +26,9 @@ class _HomeTvSeriesPageState extends State<HomeTvSeriesPage> {
     super.initState();
     Future.microtask(
       () => Provider.of<TvSeriesListNotifier>(context, listen: false)
-        ..fetchNowPlayingTvSeries(),
-      // ..fetchPopularMovies()
-      // ..fetchTopRatedMovies(),
+        ..fetchNowPlayingTvSeries()
+        ..fetchPopularTvSeries()
+        ..fetchTopRatedTvSeries(),
     );
   }
 
@@ -59,40 +60,32 @@ class _HomeTvSeriesPageState extends State<HomeTvSeriesPage> {
                   data.nowPlayingTvSeries,
                 ),
               ),
-              // _buildSubHeading(
-              //   title: 'Popular',
-              //   onTap: () =>
-              //       Navigator.pushNamed(context, PopularMoviesPage.ROUTE_NAME),
-              // ),
-              // Consumer<MovieListNotifier>(builder: (context, data, child) {
-              //   final state = data.popularMoviesState;
-              //   if (state == RequestState.loading) {
-              //     return const Center(
-              //       child: CircularProgressIndicator(),
-              //     );
-              //   } else if (state == RequestState.loaded) {
-              //     return MovieList(data.popularMovies);
-              //   } else {
-              //     return const Text('Failed');
-              //   }
-              // }),
-              // _buildSubHeading(
-              //   title: 'Top Rated',
-              //   onTap: () =>
-              //       Navigator.pushNamed(context, TopRatedMoviesPage.ROUTE_NAME),
-              // ),
-              // Consumer<MovieListNotifier>(builder: (context, data, child) {
-              //   final state = data.topRatedMoviesState;
-              //   if (state == RequestState.loading) {
-              //     return const Center(
-              //       child: CircularProgressIndicator(),
-              //     );
-              //   } else if (state == RequestState.loaded) {
-              //     return MovieList(data.topRatedMovies);
-              //   } else {
-              //     return const Text('Failed');
-              //   }
-              // }),
+              SubtitleWidget(
+                title: 'Popular Tv Series',
+                onTapFunction: () => Navigator.pushNamed(
+                  context,
+                  PopularTvSeriesPage.ROUTE_NAME,
+                ),
+              ),
+              Consumer<TvSeriesListNotifier>(
+                builder: (context, data, child) => showTvSeriesCardLogic(
+                  data.popularTvSeriesState,
+                  data.popularTvSeries,
+                ),
+              ),
+              SubtitleWidget(
+                title: 'Top Rated Tv Series',
+                onTapFunction: () => Navigator.pushNamed(
+                  context,
+                  TopRatedTvSeriesPage.ROUTE_NAME,
+                ),
+              ),
+              Consumer<TvSeriesListNotifier>(
+                builder: (context, data, child) => showTvSeriesCardLogic(
+                  data.topRatedTvSeriesState,
+                  data.topRatedTvSeries,
+                ),
+              ),
             ],
           ),
         ),

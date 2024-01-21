@@ -7,8 +7,8 @@ import 'package:k31_watch_flutter/data/models/tv_series_response.dart';
 
 abstract class TvSeriesRemoteDataSource {
   Future<List<TvSeriesModel>> getNowPlayingTvSeries();
-  // Future<List<MovieModel>> getPopularMovies();
-  // Future<List<MovieModel>> getTopRatedMovies();
+  Future<List<TvSeriesModel>> getPopularTvSeries();
+  Future<List<TvSeriesModel>> getTopRatedTvSeries();
   // Future<MovieDetailResponse> getMovieDetail(int id);
   // Future<List<MovieModel>> getMovieRecommendations(int id);
   // Future<List<MovieModel>> searchMovies(String query);
@@ -34,6 +34,30 @@ class TvSeriesRemoteDataSourceImpl implements TvSeriesRemoteDataSource {
     }
   }
 
+  @override
+  Future<List<TvSeriesModel>> getPopularTvSeries() async {
+    final response =
+        await client.get(Uri.parse('$baseApiUrl/tv/popular?$apiKey'));
+
+    if (response.statusCode == 200) {
+      return TvSeriesResponse.fromJson(json.decode(response.body)).tvSeriesList;
+    } else {
+      throw ServerException();
+    }
+  }
+
+  @override
+  Future<List<TvSeriesModel>> getTopRatedTvSeries() async {
+    final response =
+        await client.get(Uri.parse('$baseApiUrl/tv/top_rated?$apiKey'));
+
+    if (response.statusCode == 200) {
+      return TvSeriesResponse.fromJson(json.decode(response.body)).tvSeriesList;
+    } else {
+      throw ServerException();
+    }
+  }
+
   // @override
   // Future<MovieDetailResponse> getMovieDetail(int id) async {
   //   final response =
@@ -50,30 +74,6 @@ class TvSeriesRemoteDataSourceImpl implements TvSeriesRemoteDataSource {
   // Future<List<MovieModel>> getMovieRecommendations(int id) async {
   //   final response = await client
   //       .get(Uri.parse('$baseApiUrl/movie/$id/recommendations?$apiKey'));
-
-  //   if (response.statusCode == 200) {
-  //     return MovieResponse.fromJson(json.decode(response.body)).movieList;
-  //   } else {
-  //     throw ServerException();
-  //   }
-  // }
-
-  // @override
-  // Future<List<MovieModel>> getPopularMovies() async {
-  //   final response =
-  //       await client.get(Uri.parse('$baseApiUrl/movie/popular?$apiKey'));
-
-  //   if (response.statusCode == 200) {
-  //     return MovieResponse.fromJson(json.decode(response.body)).movieList;
-  //   } else {
-  //     throw ServerException();
-  //   }
-  // }
-
-  // @override
-  // Future<List<MovieModel>> getTopRatedMovies() async {
-  //   final response =
-  //       await client.get(Uri.parse('$baseApiUrl/movie/top_rated?$apiKey'));
 
   //   if (response.statusCode == 200) {
   //     return MovieResponse.fromJson(json.decode(response.body)).movieList;
