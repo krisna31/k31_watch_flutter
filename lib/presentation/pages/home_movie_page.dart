@@ -1,24 +1,22 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:k31_watch_flutter/common/constants.dart';
-import 'package:k31_watch_flutter/common/request_state.dart';
-import 'package:k31_watch_flutter/domain/entities/movie.dart';
-import 'package:k31_watch_flutter/presentation/pages/about_page.dart';
-import 'package:k31_watch_flutter/presentation/pages/movie_detail_page.dart';
+import 'package:k31_watch_flutter/presentation/common/utils.dart';
+import 'package:k31_watch_flutter/presentation/providers/movie_list_notifier.dart';
 import 'package:k31_watch_flutter/presentation/pages/popular_movie_page.dart';
 import 'package:k31_watch_flutter/presentation/pages/search_page.dart';
 import 'package:k31_watch_flutter/presentation/pages/top_rated_movie_page.dart';
-import 'package:k31_watch_flutter/presentation/pages/watchlist_movie_page.dart';
-import 'package:k31_watch_flutter/presentation/providers/movie_list_notifier.dart';
+import 'package:k31_watch_flutter/presentation/widgets/my_drawer.dart';
+import 'package:k31_watch_flutter/presentation/widgets/subtitle_widget.dart';
 import 'package:provider/provider.dart';
 
 class HomeMoviePage extends StatefulWidget {
   // ignore: constant_identifier_names
-  static const ROUTE_NAME = '/homepage';
+  static const ROUTE_NAME = '/movie-page';
 
   const HomeMoviePage({super.key});
 
   @override
+  // ignore: library_private_types_in_public_api
   _HomeMoviePageState createState() => _HomeMoviePageState();
 }
 
@@ -36,42 +34,9 @@ class _HomeMoviePageState extends State<HomeMoviePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      drawer: Drawer(
-        child: Column(
-          children: [
-            const UserAccountsDrawerHeader(
-              currentAccountPicture: CircleAvatar(
-                backgroundImage: AssetImage('assets/logo.jpg'),
-              ),
-              accountName: Text('Ditonton'),
-              accountEmail: Text('ditonton@dicoding.com'),
-            ),
-            ListTile(
-              leading: const Icon(Icons.movie),
-              title: const Text('Movies'),
-              onTap: () {
-                Navigator.pop(context);
-              },
-            ),
-            ListTile(
-              leading: const Icon(Icons.save_alt),
-              title: const Text('Watchlist'),
-              onTap: () {
-                Navigator.pushNamed(context, WatchlistMoviesPage.ROUTE_NAME);
-              },
-            ),
-            ListTile(
-              onTap: () {
-                Navigator.pushNamed(context, AboutPage.ROUTE_NAME);
-              },
-              leading: const Icon(Icons.info_outline),
-              title: const Text('About'),
-            ),
-          ],
-        ),
-      ),
+      drawer: const MyDrawer(),
       appBar: AppBar(
-        title: const Text('Ditonton'),
+        title: const Text('Movies'),
         actions: [
           IconButton(
             onPressed: () {
@@ -88,118 +53,42 @@ class _HomeMoviePageState extends State<HomeMoviePage> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text('Now Playing', style: myTextTheme.bodyMedium),
-              Consumer<MovieListNotifier>(builder: (context, data, child) {
-                final state = data.nowPlayingState;
-                if (state == RequestState.loading) {
-                  return const Center(
-                    child: CircularProgressIndicator(),
+              Consumer<MovieListNotifier>(
+                builder: (context, data, child) {
+                  return showMovieCardLogic(
+                    data.nowPlayingState,
+                    data.nowPlayingMovies,
                   );
-                } else if (state == RequestState.loaded) {
-                  return MovieList(data.nowPlayingMovies);
-                } else {
-                  return const Text('Failed');
-                }
-              }),
-              _buildSubHeading(
-                title: 'Popular',
-                onTap: () =>
+                },
+              ),
+              SubtitleWidget(
+                title: "Popular",
+                onTapFunction: () =>
                     Navigator.pushNamed(context, PopularMoviesPage.ROUTE_NAME),
               ),
               Consumer<MovieListNotifier>(builder: (context, data, child) {
-                final state = data.popularMoviesState;
-                if (state == RequestState.loading) {
-                  return const Center(
-                    child: CircularProgressIndicator(),
+                  return showMovieCardLogic(
+                    data.popularMoviesState,
+                    data.popularMovies,
                   );
-                } else if (state == RequestState.loaded) {
-                  return MovieList(data.popularMovies);
-                } else {
-                  return const Text('Failed');
-                }
-              }),
-              _buildSubHeading(
-                title: 'Top Rated',
-                onTap: () =>
+                },
+              ),
+              SubtitleWidget(
+                title: "Top Rated",
+                onTapFunction: () =>
                     Navigator.pushNamed(context, TopRatedMoviesPage.ROUTE_NAME),
               ),
-              Consumer<MovieListNotifier>(builder: (context, data, child) {
-                final state = data.topRatedMoviesState;
-                if (state == RequestState.loading) {
-                  return const Center(
-                    child: CircularProgressIndicator(),
+              Consumer<MovieListNotifier>(
+                builder: (context, data, child) {
+                  return showMovieCardLogic(
+                    data.topRatedMoviesState,
+                    data.topRatedMovies,
                   );
-                } else if (state == RequestState.loaded) {
-                  return MovieList(data.topRatedMovies);
-                } else {
-                  return const Text('Failed');
-                }
-              }),
+                },
+              ),
             ],
           ),
         ),
-      ),
-    );
-  }
-
-  Row _buildSubHeading({required String title, required Function() onTap}) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        Text(
-          title,
-          style: myTextTheme.titleLarge,
-        ),
-        InkWell(
-          onTap: onTap,
-          child: const Padding(
-            padding: EdgeInsets.all(8.0),
-            child: Row(
-              children: [Text('See More'), Icon(Icons.arrow_forward_ios)],
-            ),
-          ),
-        ),
-      ],
-    );
-  }
-}
-
-class MovieList extends StatelessWidget {
-  final List<Movie> movies;
-
-  const MovieList(this.movies, {super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return SizedBox(
-      height: 200,
-      child: ListView.builder(
-        scrollDirection: Axis.horizontal,
-        itemBuilder: (context, index) {
-          final movie = movies[index];
-          return Container(
-            padding: const EdgeInsets.all(8),
-            child: InkWell(
-              onTap: () {
-                Navigator.pushNamed(
-                  context,
-                  MovieDetailPage.ROUTE_NAME,
-                  arguments: movie.id,
-                );
-              },
-              child: ClipRRect(
-                borderRadius: const BorderRadius.all(Radius.circular(16)),
-                child: CachedNetworkImage(
-                  imageUrl: '$baseImageUrl${movie.posterPath}',
-                  placeholder: (context, url) => const Center(
-                    child: CircularProgressIndicator(),
-                  ),
-                  errorWidget: (context, url, error) => const Icon(Icons.error),
-                ),
-              ),
-            ),
-          );
-        },
-        itemCount: movies.length,
       ),
     );
   }

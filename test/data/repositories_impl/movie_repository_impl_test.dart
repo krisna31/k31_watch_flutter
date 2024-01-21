@@ -28,7 +28,7 @@ void main() {
     );
   });
 
-  const tMovieModel = MovieModel(
+  const tMovieModel = TvSeriesModel(
     adult: false,
     backdropPath: '/muth4OYamXf41G2evdrLEg8d3om.jpg',
     genreIds: [14, 28],
@@ -64,7 +64,7 @@ void main() {
     originalLanguage: 'en',
   );
 
-  final tMovieModelList = <MovieModel>[tMovieModel];
+  final tMovieModelList = <TvSeriesModel>[tMovieModel];
   final tMovieList = <Movie>[tMovie];
 
   group('Now Playing Movies', () {
@@ -262,7 +262,7 @@ void main() {
   });
 
   group('Get Movie Recommendations', () {
-    final tMovieList = <MovieModel>[];
+    final tMovieList = <TvSeriesModel>[];
     const tId = 1;
 
     test('should return data (movie list) when the call is successful',

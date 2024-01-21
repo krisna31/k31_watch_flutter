@@ -3,7 +3,7 @@ import 'package:k31_watch_flutter/data/models/movie_model.dart';
 import 'package:k31_watch_flutter/domain/entities/movie.dart';
 
 void main() {
-  const tMovieModel = MovieModel(
+  const tMovieModel = TvSeriesModel(
     adult: false,
     backdropPath: 'backdropPath',
     genreIds: [1, 2, 3],

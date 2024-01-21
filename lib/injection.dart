@@ -3,11 +3,15 @@ import 'package:get_it/get_it.dart';
 import 'package:k31_watch_flutter/data/datasources/db/db_helper.dart';
 import 'package:k31_watch_flutter/data/datasources/movie_local_data_source.dart';
 import 'package:k31_watch_flutter/data/datasources/movie_remote_data_source.dart';
+import 'package:k31_watch_flutter/data/datasources/tv_series_remote_data_source.dart';
 import 'package:k31_watch_flutter/data/repositories_impl/movie_repository_impl.dart';
+import 'package:k31_watch_flutter/data/repositories_impl/tv_series_repository_impl.dart';
 import 'package:k31_watch_flutter/domain/repositories/movie_repositories.dart';
+import 'package:k31_watch_flutter/domain/repositories/tv_series_repositories.dart';
 import 'package:k31_watch_flutter/domain/use_case/get_movie_detail.dart';
 import 'package:k31_watch_flutter/domain/use_case/get_movie_recommendations.dart';
 import 'package:k31_watch_flutter/domain/use_case/get_now_playing_movies.dart';
+import 'package:k31_watch_flutter/domain/use_case/get_now_playing_tv_series.dart';
 import 'package:k31_watch_flutter/domain/use_case/get_popular_movies.dart';
 import 'package:k31_watch_flutter/domain/use_case/get_top_rated_movies.dart';
 import 'package:k31_watch_flutter/domain/use_case/get_watch_list_movies.dart';
@@ -20,6 +24,7 @@ import 'package:k31_watch_flutter/presentation/providers/movie_list_notifier.dar
 import 'package:k31_watch_flutter/presentation/providers/movie_search_notifier.dart';
 import 'package:k31_watch_flutter/presentation/providers/popular_movie.notifier.dart';
 import 'package:k31_watch_flutter/presentation/providers/top_rated_movie_notifier.dart';
+import 'package:k31_watch_flutter/presentation/providers/tv_series_list_notifier.dart';
 import 'package:k31_watch_flutter/presentation/providers/watch_list_movie_notifier.dart';
 
 final locator = GetIt.instance;
@@ -62,6 +67,11 @@ void init() {
       getWatchlistMovies: locator(),
     ),
   );
+  locator.registerFactory(
+    () => TvSeriesListNotifier(
+      getNowPlayingTvSeries: locator(),
+    ),
+  );
 
   // use case
   locator.registerLazySingleton(() => GetNowPlayingMovies(locator()));
@@ -74,6 +84,7 @@ void init() {
   locator.registerLazySingleton(() => SaveWatchlist(locator()));
   locator.registerLazySingleton(() => RemoveWatchlist(locator()));
   locator.registerLazySingleton(() => GetWatchlistMovies(locator()));
+  locator.registerLazySingleton(() => GetNowPlayingTvSeries(locator()));
 
   // repository
   locator.registerLazySingleton<MovieRepository>(
@@ -83,11 +94,29 @@ void init() {
     ),
   );
 
+  locator.registerLazySingleton<TvSeriesRepository>(
+    () => TvSeriesRepositoryImpl(
+      remoteDataSource: locator(),
+    ),
+  );
+
   // data sources
   locator.registerLazySingleton<MovieRemoteDataSource>(
-      () => MovieRemoteDataSourceImpl(client: locator()));
+    () => MovieRemoteDataSourceImpl(
+      client: locator(),
+    ),
+  );
   locator.registerLazySingleton<MovieLocalDataSource>(
-      () => MovieLocalDataSourceImpl(dbHelper: locator()));
+    () => MovieLocalDataSourceImpl(
+      dbHelper: locator(),
+    ),
+  );
+
+  locator.registerLazySingleton<TvSeriesRemoteDataSource>(
+    () => TvSeriesRemoteDataSourceImpl(
+      client: locator(),
+    ),
+  );
 
   // helper
   locator.registerLazySingleton<DbHelper>(() => DbHelper());

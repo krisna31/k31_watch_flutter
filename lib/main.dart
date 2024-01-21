@@ -4,6 +4,7 @@ import 'package:k31_watch_flutter/common/constants.dart';
 import 'package:k31_watch_flutter/common/index.dart';
 import 'package:k31_watch_flutter/presentation/pages/about_page.dart';
 import 'package:k31_watch_flutter/presentation/pages/home_movie_page.dart';
+import 'package:k31_watch_flutter/presentation/pages/home_tv_series_page.dart';
 import 'package:k31_watch_flutter/presentation/pages/movie_detail_page.dart';
 import 'package:k31_watch_flutter/presentation/pages/popular_movie_page.dart';
 import 'package:k31_watch_flutter/presentation/pages/search_page.dart';
@@ -14,6 +15,7 @@ import 'package:k31_watch_flutter/presentation/providers/movie_list_notifier.dar
 import 'package:k31_watch_flutter/presentation/providers/movie_search_notifier.dart';
 import 'package:k31_watch_flutter/presentation/providers/popular_movie.notifier.dart';
 import 'package:k31_watch_flutter/presentation/providers/top_rated_movie_notifier.dart';
+import 'package:k31_watch_flutter/presentation/providers/tv_series_list_notifier.dart';
 import 'package:k31_watch_flutter/presentation/providers/watch_list_movie_notifier.dart';
 import 'package:provider/provider.dart';
 import 'package:k31_watch_flutter/injection.dart' as di;
@@ -31,23 +33,25 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(
-          create: (_) => di.locator<MovieListNotifier>(),
+          create: (_) => di.locator<MovieListNotifier>()
         ),
         ChangeNotifierProvider(
-          create: (_) => di.locator<MovieDetailNotifier>(),
+            create: (_) => di.locator<MovieDetailNotifier>()
         ),
         ChangeNotifierProvider(
-          create: (_) => di.locator<MovieSearchNotifier>(),
+            create: (_) => di.locator<MovieSearchNotifier>()
         ),
         ChangeNotifierProvider(
-          create: (_) => di.locator<TopRatedMoviesNotifier>(),
+            create: (_) => di.locator<TopRatedMoviesNotifier>()
         ),
         ChangeNotifierProvider(
-          create: (_) => di.locator<PopularMoviesNotifier>(),
+            create: (_) => di.locator<PopularMoviesNotifier>()
         ),
         ChangeNotifierProvider(
-          create: (_) => di.locator<WatchlistMovieNotifier>(),
+            create: (_) => di.locator<WatchlistMovieNotifier>()
         ),
+        ChangeNotifierProvider(
+            create: (_) => di.locator<TvSeriesListNotifier>())
       ],
       child: MaterialApp(
         title: 'K31 Movie',
@@ -57,12 +61,18 @@ class MyApp extends StatelessWidget {
           scaffoldBackgroundColor: primary,
           textTheme: myTextTheme,
         ),
-        home: const HomeMoviePage(),
+        home: const HomeTvSeriesPage(),
         navigatorObservers: [routeObserver],
         onGenerateRoute: (RouteSettings settings) {
           switch (settings.name) {
+            case HomeTvSeriesPage.ROUTE_NAME:
+              return MaterialPageRoute(
+                builder: (_) => const HomeTvSeriesPage(),
+              );
             case HomeMoviePage.ROUTE_NAME:
-              return MaterialPageRoute(builder: (_) => const HomeMoviePage());
+              return MaterialPageRoute(
+                builder: (_) => const HomeMoviePage(),
+              );
             case PopularMoviesPage.ROUTE_NAME:
               return CupertinoPageRoute(
                   builder: (_) => const PopularMoviesPage());
