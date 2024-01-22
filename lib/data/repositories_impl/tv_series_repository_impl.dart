@@ -4,18 +4,20 @@ import 'package:dartz/dartz.dart';
 import 'package:k31_watch_flutter/common/exception.dart';
 import 'package:k31_watch_flutter/common/failure.dart';
 import 'package:k31_watch_flutter/common/failure_child.dart';
+import 'package:k31_watch_flutter/data/datasources/local_data_tv_series_source.dart';
 import 'package:k31_watch_flutter/data/datasources/tv_series_remote_data_source.dart';
+import 'package:k31_watch_flutter/data/models/table_tv_series.dart';
 import 'package:k31_watch_flutter/domain/entities/detail_tv_series.dart';
 import 'package:k31_watch_flutter/domain/entities/tv_series.dart';
 import 'package:k31_watch_flutter/domain/repositories/tv_series_repositories.dart';
 
 class TvSeriesRepositoryImpl implements TvSeriesRepository {
   final TvSeriesRemoteDataSource remoteDataSource;
-  // final MovieLocalDataSource localDataSource;
+  final LocalDataTvSeriesSource localDataSource;
 
   TvSeriesRepositoryImpl({
     required this.remoteDataSource,
-    // required this.localDataSource,
+    required this.localDataSource,
   });
 
   @override
@@ -104,53 +106,41 @@ class TvSeriesRepositoryImpl implements TvSeriesRepository {
     }
   }
 
-    // @override
-    // Future<Either<Failure, List<Movie>>> searchMovies(String query) async {
-    //   try {
-    //     final result = await remoteDataSource.searchMovies(query);
-    //     return Right(result.map((model) => model.toEntity()).toList());
-    //   } on ServerException {
-    //     return const Left(ServerFailure(''));
-    //   } on SocketException {
-    //     return const Left(ConnectionFailure('Failed to connect to the network'));
-    //   }
-    // }
+  @override
+  Future<Either<Failure, String>> saveWatchlistTv(DetailTvSeries tv) async {
+    try {
+      final result =
+          await localDataSource.insertWatchlist(TableTvSeries.fromEntity(tv));
+      return Right(result);
+    } on DatabaseException catch (e) {
+      return Left(DatabaseFailure(e.message));
+    } catch (e) {
+      rethrow;
+    }
+  }
 
-    // @override
-    // Future<Either<Failure, String>> saveWatchlist(MovieDetail movie) async {
-    //   try {
-    //     final result =
-    //         await localDataSource.insertWatchlist(MovieTable.fromEntity(movie));
-    //     return Right(result);
-    //   } on DatabaseException catch (e) {
-    //     return Left(DatabaseFailure(e.message));
-    //   } catch (e) {
-    //     rethrow;
-    //   }
-    // }
+  @override
+  Future<Either<Failure, String>> removeWatchlistTv(DetailTvSeries tv) async {
+    try {
+      final result =
+          await localDataSource.removeWatchlist(TableTvSeries.fromEntity(tv));
+      return Right(result);
+    } on DatabaseException catch (e) {
+      return Left(DatabaseFailure(e.message));
+    }
+  }
 
-    // @override
-    // Future<Either<Failure, String>> removeWatchlist(MovieDetail movie) async {
-    //   try {
-    //     final result =
-    //         await localDataSource.removeWatchlist(MovieTable.fromEntity(movie));
-    //     return Right(result);
-    //   } on DatabaseException catch (e) {
-    //     return Left(DatabaseFailure(e.message));
-    //   }
-    // }
+  @override
+  Future<bool> isAddedToWatchlistTv(int id) async {
+    final result = await localDataSource.getTvById(id);
+    return result != null;
+  }
 
-    // @override
-    // Future<bool> isAddedToWatchlist(int id) async {
-    //   final result = await localDataSource.getMovieById(id);
-    //   return result != null;
-    // }
-
-    // @override
-    // Future<Either<Failure, List<Movie>>> getWatchlistMovies() async {
-    //   final result = await localDataSource.getWatchlistMovies();
-    //   return Right(result.map((data) => data.toEntity()).toList());
-  // }
+  @override
+  Future<Either<Failure, List<TvSeries>>> getWatchlistTvSeries() async {
+    final result = await localDataSource.getWatchlistTv();
+    return Right(result.map((data) => data.toEntity()).toList());
+  }
 
   Left<Failure, List<TvSeries>> returnErrorOnSocketExceptionTvSeries() {
     return const Left(ConnectionFailure('Failed to connect to the network'));

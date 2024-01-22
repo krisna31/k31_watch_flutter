@@ -1,6 +1,6 @@
 import 'package:k31_watch_flutter/common/exception.dart';
+import 'package:k31_watch_flutter/data/datasources/db/db_helper_movies.dart';
 import 'package:k31_watch_flutter/data/models/movie_table.dart';
-import 'package:k31_watch_flutter/data/datasources/db/db_helper.dart';
 
 abstract class MovieLocalDataSource {
   Future<String> insertWatchlist(MovieTable movie);
@@ -10,14 +10,14 @@ abstract class MovieLocalDataSource {
 }
 
 class MovieLocalDataSourceImpl implements MovieLocalDataSource {
-  final DbHelper dbHelper;
+  final DbHelperMovies dbHelper;
 
   MovieLocalDataSourceImpl({required this.dbHelper});
 
   @override
   Future<String> insertWatchlist(MovieTable movie) async {
     try {
-      await dbHelper.insertWatchlist(movie);
+      await dbHelper.insertMovieToWatchlist(movie);
       return 'Added to Watchlist';
     } catch (e) {
       throw DatabaseException(e.toString());
@@ -27,7 +27,7 @@ class MovieLocalDataSourceImpl implements MovieLocalDataSource {
   @override
   Future<String> removeWatchlist(MovieTable movie) async {
     try {
-      await dbHelper.removeWatchlist(movie);
+      await dbHelper.removeMovieFromWatchlist(movie);
       return 'Removed from Watchlist';
     } catch (e) {
       throw DatabaseException(e.toString());

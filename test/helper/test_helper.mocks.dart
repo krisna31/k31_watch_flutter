@@ -10,7 +10,8 @@ import 'dart:typed_data' as _i18;
 import 'package:dartz/dartz.dart' as _i2;
 import 'package:http/http.dart' as _i4;
 import 'package:k31_watch_flutter/common/failure.dart' as _i7;
-import 'package:k31_watch_flutter/data/datasources/db/db_helper.dart' as _i15;
+import 'package:k31_watch_flutter/data/datasources/db/db_helper_movies.dart'
+    as _i15;
 import 'package:k31_watch_flutter/data/datasources/movie_local_data_source.dart'
     as _i12;
 import 'package:k31_watch_flutter/data/datasources/movie_remote_data_source.dart'
@@ -398,11 +399,11 @@ class MockMovieLocalDataSource extends _i1.Mock
       ) as _i6.Future<List<_i13.MovieTable>>);
 }
 
-/// A class which mocks [DbHelper].
+/// A class which mocks [DbHelperMovies].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockDbHelper extends _i1.Mock implements _i15.DbHelper {
-  MockDbHelper() {
+class MockDbHelperMovies extends _i1.Mock implements _i15.DbHelperMovies {
+  MockDbHelperMovies() {
     _i1.throwOnMissingStub(this);
   }
 
@@ -413,20 +414,20 @@ class MockDbHelper extends _i1.Mock implements _i15.DbHelper {
       ) as _i6.Future<_i16.Database?>);
 
   @override
-  _i6.Future<int> insertWatchlist(_i13.MovieTable? movie) =>
+  _i6.Future<int> insertMovieToWatchlist(_i13.MovieTable? movie) =>
       (super.noSuchMethod(
         Invocation.method(
-          #insertWatchlist,
+          #insertMovieToWatchlist,
           [movie],
         ),
         returnValue: _i6.Future<int>.value(0),
       ) as _i6.Future<int>);
 
   @override
-  _i6.Future<int> removeWatchlist(_i13.MovieTable? movie) =>
+  _i6.Future<int> removeMovieFromWatchlist(_i13.MovieTable? movie) =>
       (super.noSuchMethod(
         Invocation.method(
-          #removeWatchlist,
+          #removeMovieFromWatchlist,
           [movie],
         ),
         returnValue: _i6.Future<int>.value(0),

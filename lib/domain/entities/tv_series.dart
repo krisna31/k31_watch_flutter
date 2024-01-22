@@ -58,9 +58,9 @@ class TvSeries extends Equatable {
 
   TvSeries.watchlist({
     required this.id,
+    required this.name,
     required this.overview,
     required this.posterPath,
-    required this.name,
   });
 
   @override

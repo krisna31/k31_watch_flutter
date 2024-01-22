@@ -8,10 +8,10 @@ import '../../helper/test_helper.mocks.dart';
 
 void main() {
   late MovieLocalDataSourceImpl dataSource;
-  late MockDbHelper mockDbHelper;
+  late MockDbHelperMovies mockDbHelper;
 
   setUp(() {
-    mockDbHelper = MockDbHelper();
+    mockDbHelper = MockDbHelperMovies();
     dataSource = MovieLocalDataSourceImpl(dbHelper: mockDbHelper);
   });
 
@@ -19,7 +19,7 @@ void main() {
     test('should return success message when insert to database is success',
         () async {
       // arrange
-      when(mockDbHelper.insertWatchlist(testMovieTable))
+      when(mockDbHelper.insertMovieToWatchlist(testMovieTable))
           .thenAnswer((_) async => 1);
       // act
       final result = await dataSource.insertWatchlist(testMovieTable);
@@ -30,7 +30,8 @@ void main() {
     test('should throw DatabaseException when insert to database is failed',
         () async {
       // arrange
-      when(mockDbHelper.insertWatchlist(testMovieTable)).thenThrow(Exception());
+      when(mockDbHelper.insertMovieToWatchlist(testMovieTable))
+          .thenThrow(Exception());
       // act
       final call = dataSource.insertWatchlist(testMovieTable);
       // assert
@@ -42,7 +43,7 @@ void main() {
     test('should return success message when remove from database is success',
         () async {
       // arrange
-      when(mockDbHelper.removeWatchlist(testMovieTable))
+      when(mockDbHelper.removeMovieFromWatchlist(testMovieTable))
           .thenAnswer((_) async => 1);
       // act
       final result = await dataSource.removeWatchlist(testMovieTable);
@@ -53,7 +54,8 @@ void main() {
     test('should throw DatabaseException when remove from database is failed',
         () async {
       // arrange
-      when(mockDbHelper.removeWatchlist(testMovieTable)).thenThrow(Exception());
+      when(mockDbHelper.removeMovieFromWatchlist(testMovieTable))
+          .thenThrow(Exception());
       // act
       final call = dataSource.removeWatchlist(testMovieTable);
       // assert

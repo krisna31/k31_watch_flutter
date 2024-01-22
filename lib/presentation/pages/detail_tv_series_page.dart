@@ -93,56 +93,54 @@ class DetailContent extends StatelessWidget {
                       tvSeries.name!,
                       style: myTextTheme.titleLarge,
                     ),
-                    // ElevatedButton(
-                    //   onPressed: () async {
-                    //     if (!isAddedWatchlist) {
-                    //       await Provider.of<DetailTvSeriesNotifier>(
-                    //               context,
-                    //               listen: false)
-                    //           .addWatchlist(tvSeries);
-                    //     } else {
-                    //       await Provider.of<DetailTvSeriesNotifier>(
-                    //               context,
-                    //               listen: false)
-                    //           .removeFromWatchlist(tvSeries);
-                    //     }
+                    ElevatedButton(
+                      onPressed: () async {
+                        if (!isAddedWatchlist) {
+                          await Provider.of<DetailTvSeriesNotifier>(context,
+                                  listen: false)
+                              .addWatchlist(tvSeries);
+                        } else {
+                          await Provider.of<DetailTvSeriesNotifier>(context,
+                                  listen: false)
+                              .removeFromWatchlist(tvSeries);
+                        }
 
-                    //     final message =
-                    //         // ignore: use_build_context_synchronously
-                    //         Provider.of<DetailTvSeriesNotifier>(context,
-                    //                 listen: false)
-                    //             .watchlistMessage;
+                        final message =
+                            // ignore: use_build_context_synchronously
+                            Provider.of<DetailTvSeriesNotifier>(context,
+                                    listen: false)
+                                .watchlistMessage;
 
-                    //     if (message ==
-                    //             DetailTvSeriesNotifier
-                    //                 .watchlistAddSuccessMessage ||
-                    //         message ==
-                    //             DetailTvSeriesNotifier
-                    //                 .watchlistRemoveSuccessMessage) {
-                    //       // ignore: use_build_context_synchronously
-                    //       ScaffoldMessenger.of(context).showSnackBar(
-                    //           SnackBar(content: Text(message)));
-                    //     } else {
-                    //       // ignore: use_build_context_synchronously
-                    //       showDialog(
-                    //           context: context,
-                    //           builder: (context) {
-                    //             return AlertDialog(
-                    //               content: Text(message),
-                    //             );
-                    //           });
-                    //     }
-                    //   },
-                    //   child: Row(
-                    //     mainAxisSize: MainAxisSize.min,
-                    //     children: [
-                    //       isAddedWatchlist
-                    //           ? const Icon(Icons.check)
-                    //           : const Icon(Icons.add),
-                    //       const Text('Watchlist'),
-                    //     ],
-                    //   ),
-                    // ),
+                        if (message ==
+                                DetailTvSeriesNotifier
+                                    .watchlistAddSuccessMessage ||
+                            message ==
+                                DetailTvSeriesNotifier
+                                    .watchlistRemoveSuccessMessage) {
+                          // ignore: use_build_context_synchronously
+                          ScaffoldMessenger.of(context)
+                              .showSnackBar(SnackBar(content: Text(message)));
+                        } else {
+                          // ignore: use_build_context_synchronously
+                          showDialog(
+                              context: context,
+                              builder: (context) {
+                                return AlertDialog(
+                                  content: Text(message),
+                                );
+                              });
+                        }
+                      },
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          isAddedWatchlist
+                              ? const Icon(Icons.check)
+                              : const Icon(Icons.add),
+                          const Text('Watchlist'),
+                        ],
+                      ),
+                    ),
                     const SizedBox(height: 16),
                     Wrap(
                       spacing: 8.0, // Space between chips

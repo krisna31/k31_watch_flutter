@@ -15,6 +15,7 @@ import 'package:k31_watch_flutter/presentation/pages/tv_series_now_play_page.dar
 import 'package:k31_watch_flutter/presentation/pages/tv_series_top_rated_page.dart';
 import 'package:k31_watch_flutter/presentation/pages/tv_series_popular_page.dart';
 import 'package:k31_watch_flutter/presentation/pages/watchlist_movie_page.dart';
+import 'package:k31_watch_flutter/presentation/pages/watchlist_tv_series_page.dart';
 import 'package:k31_watch_flutter/presentation/providers/detail_tv_series_notifier.dart';
 import 'package:k31_watch_flutter/presentation/providers/movie_detail_notifier.dart';
 import 'package:k31_watch_flutter/presentation/providers/movie_list_notifier.dart';
@@ -27,6 +28,7 @@ import 'package:k31_watch_flutter/presentation/providers/tv_series_now_play_noti
 import 'package:k31_watch_flutter/presentation/providers/tv_series_popular_notifier.dart';
 import 'package:k31_watch_flutter/presentation/providers/tv_series_top_rated_notifier.dart';
 import 'package:k31_watch_flutter/presentation/providers/watch_list_movie_notifier.dart';
+import 'package:k31_watch_flutter/presentation/providers/watch_list_tv_series_notifier.dart';
 import 'package:provider/provider.dart';
 import 'package:k31_watch_flutter/injection.dart' as di;
 
@@ -78,6 +80,9 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(
           create: (_) => di.locator<SearchTvNotifier>(),
         ),
+        ChangeNotifierProvider(
+          create: (_) => di.locator<WatchlistTvSeriesNotifier>(),
+        ),
       ],
       child: MaterialApp(
         title: 'K31 Movie',
@@ -106,6 +111,10 @@ class MyApp extends StatelessWidget {
             case TvSeriesNowPlayPage.ROUTE_NAME:
               return MaterialPageRoute(
                 builder: (_) => const TvSeriesNowPlayPage(),
+              );
+            case WatchlistTvSeriesPage.ROUTE_NAME:
+              return MaterialPageRoute(
+                builder: (_) => const WatchlistTvSeriesPage(),
               );
             case DetailTvSeriesPage.ROUTE_NAME:
               return MaterialPageRoute(

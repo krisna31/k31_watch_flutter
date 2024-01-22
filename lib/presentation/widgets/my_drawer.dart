@@ -3,6 +3,7 @@ import 'package:k31_watch_flutter/presentation/pages/about_page.dart';
 import 'package:k31_watch_flutter/presentation/pages/movie_page.dart';
 import 'package:k31_watch_flutter/presentation/pages/home_tv_series_page.dart';
 import 'package:k31_watch_flutter/presentation/pages/watchlist_movie_page.dart';
+import 'package:k31_watch_flutter/presentation/pages/watchlist_tv_series_page.dart';
 
 class MyDrawer extends StatelessWidget {
   const MyDrawer({
@@ -29,6 +30,13 @@ class MyDrawer extends StatelessWidget {
             },
           ),
           ListTile(
+            leading: const Icon(Icons.bookmark),
+            title: const Text('Watchlist Tv  Series'),
+            onTap: () {
+              Navigator.pushNamed(context, WatchlistTvSeriesPage.ROUTE_NAME);
+            },
+          ),
+          ListTile(
             leading: const Icon(Icons.movie),
             title: const Text('Movies'),
             onTap: () {
@@ -37,7 +45,7 @@ class MyDrawer extends StatelessWidget {
           ),
           ListTile(
             leading: const Icon(Icons.save_alt),
-            title: const Text('Watchlist'),
+            title: const Text('Watchlist Movies'),
             onTap: () {
               Navigator.pushNamed(context, WatchlistMoviesPage.ROUTE_NAME);
             },
