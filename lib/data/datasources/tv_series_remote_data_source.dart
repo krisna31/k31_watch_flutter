@@ -11,7 +11,7 @@ abstract class TvSeriesRemoteDataSource {
   Future<List<TvSeriesModel>> getPopularTvSeries();
   Future<List<TvSeriesModel>> getTopRatedTvSeries();
   Future<TvSeriesModelDetail> getDetailTvSeries(int id);
-  // Future<MovieDetailResponse> getMovieDetail(int id);
+  Future<List<TvSeriesModel>> getRecommendationsTvSeries(int id);
   // Future<List<MovieModel>> getMovieRecommendations(int id);
   // Future<List<MovieModel>> searchMovies(String query);
 }
@@ -70,30 +70,18 @@ class TvSeriesRemoteDataSourceImpl implements TvSeriesRemoteDataSource {
 
     return TvSeriesModelDetail.fromJson(json.decode(response.body));
   }
+  
+  @override
+  Future<List<TvSeriesModel>> getRecommendationsTvSeries(int id) async {
+    final response = await client
+        .get(Uri.parse('$baseApiUrl/tv/$id/recommendations?$apiKey'));
 
-  // @override
-  // Future<MovieDetailResponse> getMovieDetail(int id) async {
-  //   final response =
-  //       await client.get(Uri.parse('$baseApiUrl/movie/$id?$apiKey'));
+    if (!(response.statusCode == 200)) {
+      throw ServerException();
+    }
 
-  //   if (response.statusCode == 200) {
-  //     return MovieDetailResponse.fromJson(json.decode(response.body));
-  //   } else {
-  //     throw ServerException();
-  //   }
-  // }
-
-  // @override
-  // Future<List<MovieModel>> getMovieRecommendations(int id) async {
-  //   final response = await client
-  //       .get(Uri.parse('$baseApiUrl/movie/$id/recommendations?$apiKey'));
-
-  //   if (response.statusCode == 200) {
-  //     return MovieResponse.fromJson(json.decode(response.body)).movieList;
-  //   } else {
-  //     throw ServerException();
-  //   }
-  // }
+    return TvSeriesResponse.fromJson(json.decode(response.body)).tvSeriesList;
+  }
 
   // @override
   // Future<List<MovieModel>> searchMovies(String query) async {

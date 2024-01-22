@@ -3,19 +3,20 @@ import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:k31_watch_flutter/common/constants.dart';
 import 'package:k31_watch_flutter/common/request_state.dart';
-import 'package:k31_watch_flutter/domain/entities/genre.dart';
 import 'package:k31_watch_flutter/domain/entities/movie.dart';
 import 'package:k31_watch_flutter/domain/entities/movie_detail.dart';
 import 'package:k31_watch_flutter/presentation/providers/movie_detail_notifier.dart';
 import 'package:provider/provider.dart';
 
 class MovieDetailPage extends StatefulWidget {
+  // ignore: constant_identifier_names
   static const ROUTE_NAME = '/detail';
 
   final int id;
   const MovieDetailPage({super.key, required this.id});
 
   @override
+  // ignore: library_private_types_in_public_api
   _MovieDetailPageState createState() => _MovieDetailPageState();
 }
 
@@ -153,8 +154,13 @@ class DetailContent extends StatelessWidget {
                                 ],
                               ),
                             ),
-                            Text(
-                              _showGenres(movie.genres),
+                            const SizedBox(height: 16),
+                            Wrap(
+                              spacing: 8.0,
+                              runSpacing: 8.0,
+                              children: movie.genres
+                                  .map((e) => buildGenreChip(e.name))
+                                  .toList(),
                             ),
                             Text(
                               _showDuration(movie.runtime),
@@ -281,17 +287,14 @@ class DetailContent extends StatelessWidget {
     );
   }
 
-  String _showGenres(List<Genre> genres) {
-    String result = '';
-    for (var genre in genres) {
-      result += '${genre.name}, ';
-    }
-
-    if (result.isEmpty) {
-      return result;
-    }
-
-    return result.substring(0, result.length - 2);
+Widget buildGenreChip(String genre) {
+    return Chip(
+      label: Text(genre),
+      backgroundColor: Colors.blue,
+      labelStyle: const TextStyle(color: Colors.white),
+      elevation: 2,
+      padding: const EdgeInsets.all(2),
+    );
   }
 
   String _showDuration(int runtime) {

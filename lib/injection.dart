@@ -15,6 +15,7 @@ import 'package:k31_watch_flutter/domain/use_case/get_now_playing_movies.dart';
 import 'package:k31_watch_flutter/domain/use_case/get_now_playing_tv_series.dart';
 import 'package:k31_watch_flutter/domain/use_case/get_popular_movies.dart';
 import 'package:k31_watch_flutter/domain/use_case/get_popular_tv_series.dart';
+import 'package:k31_watch_flutter/domain/use_case/get_recommendations_tv_series.dart';
 import 'package:k31_watch_flutter/domain/use_case/get_top_rated_movies.dart';
 import 'package:k31_watch_flutter/domain/use_case/get_top_rated_tv_series.dart';
 import 'package:k31_watch_flutter/domain/use_case/get_watch_list_movies.dart';
@@ -99,6 +100,7 @@ void init() {
   locator.registerFactory(
     () => DetailTvSeriesNotifier(
       getDetailTvSeries: locator(),
+      getRecommendationsTvSeries: locator(),
     ),
   );
 
@@ -117,6 +119,7 @@ void init() {
   locator.registerLazySingleton(() => GetPopularTvSeries(locator()));
   locator.registerLazySingleton(() => GetTopRatedTvSeries(locator()));
   locator.registerLazySingleton(() => GetDetailTvSeries(locator()));
+  locator.registerLazySingleton(() => GetRecommendationsTvSeries(locator()));
 
   // repository
   locator.registerLazySingleton<MovieRepository>(

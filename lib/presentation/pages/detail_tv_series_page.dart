@@ -4,7 +4,6 @@ import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:k31_watch_flutter/common/constants.dart';
 import 'package:k31_watch_flutter/common/request_state.dart';
 import 'package:k31_watch_flutter/domain/entities/detail_tv_series.dart';
-import 'package:k31_watch_flutter/domain/entities/genre.dart';
 import 'package:k31_watch_flutter/presentation/providers/detail_tv_series_notifier.dart';
 import 'package:provider/provider.dart';
 
@@ -170,10 +169,77 @@ class DetailContent extends StatelessWidget {
                     const SizedBox(height: 16),
                     Text(
                       'Overview',
-                      style: myTextTheme.bodyMedium,
+                      style: myTextTheme.titleLarge,
                     ),
                     Text(
                       tvSeries.overview!,
+                    ),
+                    const SizedBox(height: 16),
+                    Text(
+                      'Recommendations',
+                      style: myTextTheme.titleLarge,
+                    ),
+                    Consumer<DetailTvSeriesNotifier>(
+                      builder: (context, data, child) {
+                        if (data.recommendationState == RequestState.loading) {
+                          return const Center(
+                            child: CircularProgressIndicator(),
+                          );
+                        } else if (data.recommendationState ==
+                            RequestState.error) {
+                          return Center(
+                            child: Text(
+                              data.message,
+                            ),
+                          );
+                        } else if (data.recommendationState ==
+                            RequestState.loaded) {
+                          return SizedBox(
+                            height: 150,
+                            child: ListView.builder(
+                              scrollDirection: Axis.horizontal,
+                              itemBuilder: (context, index) {
+                                final tvSeries =
+                                    data.recommendationsTvSEries[index];
+                                return Padding(
+                                  padding: const EdgeInsets.all(4.0),
+                                  child: InkWell(
+                                    onTap: () {
+                                      Navigator.pushReplacementNamed(
+                                        context,
+                                        DetailTvSeriesPage.ROUTE_NAME,
+                                        arguments: tvSeries.id,
+                                      );
+                                    },
+                                    child: ClipRRect(
+                                      borderRadius: const BorderRadius.all(
+                                        Radius.circular(8),
+                                      ),
+                                      child: CachedNetworkImage(
+                                        imageUrl:
+                                            'https://image.tmdb.org/t/p/w500${tvSeries.posterPath}',
+                                        placeholder: (context, url) =>
+                                            const Center(
+                                          child: CircularProgressIndicator(),
+                                        ),
+                                        errorWidget: (context, url, error) =>
+                                            const Icon(Icons.error),
+                                      ),
+                                    ),
+                                  ),
+                                );
+                              },
+                              itemCount: data.recommendationsTvSEries.length,
+                            ),
+                          );
+                        } else {
+                          return const Center(
+                            child: Text(
+                              "Samthing is wrong",
+                            ),
+                          );
+                        }
+                      },
                     ),
                   ],
                 ),

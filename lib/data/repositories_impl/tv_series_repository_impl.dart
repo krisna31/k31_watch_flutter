@@ -75,18 +75,21 @@ class TvSeriesRepositoryImpl implements TvSeriesRepository {
     } on SocketException {
       return returnErrorOnSocketExceptionDetailTvSeries();
     }
+  }
 
-    // @override
-    // Future<Either<Failure, MovieDetail>> getMovieDetail(int id) async {
-    //   try {
-    //     final result = await remoteDataSource.getMovieDetail(id);
-    //     return Right(result.toEntity());
-    //   } on ServerException {
-    //     return const Left(ServerFailure(''));
-    //   } on SocketException {
-    //     return const Left(ConnectionFailure('Failed to connect to the network'));
-    //   }
-    // }
+  @override
+  Future<Either<Failure, List<TvSeries>>> getRecommendationsTvSeries(
+      int id) async {
+    try {
+      final result = await remoteDataSource.getRecommendationsTvSeries(id);
+
+      return Right(result.map((model) => model.toEntity()).toList());
+    } on ServerException {
+      return returnErrorOnServerExceptionTvSeries();
+    } on SocketException {
+      return returnErrorOnSocketExceptionTvSeries();
+    }
+  }
 
     // @override
     // Future<Either<Failure, List<Movie>>> getMovieRecommendations(int id) async {
@@ -146,8 +149,7 @@ class TvSeriesRepositoryImpl implements TvSeriesRepository {
     // Future<Either<Failure, List<Movie>>> getWatchlistMovies() async {
     //   final result = await localDataSource.getWatchlistMovies();
     //   return Right(result.map((data) => data.toEntity()).toList());
-    // }
-  }
+  // }
 
   Left<Failure, List<TvSeries>> returnErrorOnSocketExceptionTvSeries() {
     return const Left(ConnectionFailure('Failed to connect to the network'));
@@ -164,4 +166,5 @@ class TvSeriesRepositoryImpl implements TvSeriesRepository {
   Left<Failure, DetailTvSeries> returnErrorOnSocketExceptionDetailTvSeries() {
     return const Left(ConnectionFailure('Failed to connect to the network'));
   }
+  
 }

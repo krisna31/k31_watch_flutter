@@ -1,6 +1,5 @@
 import 'package:k31_watch_flutter/data/models/genre_model.dart';
 import 'package:k31_watch_flutter/domain/entities/detail_tv_series.dart';
-import 'package:meta/meta.dart';
 import 'dart:convert';
 
 class TvSeriesModelDetail {

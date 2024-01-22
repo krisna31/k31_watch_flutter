@@ -4,9 +4,11 @@ import 'package:k31_watch_flutter/domain/entities/detail_tv_series.dart';
 import 'package:k31_watch_flutter/domain/entities/movie.dart';
 import 'package:k31_watch_flutter/domain/entities/movie_detail.dart';
 import 'package:k31_watch_flutter/common/request_state.dart';
+import 'package:k31_watch_flutter/domain/entities/tv_series.dart';
 import 'package:k31_watch_flutter/domain/use_case/get_detail_tv_series.dart';
 import 'package:k31_watch_flutter/domain/use_case/get_movie_recommendations.dart';
 import 'package:k31_watch_flutter/domain/use_case/get_movie_detail.dart';
+import 'package:k31_watch_flutter/domain/use_case/get_recommendations_tv_series.dart';
 import 'package:k31_watch_flutter/domain/use_case/get_watch_list_status.dart';
 import 'package:k31_watch_flutter/domain/use_case/remove_watch_list.dart';
 import 'package:k31_watch_flutter/domain/use_case/save_watch_list.dart';
@@ -16,12 +18,14 @@ class DetailTvSeriesNotifier extends ChangeNotifier {
   // static const watchlistRemoveSuccessMessage = 'Removed from Watchlist';
 
   final GetDetailTvSeries getDetailTvSeries;
+  final GetRecommendationsTvSeries getRecommendationsTvSeries;
   // final GetWatchListStatus getWatchListStatus;
   // final SaveWatchlist saveWatchlist;
   // final RemoveWatchlist removeWatchlist;
 
   DetailTvSeriesNotifier({
     required this.getDetailTvSeries,
+    required this.getRecommendationsTvSeries,
     // required this.getWatchListStatus,
     // required this.saveWatchlist,
     // required this.removeWatchlist,
@@ -33,6 +37,12 @@ class DetailTvSeriesNotifier extends ChangeNotifier {
   RequestState _tvSeriesState = RequestState.empty;
   RequestState get tvSeriesState => _tvSeriesState;
 
+  late List<TvSeries> _tvRecommendations = [];
+  List<TvSeries> get recommendationsTvSEries => _tvRecommendations;
+
+  RequestState _recommendationState = RequestState.empty;
+  RequestState get recommendationState => _recommendationState;
+
   String _message = '';
   String get message => _message;
 
@@ -41,18 +51,32 @@ class DetailTvSeriesNotifier extends ChangeNotifier {
 
   Future<void> fetchDetailTvSeries(int id) async {
     _tvSeriesState = RequestState.loading;
+    _recommendationState = RequestState.loading;
     notifyListeners();
     final detailResult = await getDetailTvSeries.execute(id);
+    final recommendationResult = await getRecommendationsTvSeries.execute(id);
     detailResult.fold(
       (failure) {
         _tvSeriesState = RequestState.error;
+        _recommendationState = RequestState.error;
         _message = failure.message;
         notifyListeners();
       },
       (tvSeries) {
+        _tvSeriesState = RequestState.loaded;
         _tvSeries = tvSeries;
         notifyListeners();
-        _tvSeriesState = RequestState.loaded;
+        _recommendationState = RequestState.loading;
+        recommendationResult.fold(
+          (failure) {
+            _recommendationState = RequestState.error;
+            _message = failure.message;
+          },
+          (tvSeries) {
+            _recommendationState = RequestState.loaded;
+            _tvRecommendations = tvSeries;
+          },
+        );
         notifyListeners();
       },
     );
