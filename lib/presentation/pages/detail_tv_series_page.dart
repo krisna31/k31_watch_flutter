@@ -27,8 +27,8 @@ class _DetailTvSeriesPageState extends State<DetailTvSeriesPage> {
     Future.microtask(() {
       Provider.of<DetailTvSeriesNotifier>(context, listen: false)
           .fetchDetailTvSeries(widget.id);
-      // Provider.of<DetailTvSeriesNotifier>(context, listen: false)
-      //     .loadWatchlistStatus(widget.id);
+      Provider.of<DetailTvSeriesNotifier>(context, listen: false)
+          .loadWatchlistStatus(widget.id);
     });
   }
 
@@ -48,9 +48,7 @@ class _DetailTvSeriesPageState extends State<DetailTvSeriesPage> {
             final tvSeries = provider.tvSeries;
             return DetailContent(
               tvSeries,
-              // provider.tvSeriesRecommendations,
-              // provider.isAddedToWatchlist,
-              false,
+              provider.isAddedToWatchlist,
             );
           } else {
             return Text(provider.message);
