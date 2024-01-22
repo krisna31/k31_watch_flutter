@@ -1,21 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:k31_watch_flutter/common/constants.dart';
 import 'package:k31_watch_flutter/common/request_state.dart';
-import 'package:k31_watch_flutter/presentation/providers/movie_search_notifier.dart';
-import 'package:k31_watch_flutter/presentation/widgets/movie_card_list.dart';
+import 'package:k31_watch_flutter/presentation/providers/search_tv_notifier.dart';
+import 'package:k31_watch_flutter/presentation/widgets/tv_series_list_widget.dart';
 import 'package:provider/provider.dart';
 
-class SearchPage extends StatelessWidget {
+class SearchPageTv extends StatelessWidget {
   // ignore: constant_identifier_names
-  static const ROUTE_NAME = '/search-movies';
+  static const ROUTE_NAME = '/search=tv-series';
 
-  const SearchPage({super.key});
+  const SearchPageTv({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Search'),
+        title: const Text('Search  Tv SEries'),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -24,11 +24,11 @@ class SearchPage extends StatelessWidget {
           children: [
             TextField(
               onSubmitted: (query) {
-                Provider.of<MovieSearchNotifier>(context, listen: false)
-                    .fetchMovieSearch(query);
+                Provider.of<SearchTvNotifier>(context, listen: false)
+                    .fetchTvSearchFromNotifier(query);
               },
               decoration: const InputDecoration(
-                hintText: 'Search title',
+                hintText: 'S earch title',
                 prefixIcon: Icon(Icons.search),
                 border: OutlineInputBorder(),
               ),
@@ -39,7 +39,7 @@ class SearchPage extends StatelessWidget {
               'Search Result',
               style: myTextTheme.titleLarge,
             ),
-            Consumer<MovieSearchNotifier>(
+            Consumer<SearchTvNotifier>(
               builder: (context, data, child) {
                 if (data.state == RequestState.loading) {
                   return const Center(
@@ -51,8 +51,10 @@ class SearchPage extends StatelessWidget {
                     child: ListView.builder(
                       padding: const EdgeInsets.all(8),
                       itemBuilder: (context, index) {
-                        final movie = data.searchResult[index];
-                        return MovieCard(movie);
+                        final tv = data.searchResult[index];
+                        return TvSeriesListWidget(
+                          tvData: tv,
+                        );
                       },
                       itemCount: result.length,
                     ),

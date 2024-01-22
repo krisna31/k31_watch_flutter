@@ -9,6 +9,7 @@ import 'package:k31_watch_flutter/presentation/pages/home_tv_series_page.dart';
 import 'package:k31_watch_flutter/presentation/pages/movie_detail_page.dart';
 import 'package:k31_watch_flutter/presentation/pages/popular_movie_page.dart';
 import 'package:k31_watch_flutter/presentation/pages/search_page.dart';
+import 'package:k31_watch_flutter/presentation/pages/search_page_tv.dart';
 import 'package:k31_watch_flutter/presentation/pages/top_rated_movie_page.dart';
 import 'package:k31_watch_flutter/presentation/pages/tv_series_now_play_page.dart';
 import 'package:k31_watch_flutter/presentation/pages/tv_series_top_rated_page.dart';
@@ -19,6 +20,7 @@ import 'package:k31_watch_flutter/presentation/providers/movie_detail_notifier.d
 import 'package:k31_watch_flutter/presentation/providers/movie_list_notifier.dart';
 import 'package:k31_watch_flutter/presentation/providers/movie_search_notifier.dart';
 import 'package:k31_watch_flutter/presentation/providers/popular_movie.notifier.dart';
+import 'package:k31_watch_flutter/presentation/providers/search_tv_notifier.dart';
 import 'package:k31_watch_flutter/presentation/providers/top_rated_movie_notifier.dart';
 import 'package:k31_watch_flutter/presentation/providers/tv_series_list_notifier.dart';
 import 'package:k31_watch_flutter/presentation/providers/tv_series_now_play_notifier.dart';
@@ -73,6 +75,9 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(
           create: (_) => di.locator<DetailTvSeriesNotifier>(),
         ),
+        ChangeNotifierProvider(
+          create: (_) => di.locator<SearchTvNotifier>(),
+        ),
       ],
       child: MaterialApp(
         title: 'K31 Movie',
@@ -107,6 +112,10 @@ class MyApp extends StatelessWidget {
                 builder: (_) =>
                     DetailTvSeriesPage(id: settings.arguments as int),
                 settings: settings,
+              );
+            case SearchPageTv.ROUTE_NAME:
+              return MaterialPageRoute(
+                builder: (_) => const SearchPageTv(),
               );
             case MoviePage.ROUTE_NAME:
               return MaterialPageRoute(

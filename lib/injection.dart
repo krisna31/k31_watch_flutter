@@ -23,11 +23,13 @@ import 'package:k31_watch_flutter/domain/use_case/get_watch_list_status.dart';
 import 'package:k31_watch_flutter/domain/use_case/remove_watch_list.dart';
 import 'package:k31_watch_flutter/domain/use_case/save_watch_list.dart';
 import 'package:k31_watch_flutter/domain/use_case/search_movies.dart';
+import 'package:k31_watch_flutter/domain/use_case/search_tv.dart';
 import 'package:k31_watch_flutter/presentation/providers/detail_tv_series_notifier.dart';
 import 'package:k31_watch_flutter/presentation/providers/movie_detail_notifier.dart';
 import 'package:k31_watch_flutter/presentation/providers/movie_list_notifier.dart';
 import 'package:k31_watch_flutter/presentation/providers/movie_search_notifier.dart';
 import 'package:k31_watch_flutter/presentation/providers/popular_movie.notifier.dart';
+import 'package:k31_watch_flutter/presentation/providers/search_tv_notifier.dart';
 import 'package:k31_watch_flutter/presentation/providers/top_rated_movie_notifier.dart';
 import 'package:k31_watch_flutter/presentation/providers/tv_series_list_notifier.dart';
 import 'package:k31_watch_flutter/presentation/providers/tv_series_now_play_notifier.dart';
@@ -103,6 +105,11 @@ void init() {
       getRecommendationsTvSeries: locator(),
     ),
   );
+  locator.registerFactory(
+    () => SearchTvNotifier(
+      searchTv: locator(),
+    ),
+  );
 
   // use case
   locator.registerLazySingleton(() => GetNowPlayingMovies(locator()));
@@ -120,6 +127,7 @@ void init() {
   locator.registerLazySingleton(() => GetTopRatedTvSeries(locator()));
   locator.registerLazySingleton(() => GetDetailTvSeries(locator()));
   locator.registerLazySingleton(() => GetRecommendationsTvSeries(locator()));
+  locator.registerLazySingleton(() => SearchTv(locator()));
 
   // repository
   locator.registerLazySingleton<MovieRepository>(

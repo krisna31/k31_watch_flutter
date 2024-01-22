@@ -91,17 +91,18 @@ class TvSeriesRepositoryImpl implements TvSeriesRepository {
     }
   }
 
-    // @override
-    // Future<Either<Failure, List<Movie>>> getMovieRecommendations(int id) async {
-    //   try {
-    //     final result = await remoteDataSource.getMovieRecommendations(id);
-    //     return Right(result.map((model) => model.toEntity()).toList());
-    //   } on ServerException {
-    //     return const Left(ServerFailure(''));
-    //   } on SocketException {
-    //     return const Left(ConnectionFailure('Failed to connect to the network'));
-    //   }
-    // }
+  @override
+  Future<Either<Failure, List<TvSeries>>> searchTvSeries(String query) async {
+    try {
+      final result = await remoteDataSource.searchTvSeries(query);
+
+      return Right(result.map((model) => model.toEntity()).toList());
+    } on ServerException {
+      return returnErrorOnServerExceptionTvSeries();
+    } on SocketException {
+      return returnErrorOnSocketExceptionTvSeries();
+    }
+  }
 
     // @override
     // Future<Either<Failure, List<Movie>>> searchMovies(String query) async {
@@ -166,5 +167,7 @@ class TvSeriesRepositoryImpl implements TvSeriesRepository {
   Left<Failure, DetailTvSeries> returnErrorOnSocketExceptionDetailTvSeries() {
     return const Left(ConnectionFailure('Failed to connect to the network'));
   }
+  
+ 
   
 }

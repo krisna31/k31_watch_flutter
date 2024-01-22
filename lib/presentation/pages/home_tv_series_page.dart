@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:k31_watch_flutter/presentation/common/utils.dart';
+import 'package:k31_watch_flutter/presentation/pages/search_page_tv.dart';
 import 'package:k31_watch_flutter/presentation/pages/tv_series_now_play_page.dart';
 import 'package:k31_watch_flutter/presentation/pages/tv_series_popular_page.dart';
-import 'package:k31_watch_flutter/presentation/pages/search_page.dart';
 import 'package:k31_watch_flutter/presentation/pages/tv_series_top_rated_page.dart';
 import 'package:k31_watch_flutter/presentation/providers/tv_series_list_notifier.dart';
 import 'package:k31_watch_flutter/presentation/widgets/my_drawer.dart';
@@ -41,7 +41,7 @@ class _HomeTvSeriesPageState extends State<HomeTvSeriesPage> {
         actions: [
           IconButton(
             onPressed: () {
-              Navigator.pushNamed(context, SearchPage.ROUTE_NAME);
+              Navigator.pushNamed(context, SearchPageTv.ROUTE_NAME);
             },
             icon: const Icon(Icons.search),
           )
