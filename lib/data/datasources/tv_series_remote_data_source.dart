@@ -3,12 +3,14 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:k31_watch_flutter/common/exception.dart';
 import 'package:k31_watch_flutter/data/models/tv_series_model.dart';
+import 'package:k31_watch_flutter/data/models/tv_series_model_detail.dart';
 import 'package:k31_watch_flutter/data/models/tv_series_response.dart';
 
 abstract class TvSeriesRemoteDataSource {
   Future<List<TvSeriesModel>> getNowPlayingTvSeries();
   Future<List<TvSeriesModel>> getPopularTvSeries();
   Future<List<TvSeriesModel>> getTopRatedTvSeries();
+  Future<TvSeriesModelDetail> getDetailTvSeries(int id);
   // Future<MovieDetailResponse> getMovieDetail(int id);
   // Future<List<MovieModel>> getMovieRecommendations(int id);
   // Future<List<MovieModel>> searchMovies(String query);
@@ -51,11 +53,22 @@ class TvSeriesRemoteDataSourceImpl implements TvSeriesRemoteDataSource {
     final response =
         await client.get(Uri.parse('$baseApiUrl/tv/top_rated?$apiKey'));
 
-    if (response.statusCode == 200) {
-      return TvSeriesResponse.fromJson(json.decode(response.body)).tvSeriesList;
-    } else {
+    if (!(response.statusCode == 200)) {
       throw ServerException();
     }
+
+    return TvSeriesResponse.fromJson(json.decode(response.body)).tvSeriesList;
+  }
+
+  @override
+  Future<TvSeriesModelDetail> getDetailTvSeries(int id) async {
+    final response = await client.get(Uri.parse('$baseApiUrl/tv/$id?$apiKey'));
+
+    if (!(response.statusCode == 200)) {
+      throw ServerException();
+    }
+
+    return TvSeriesModelDetail.fromJson(json.decode(response.body));
   }
 
   // @override

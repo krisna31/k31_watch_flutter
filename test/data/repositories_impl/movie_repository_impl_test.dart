@@ -15,14 +15,14 @@ import '../../dummy_data/dummy_object.dart';
 import '../../helper/test_helper.mocks.dart';
 
 void main() {
-  late MovieRepositoryImpl repository;
+  late MovieRepositoryImplementation repository;
   late MockMovieRemoteDataSource mockRemoteDataSource;
   late MockMovieLocalDataSource mockLocalDataSource;
 
   setUp(() {
     mockRemoteDataSource = MockMovieRemoteDataSource();
     mockLocalDataSource = MockMovieLocalDataSource();
-    repository = MovieRepositoryImpl(
+    repository = MovieRepositoryImplementation(
       remoteDataSource: mockRemoteDataSource,
       localDataSource: mockLocalDataSource,
     );

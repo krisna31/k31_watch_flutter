@@ -11,11 +11,11 @@ import 'package:k31_watch_flutter/domain/entities/movie.dart';
 import 'package:k31_watch_flutter/domain/entities/movie_detail.dart';
 import 'package:k31_watch_flutter/domain/repositories/movie_repositories.dart';
 
-class MovieRepositoryImpl implements MovieRepository {
+class MovieRepositoryImplementation implements MovieRepository {
   final MovieRemoteDataSource remoteDataSource;
   final MovieLocalDataSource localDataSource;
 
-  MovieRepositoryImpl({
+  MovieRepositoryImplementation({
     required this.remoteDataSource,
     required this.localDataSource,
   });

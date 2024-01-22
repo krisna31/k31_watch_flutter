@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:k31_watch_flutter/common/constants.dart';
 import 'package:k31_watch_flutter/domain/entities/tv_series.dart';
+import 'package:k31_watch_flutter/presentation/pages/detail_tv_series_page.dart';
 
 class TvSeriesList extends StatelessWidget {
   const TvSeriesList(this.tvSeries, {super.key});
@@ -20,11 +21,11 @@ class TvSeriesList extends StatelessWidget {
             padding: const EdgeInsets.all(10),
             child: InkWell(
               onTap: () {
-                // Navigator.pushNamed(
-                //   context,
-                //   MovieDetailPage.ROUTE_NAME,
-                //   arguments: tvSerie.id,
-                // );
+                Navigator.pushNamed(
+                  context,
+                  DetailTvSeriesPage.ROUTE_NAME,
+                  arguments: tvSerie.id,
+                );
               },
               child: ClipRRect(
                 borderRadius: const BorderRadius.all(Radius.circular(20)),

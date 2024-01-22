@@ -8,6 +8,7 @@ import 'package:k31_watch_flutter/data/repositories_impl/movie_repository_impl.d
 import 'package:k31_watch_flutter/data/repositories_impl/tv_series_repository_impl.dart';
 import 'package:k31_watch_flutter/domain/repositories/movie_repositories.dart';
 import 'package:k31_watch_flutter/domain/repositories/tv_series_repositories.dart';
+import 'package:k31_watch_flutter/domain/use_case/get_detail_tv_series.dart';
 import 'package:k31_watch_flutter/domain/use_case/get_movie_detail.dart';
 import 'package:k31_watch_flutter/domain/use_case/get_movie_recommendations.dart';
 import 'package:k31_watch_flutter/domain/use_case/get_now_playing_movies.dart';
@@ -21,6 +22,7 @@ import 'package:k31_watch_flutter/domain/use_case/get_watch_list_status.dart';
 import 'package:k31_watch_flutter/domain/use_case/remove_watch_list.dart';
 import 'package:k31_watch_flutter/domain/use_case/save_watch_list.dart';
 import 'package:k31_watch_flutter/domain/use_case/search_movies.dart';
+import 'package:k31_watch_flutter/presentation/providers/detail_tv_series_notifier.dart';
 import 'package:k31_watch_flutter/presentation/providers/movie_detail_notifier.dart';
 import 'package:k31_watch_flutter/presentation/providers/movie_list_notifier.dart';
 import 'package:k31_watch_flutter/presentation/providers/movie_search_notifier.dart';
@@ -94,6 +96,11 @@ void init() {
       getPopularTvSeries: locator(),
     ),
   );
+  locator.registerFactory(
+    () => DetailTvSeriesNotifier(
+      getDetailTvSeries: locator(),
+    ),
+  );
 
   // use case
   locator.registerLazySingleton(() => GetNowPlayingMovies(locator()));
@@ -109,10 +116,11 @@ void init() {
   locator.registerLazySingleton(() => GetNowPlayingTvSeries(locator()));
   locator.registerLazySingleton(() => GetPopularTvSeries(locator()));
   locator.registerLazySingleton(() => GetTopRatedTvSeries(locator()));
+  locator.registerLazySingleton(() => GetDetailTvSeries(locator()));
 
   // repository
   locator.registerLazySingleton<MovieRepository>(
-    () => MovieRepositoryImpl(
+    () => MovieRepositoryImplementation(
       remoteDataSource: locator(),
       localDataSource: locator(),
     ),

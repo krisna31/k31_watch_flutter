@@ -1,6 +1,5 @@
 import 'package:k31_watch_flutter/common/request_state.dart';
 import 'package:k31_watch_flutter/presentation/providers/tv_series_now_play_notifier.dart';
-import 'package:k31_watch_flutter/presentation/providers/tv_series_top_rated_notifier.dart';
 import 'package:provider/provider.dart';
 
 import 'package:k31_watch_flutter/presentation/widgets/tv_series_list_widget.dart';

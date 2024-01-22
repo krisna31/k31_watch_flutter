@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:k31_watch_flutter/common/constants.dart';
 import 'package:k31_watch_flutter/common/index.dart';
 import 'package:k31_watch_flutter/presentation/pages/about_page.dart';
+import 'package:k31_watch_flutter/presentation/pages/detail_tv_series_page.dart';
 import 'package:k31_watch_flutter/presentation/pages/movie_page.dart';
 import 'package:k31_watch_flutter/presentation/pages/home_tv_series_page.dart';
 import 'package:k31_watch_flutter/presentation/pages/movie_detail_page.dart';
@@ -13,6 +14,7 @@ import 'package:k31_watch_flutter/presentation/pages/tv_series_now_play_page.dar
 import 'package:k31_watch_flutter/presentation/pages/tv_series_top_rated_page.dart';
 import 'package:k31_watch_flutter/presentation/pages/tv_series_popular_page.dart';
 import 'package:k31_watch_flutter/presentation/pages/watchlist_movie_page.dart';
+import 'package:k31_watch_flutter/presentation/providers/detail_tv_series_notifier.dart';
 import 'package:k31_watch_flutter/presentation/providers/movie_detail_notifier.dart';
 import 'package:k31_watch_flutter/presentation/providers/movie_list_notifier.dart';
 import 'package:k31_watch_flutter/presentation/providers/movie_search_notifier.dart';
@@ -68,6 +70,9 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(
           create: (_) => di.locator<TvSeriesNowPlayNotifier>(),
         ),
+        ChangeNotifierProvider(
+          create: (_) => di.locator<DetailTvSeriesNotifier>(),
+        ),
       ],
       child: MaterialApp(
         title: 'K31 Movie',
@@ -97,6 +102,12 @@ class MyApp extends StatelessWidget {
               return MaterialPageRoute(
                 builder: (_) => const TvSeriesNowPlayPage(),
               );
+            case DetailTvSeriesPage.ROUTE_NAME:
+              return MaterialPageRoute(
+                builder: (_) =>
+                    DetailTvSeriesPage(id: settings.arguments as int),
+                settings: settings,
+              );
             case MoviePage.ROUTE_NAME:
               return MaterialPageRoute(
                 builder: (_) => const MoviePage(),
@@ -105,16 +116,15 @@ class MyApp extends StatelessWidget {
               return CupertinoPageRoute(
                   builder: (_) => const PopularMoviesPage());
             case TopRatedMoviesPage.ROUTE_NAME:
-              return CupertinoPageRoute(
+              return MaterialPageRoute(
                   builder: (_) => const TopRatedMoviesPage());
             case MovieDetailPage.ROUTE_NAME:
-              final id = settings.arguments as int;
               return MaterialPageRoute(
-                builder: (_) => MovieDetailPage(id: id),
+                builder: (_) => MovieDetailPage(id: settings.arguments as int),
                 settings: settings,
               );
             case SearchPage.ROUTE_NAME:
-              return CupertinoPageRoute(builder: (_) => const SearchPage());
+              return MaterialPageRoute(builder: (_) => const SearchPage());
             case WatchlistMoviesPage.ROUTE_NAME:
               return MaterialPageRoute(
                   builder: (_) => const WatchlistMoviesPage());
@@ -124,7 +134,7 @@ class MyApp extends StatelessWidget {
               return MaterialPageRoute(builder: (_) {
                 return const Scaffold(
                   body: Center(
-                    child: Text('Page not found :('),
+                    child: Text('404 NOT FOUND 404'),
                   ),
                 );
               });
