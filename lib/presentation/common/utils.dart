@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:k31_watch_flutter/common/constants.dart';
 import 'package:k31_watch_flutter/common/request_state.dart';
 import 'package:k31_watch_flutter/domain/entities/movie.dart';
 import 'package:k31_watch_flutter/domain/entities/tv_series.dart';
@@ -30,3 +31,5 @@ Widget showTvSeriesCardLogic(RequestState state, List<TvSeries> data) {
       return const Text('Failed');
   }
 }
+
+

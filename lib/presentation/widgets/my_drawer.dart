@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:k31_watch_flutter/presentation/pages/about_page.dart';
-import 'package:k31_watch_flutter/presentation/pages/home_movie_page.dart';
+import 'package:k31_watch_flutter/presentation/pages/movie_page.dart';
 import 'package:k31_watch_flutter/presentation/pages/home_tv_series_page.dart';
 import 'package:k31_watch_flutter/presentation/pages/watchlist_movie_page.dart';
 
@@ -32,7 +32,7 @@ class MyDrawer extends StatelessWidget {
             leading: const Icon(Icons.movie),
             title: const Text('Movies'),
             onTap: () {
-              Navigator.pushNamed(context, HomeMoviePage.ROUTE_NAME);
+              Navigator.pushNamed(context, MoviePage.ROUTE_NAME);
             },
           ),
           ListTile(

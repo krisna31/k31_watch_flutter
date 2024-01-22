@@ -5,11 +5,13 @@ import 'package:k31_watch_flutter/presentation/widgets/movie_card_list.dart';
 import 'package:provider/provider.dart';
 
 class PopularMoviesPage extends StatefulWidget {
+  // ignore: constant_identifier_names
   static const ROUTE_NAME = '/popular-movie';
 
   const PopularMoviesPage({super.key});
 
   @override
+  // ignore: library_private_types_in_public_api
   _PopularMoviesPageState createState() => _PopularMoviesPageState();
 }
 

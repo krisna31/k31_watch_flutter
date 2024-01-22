@@ -9,7 +9,7 @@ class SubtitleWidget extends StatelessWidget {
   });
 
   final String title;
-  final Function onTapFunction;
+  final void Function()? onTapFunction;
 
   @override
   Widget build(BuildContext context) {
@@ -21,11 +21,27 @@ class SubtitleWidget extends StatelessWidget {
           style: myTextTheme.titleLarge,
         ),
         InkWell(
-          onTap: () => onTapFunction,
+          onTap: onTapFunction,
           child: const Padding(
-            padding: EdgeInsets.all(8.0),
+            padding: EdgeInsets.fromLTRB(0, 0, 8, 0),
             child: Row(
-              children: [Text('See More'), Icon(Icons.arrow_forward_ios)],
+              children: [
+                Padding(
+                  padding: EdgeInsets.only(right: 4),
+                  child: Row(
+                    children: [
+                      Text(
+                        'Clickk To See More',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 12,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                Icon(Icons.arrow_forward_sharp, size: 12),
+              ],
             ),
           ),
         ),

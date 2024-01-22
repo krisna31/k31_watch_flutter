@@ -8,24 +8,20 @@ final myTextTheme = TextTheme(
     fontWeight: FontWeight.w300,
     fontSize: 22,
     letterSpacing: 0.20,
+    color: Colors.white,
   ),
   titleLarge: GoogleFonts.poppins(
-    fontWeight: FontWeight.w400,
+    color: Colors.white,
     fontSize: 18,
-  ),
-  titleMedium: GoogleFonts.poppins(
-    fontWeight: FontWeight.w300,
-    fontSize: 13,
-    letterSpacing: 0.15,
+    fontWeight: FontWeight.bold,
   ),
   bodyMedium: GoogleFonts.poppins(
-    fontWeight: FontWeight.w300,
+    color: Colors.white,
     fontSize: 12,
-    letterSpacing: 0.22,
   ),
 );
 
-const Color primary = Color.fromARGB(228, 65, 65, 65);
+const Color primary = Color.fromRGBO(9, 91, 163, 0.965);
 const Color darkBlue = Color.fromARGB(228, 10, 46, 86);
 const Color success = Color.fromARGB(255, 6, 65, 120);
 const Color warning = Color.fromARGB(255, 225, 177, 18);

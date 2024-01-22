@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:k31_watch_flutter/common/constants.dart';
 import 'package:k31_watch_flutter/presentation/common/utils.dart';
-import 'package:k31_watch_flutter/presentation/pages/popular_tv_series_page.dart';
+import 'package:k31_watch_flutter/presentation/pages/tv_series_now_play_page.dart';
+import 'package:k31_watch_flutter/presentation/pages/tv_series_popular_page.dart';
 import 'package:k31_watch_flutter/presentation/pages/search_page.dart';
-import 'package:k31_watch_flutter/presentation/pages/top_rated_tv_series_page.dart';
+import 'package:k31_watch_flutter/presentation/pages/tv_series_top_rated_page.dart';
 import 'package:k31_watch_flutter/presentation/providers/tv_series_list_notifier.dart';
 import 'package:k31_watch_flutter/presentation/widgets/my_drawer.dart';
 import 'package:k31_watch_flutter/presentation/widgets/subtitle_widget.dart';
@@ -53,7 +53,13 @@ class _HomeTvSeriesPageState extends State<HomeTvSeriesPage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text('Now Playing', style: myTextTheme.bodyMedium),
+              SubtitleWidget(
+                title: "Now Playing",
+                onTapFunction: () => Navigator.pushNamed(
+                  context,
+                  TvSeriesNowPlayPage.ROUTE_NAME,
+                ),
+              ),
               Consumer<TvSeriesListNotifier>(
                 builder: (context, data, child) => showTvSeriesCardLogic(
                   data.nowPlayingState,
@@ -64,7 +70,7 @@ class _HomeTvSeriesPageState extends State<HomeTvSeriesPage> {
                 title: 'Popular Tv Series',
                 onTapFunction: () => Navigator.pushNamed(
                   context,
-                  PopularTvSeriesPage.ROUTE_NAME,
+                  TvSeriesPopularPage.ROUTE_NAME,
                 ),
               ),
               Consumer<TvSeriesListNotifier>(
@@ -77,7 +83,7 @@ class _HomeTvSeriesPageState extends State<HomeTvSeriesPage> {
                 title: 'Top Rated Tv Series',
                 onTapFunction: () => Navigator.pushNamed(
                   context,
-                  TopRatedTvSeriesPage.ROUTE_NAME,
+                  TvSeriesTopRatedPage.ROUTE_NAME,
                 ),
               ),
               Consumer<TvSeriesListNotifier>(

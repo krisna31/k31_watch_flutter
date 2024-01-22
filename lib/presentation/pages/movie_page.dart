@@ -9,18 +9,18 @@ import 'package:k31_watch_flutter/presentation/widgets/my_drawer.dart';
 import 'package:k31_watch_flutter/presentation/widgets/subtitle_widget.dart';
 import 'package:provider/provider.dart';
 
-class HomeMoviePage extends StatefulWidget {
+class MoviePage extends StatefulWidget {
   // ignore: constant_identifier_names
   static const ROUTE_NAME = '/movie-page';
 
-  const HomeMoviePage({super.key});
+  const MoviePage({super.key});
 
   @override
   // ignore: library_private_types_in_public_api
-  _HomeMoviePageState createState() => _HomeMoviePageState();
+  _MoviePageState createState() => _MoviePageState();
 }
 
-class _HomeMoviePageState extends State<HomeMoviePage> {
+class _MoviePageState extends State<MoviePage> {
   @override
   void initState() {
     super.initState();
@@ -69,8 +69,8 @@ class _HomeMoviePageState extends State<HomeMoviePage> {
               ),
               Consumer<MovieListNotifier>(
                 builder: (context, data, child) => showMovieCardLogic(
-                    data.popularMoviesState,
-                    data.popularMovies,
+                  data.popularMoviesState,
+                  data.popularMovies,
                 ),
               ),
               SubtitleWidget(
@@ -80,8 +80,8 @@ class _HomeMoviePageState extends State<HomeMoviePage> {
               ),
               Consumer<MovieListNotifier>(
                 builder: (context, data, child) => showMovieCardLogic(
-                    data.topRatedMoviesState,
-                    data.topRatedMovies,
+                  data.topRatedMoviesState,
+                  data.topRatedMovies,
                 ),
               ),
             ],

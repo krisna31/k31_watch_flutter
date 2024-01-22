@@ -5,7 +5,7 @@ import 'package:k31_watch_flutter/domain/entities/tv_series.dart';
 
 class TvSeriesModel extends Equatable {
   final bool adult;
-  final String backdropPath;
+  final String? backdropPath;
   final List<int> genreIds;
   final int id;
   final List<String> originCountry;
@@ -13,7 +13,7 @@ class TvSeriesModel extends Equatable {
   final String originalName;
   final String overview;
   final double popularity;
-  final dynamic posterPath;
+  final String? posterPath;
   final String firstAirDate;
   final String name;
   final double voteAverage;

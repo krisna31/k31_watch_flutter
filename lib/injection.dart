@@ -27,6 +27,9 @@ import 'package:k31_watch_flutter/presentation/providers/movie_search_notifier.d
 import 'package:k31_watch_flutter/presentation/providers/popular_movie.notifier.dart';
 import 'package:k31_watch_flutter/presentation/providers/top_rated_movie_notifier.dart';
 import 'package:k31_watch_flutter/presentation/providers/tv_series_list_notifier.dart';
+import 'package:k31_watch_flutter/presentation/providers/tv_series_now_play_notifier.dart';
+import 'package:k31_watch_flutter/presentation/providers/tv_series_popular_notifier.dart';
+import 'package:k31_watch_flutter/presentation/providers/tv_series_top_rated_notifier.dart';
 import 'package:k31_watch_flutter/presentation/providers/watch_list_movie_notifier.dart';
 
 final locator = GetIt.instance;
@@ -74,6 +77,21 @@ void init() {
       getNowPlayingTvSeries: locator(),
       getPopularTvSeries: locator(),
       getTopRatedTvSeries: locator(),
+    ),
+  );
+  locator.registerFactory(
+    () => TvSeriesNowPlayNotifier(
+      getNowPlayingTvSeries: locator(),
+    ),
+  );
+  locator.registerFactory(
+    () => TvSeriesTopRatedNotifier(
+      getTopRatedTvSeries: locator(),
+    ),
+  );
+  locator.registerFactory(
+    () => TvSeriesPopularNotifier(
+      getPopularTvSeries: locator(),
     ),
   );
 

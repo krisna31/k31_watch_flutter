@@ -3,12 +3,15 @@ import 'package:flutter/material.dart';
 import 'package:k31_watch_flutter/common/constants.dart';
 import 'package:k31_watch_flutter/common/index.dart';
 import 'package:k31_watch_flutter/presentation/pages/about_page.dart';
-import 'package:k31_watch_flutter/presentation/pages/home_movie_page.dart';
+import 'package:k31_watch_flutter/presentation/pages/movie_page.dart';
 import 'package:k31_watch_flutter/presentation/pages/home_tv_series_page.dart';
 import 'package:k31_watch_flutter/presentation/pages/movie_detail_page.dart';
 import 'package:k31_watch_flutter/presentation/pages/popular_movie_page.dart';
 import 'package:k31_watch_flutter/presentation/pages/search_page.dart';
 import 'package:k31_watch_flutter/presentation/pages/top_rated_movie_page.dart';
+import 'package:k31_watch_flutter/presentation/pages/tv_series_now_play_page.dart';
+import 'package:k31_watch_flutter/presentation/pages/tv_series_top_rated_page.dart';
+import 'package:k31_watch_flutter/presentation/pages/tv_series_popular_page.dart';
 import 'package:k31_watch_flutter/presentation/pages/watchlist_movie_page.dart';
 import 'package:k31_watch_flutter/presentation/providers/movie_detail_notifier.dart';
 import 'package:k31_watch_flutter/presentation/providers/movie_list_notifier.dart';
@@ -16,6 +19,9 @@ import 'package:k31_watch_flutter/presentation/providers/movie_search_notifier.d
 import 'package:k31_watch_flutter/presentation/providers/popular_movie.notifier.dart';
 import 'package:k31_watch_flutter/presentation/providers/top_rated_movie_notifier.dart';
 import 'package:k31_watch_flutter/presentation/providers/tv_series_list_notifier.dart';
+import 'package:k31_watch_flutter/presentation/providers/tv_series_now_play_notifier.dart';
+import 'package:k31_watch_flutter/presentation/providers/tv_series_popular_notifier.dart';
+import 'package:k31_watch_flutter/presentation/providers/tv_series_top_rated_notifier.dart';
 import 'package:k31_watch_flutter/presentation/providers/watch_list_movie_notifier.dart';
 import 'package:provider/provider.dart';
 import 'package:k31_watch_flutter/injection.dart' as di;
@@ -51,7 +57,17 @@ class MyApp extends StatelessWidget {
             create: (_) => di.locator<WatchlistMovieNotifier>()
         ),
         ChangeNotifierProvider(
-            create: (_) => di.locator<TvSeriesListNotifier>())
+          create: (_) => di.locator<TvSeriesListNotifier>(),
+        ),
+        ChangeNotifierProvider(
+          create: (_) => di.locator<TvSeriesPopularNotifier>(),
+        ),
+        ChangeNotifierProvider(
+          create: (_) => di.locator<TvSeriesTopRatedNotifier>(),
+        ),
+        ChangeNotifierProvider(
+          create: (_) => di.locator<TvSeriesNowPlayNotifier>(),
+        ),
       ],
       child: MaterialApp(
         title: 'K31 Movie',
@@ -69,9 +85,21 @@ class MyApp extends StatelessWidget {
               return MaterialPageRoute(
                 builder: (_) => const HomeTvSeriesPage(),
               );
-            case HomeMoviePage.ROUTE_NAME:
+            case TvSeriesPopularPage.ROUTE_NAME:
               return MaterialPageRoute(
-                builder: (_) => const HomeMoviePage(),
+                builder: (_) => const TvSeriesPopularPage(),
+              );
+            case TvSeriesTopRatedPage.ROUTE_NAME:
+              return MaterialPageRoute(
+                builder: (_) => const TvSeriesTopRatedPage(),
+              );
+            case TvSeriesNowPlayPage.ROUTE_NAME:
+              return MaterialPageRoute(
+                builder: (_) => const TvSeriesNowPlayPage(),
+              );
+            case MoviePage.ROUTE_NAME:
+              return MaterialPageRoute(
+                builder: (_) => const MoviePage(),
               );
             case PopularMoviesPage.ROUTE_NAME:
               return CupertinoPageRoute(
