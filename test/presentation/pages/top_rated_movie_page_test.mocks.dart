@@ -6,14 +6,14 @@
 import 'dart:async' as _i7;
 import 'dart:ui' as _i8;
 
-import 'package:k31_watch_flutter/common/request_state.dart' as _i4;
-import 'package:k31_watch_flutter/domain/entities/movie.dart' as _i5;
+import 'package:k31_watch_flutter/common/request_state.dart' as _i5;
+import 'package:k31_watch_flutter/domain/entities/movie.dart' as _i6;
 import 'package:k31_watch_flutter/domain/use_case/get_top_rated_movies.dart'
     as _i2;
 import 'package:k31_watch_flutter/presentation/providers/top_rated_movie_notifier.dart'
     as _i3;
 import 'package:mockito/mockito.dart' as _i1;
-import 'package:mockito/src/dummies.dart' as _i6;
+import 'package:mockito/src/dummies.dart' as _i4;
 
 // ignore_for_file: type=lint
 // ignore_for_file: avoid_redundant_argument_values
@@ -58,25 +58,25 @@ class MockTopRatedMoviesNotifier extends _i1.Mock
       ) as _i2.GetTopRatedMovies);
 
   @override
-  _i4.RequestState get state => (super.noSuchMethod(
-        Invocation.getter(#state),
-        returnValue: _i4.RequestState.empty,
-      ) as _i4.RequestState);
-
-  @override
-  List<_i5.Movie> get movies => (super.noSuchMethod(
-        Invocation.getter(#movies),
-        returnValue: <_i5.Movie>[],
-      ) as List<_i5.Movie>);
-
-  @override
   String get message => (super.noSuchMethod(
         Invocation.getter(#message),
-        returnValue: _i6.dummyValue<String>(
+        returnValue: _i4.dummyValue<String>(
           this,
           Invocation.getter(#message),
         ),
       ) as String);
+
+  @override
+  _i5.RequestState get state => (super.noSuchMethod(
+        Invocation.getter(#state),
+        returnValue: _i5.RequestState.error,
+      ) as _i5.RequestState);
+
+  @override
+  List<_i6.Movie> get movies => (super.noSuchMethod(
+        Invocation.getter(#movies),
+        returnValue: <_i6.Movie>[],
+      ) as List<_i6.Movie>);
 
   @override
   bool get hasListeners => (super.noSuchMethod(
