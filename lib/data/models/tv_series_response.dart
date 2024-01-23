@@ -1,5 +1,5 @@
-import 'package:k31_watch_flutter/data/models/tv_series_model.dart';
 import 'package:equatable/equatable.dart';
+import 'package:k31_watch_flutter/data/models/tv_series_model.dart';
 
 class TvSeriesResponse extends Equatable {
   const TvSeriesResponse({required this.tvSeriesList});

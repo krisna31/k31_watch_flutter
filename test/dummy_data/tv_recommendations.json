@@ -1,0 +1,396 @@
+{
+  "page": 1,
+  "results": [
+      {
+          "adult": false,
+          "backdrop_path": "/ewiNrS8xiMpxhrw3ovo0cBMcirt.jpg",
+          "id": 2146,
+          "name": "Good Luck!!",
+          "original_language": "ja",
+          "original_name": "GOOD LUCK！！",
+          "overview": "Having achieved his life-long dream of being a pilot, Hajime is first officer on an international jetliner and is now working to become a captain. He can't seem to please Captain Koda, who has become an exacting taskmaster since an air incident many years ago. To complicate matters, he begins a relationship with stubborn and straight-talking mechanic, Ayumi, whose parents died many years ago in the plane crash for which Captain Koda feels he is responsible.  What follows is a story of 21st century love, dreams, and passion.",
+          "poster_path": "/dZtbggJpUtSoVSPamskkksKYW7q.jpg",
+          "media_type": "tv",
+          "genre_ids": [
+              18,
+              35
+          ],
+          "popularity": 12.214,
+          "first_air_date": "2003-01-19",
+          "vote_average": 7.2,
+          "vote_count": 8,
+          "origin_country": [
+              "JP"
+          ]
+      },
+      {
+          "adult": false,
+          "backdrop_path": "/3PC3tkDP6XNCCPWd7ENFC7my9vJ.jpg",
+          "id": 20368,
+          "name": "Absolute Boyfriend",
+          "original_language": "ja",
+          "original_name": "絶対彼氏 〜完全無欠の恋人ロボット〜",
+          "overview": "Robot maker, Kronos Heaven, finally develops \"Night Tenjō\", the perfect male humanoid programmed to be devoted and completely loyal to his lover. The company chooses temp worker Riko Izawa to take part in a five-day free trial. At first, Riko only sees Night as a household appliance. But when she finds out how deep Night's devotion to herself is, Riko finds herself falling in love with him. Joining the love triangle is Sōshi Asamoto, a distinguished young executive at her company who has feelings for her.",
+          "poster_path": "/Cpa9HhjuuxV4zKiXvaZxpMhQQF.jpg",
+          "media_type": "tv",
+          "genre_ids": [
+              35
+          ],
+          "popularity": 20.875,
+          "first_air_date": "2008-04-15",
+          "vote_average": 7.4,
+          "vote_count": 15,
+          "origin_country": [
+              "JP"
+          ]
+      },
+      {
+          "adult": false,
+          "backdrop_path": "/rN6rQDCgIgqHXUX1hsTqvDF6Ggs.jpg",
+          "id": 125180,
+          "name": "Yowamushi Pedal",
+          "original_language": "ja",
+          "original_name": "弱虫ペダル",
+          "overview": "An anime otaku named Sakamichi Onoda has just entered high school. In middle school, he did not have any friends with similar interests, but now he is hoping to find similar people at his new school's anime club.",
+          "poster_path": "/8M3Fkfinn6IOdjOeHqpUiWj4bdI.jpg",
+          "media_type": "tv",
+          "genre_ids": [
+              18
+          ],
+          "popularity": 56.382,
+          "first_air_date": "2016-08-26",
+          "vote_average": 5.7,
+          "vote_count": 3,
+          "origin_country": [
+              "JP"
+          ]
+      },
+      {
+          "adult": false,
+          "backdrop_path": "/gt4tnho6xhCiSByk2kZPCTBz4Bx.jpg",
+          "id": 40313,
+          "name": "Outland",
+          "original_language": "en",
+          "original_name": "Outland",
+          "overview": "Outland is a six-part comedy series about a gay science fiction fan club  and the lives, loves and never-ending dramas of its five members.\r\nThere’s Max, insecure and looking for love; the sexually-adventurous,  muffin-baking Andy; Rae, the moral centre and unofficial head of the  group; the high-camp, high-maintenance Fab; and the wealthy,  socially-inept Toby.\r\nEvery meeting collapses into chaos.  Fault-lines within the group are  exposed and secrets and skeletons come crashing out of the closet.  Can  science fiction save them all?\r\nOutland is a series about belonging, no matter who you are, and how  everyone searches to find a place to fit in.",
+          "poster_path": "/jPQtkaLQ3pAk5N3auKIVwDIrRSH.jpg",
+          "media_type": "tv",
+          "genre_ids": [
+              35
+          ],
+          "popularity": 7.331,
+          "first_air_date": "2012-02-08",
+          "vote_average": 8.0,
+          "vote_count": 4,
+          "origin_country": [
+              "AU"
+          ]
+      },
+      {
+          "adult": false,
+          "backdrop_path": null,
+          "id": 61099,
+          "name": "Sphinx – Secrets of the History",
+          "original_language": "de",
+          "original_name": "Sphinx – Geheimnisse der Geschichte",
+          "overview": "This German format is not a series properly speaking, as it has no permanent cast or script continuity, but presents each time a 45 minutes documentary, usually in part presented as a docudrama (not faction, as close to scientific knowledge as possible, but visually attractive), elaborating a specific historical theme, widely varied, often exotic in the sense of a far time (as far back as prehistoric times) and/or place (around the globe), although some episodes fit together well, chronologically or thematically, but always fit to be watched separately. Usually authentic locations are used, as well as scenes from and/or interviews about the scientific research it is based upon.",
+          "poster_path": "/25WxDo1LPrUq1zbBroPhXxbY5ss.jpg",
+          "media_type": "tv",
+          "genre_ids": [
+              99
+          ],
+          "popularity": 12.371,
+          "first_air_date": "1994-12-04",
+          "vote_average": 6.0,
+          "vote_count": 1,
+          "origin_country": [
+              "DE"
+          ]
+      },
+      {
+          "adult": false,
+          "backdrop_path": null,
+          "id": 90196,
+          "name": "Ainak Wala Jin",
+          "original_language": "ur",
+          "original_name": "عینک والا جن",
+          "overview": "A genie is sent by the emperor of genies from the Caucasus Mountains to our earth for the treatment of his eyesight problems. When he lands, he happens to meet a daring young boy who loves fantasies.",
+          "poster_path": "/nudgOqLQKyEXSt4Ev0bPw7fLxiT.jpg",
+          "media_type": "tv",
+          "genre_ids": [
+              35,
+              10751,
+              10765
+          ],
+          "popularity": 8.623,
+          "first_air_date": "1993-01-01",
+          "vote_average": 8.3,
+          "vote_count": 3,
+          "origin_country": [
+              "PK"
+          ]
+      },
+      {
+          "adult": false,
+          "backdrop_path": null,
+          "id": 35445,
+          "name": "The Rag Trade",
+          "original_language": "en",
+          "original_name": "The Rag Trade",
+          "overview": "Follows the humorous struggles of workers in a London clothing factory.",
+          "poster_path": "/24IpPBWdTP8KHzzSRboYc6WFBy4.jpg",
+          "media_type": "tv",
+          "genre_ids": [
+              35
+          ],
+          "popularity": 54.755,
+          "first_air_date": "1977-09-11",
+          "vote_average": 6.0,
+          "vote_count": 1,
+          "origin_country": [
+              "GB"
+          ]
+      },
+      {
+          "adult": false,
+          "backdrop_path": null,
+          "id": 217970,
+          "name": "Thanksgiving",
+          "original_language": "en",
+          "original_name": "Thanksgiving",
+          "overview": "A dysfunctional family gathers together during the Thanksgiving holiday weekend.",
+          "poster_path": null,
+          "media_type": "tv",
+          "genre_ids": [
+              35
+          ],
+          "popularity": 8.084,
+          "first_air_date": "2016-11-16",
+          "vote_average": 7.0,
+          "vote_count": 1,
+          "origin_country": [
+              "US"
+          ]
+      },
+      {
+          "adult": false,
+          "backdrop_path": "/AcjUVd52uOSU58a7wO8uzxk2XIa.jpg",
+          "id": 223369,
+          "name": "许你春风野马",
+          "original_language": "zh",
+          "original_name": "许你春风野马",
+          "overview": "",
+          "poster_path": "/3NlgMarHtNO5NCwoIWOYPswokIq.jpg",
+          "media_type": "tv",
+          "genre_ids": [
+              18
+          ],
+          "popularity": 6.053,
+          "first_air_date": "2023-03-28",
+          "vote_average": 6.0,
+          "vote_count": 1,
+          "origin_country": [
+              "CN"
+          ]
+      },
+      {
+          "adult": false,
+          "backdrop_path": "/xClO8rjHcbJEE9GS9Bt3nvUKj0s.jpg",
+          "id": 84094,
+          "name": "Feelings",
+          "original_language": "ko",
+          "original_name": "느낌",
+          "overview": "Three brothers Bin, Hyun and Joon become drawn to the very pretty and sweet Yuri, a family friend. Yuri arrives from France to live with them for the summer while attending classes at their university, causing each brother to be attracted to her in a different way.",
+          "poster_path": "/62gHI0C83UyBweWU0yS98fCcTGH.jpg",
+          "media_type": "tv",
+          "genre_ids": [],
+          "popularity": 27.544,
+          "first_air_date": "1994-07-20",
+          "vote_average": 3.0,
+          "vote_count": 1,
+          "origin_country": [
+              "KR"
+          ]
+      },
+      {
+          "adult": false,
+          "backdrop_path": null,
+          "id": 33928,
+          "name": "Today's F.B.I.",
+          "original_language": "en",
+          "original_name": "Today's F.B.I.",
+          "overview": "Today's F.B.I. is an American crime drama television series, an updated and revamped version of the earlier series The F.B.I.\n\nLike the original program, this series is based on actual cases from the files of the Federal Bureau of Investigation, and the F.B.I. was involved in the making of the show. Unlike the original series, which ran for nine seasons, this show ran for only 18 episodes on ABC, during the 1981-1982 season.",
+          "poster_path": null,
+          "media_type": "tv",
+          "genre_ids": [],
+          "popularity": 37.997,
+          "first_air_date": "1981-10-25",
+          "vote_average": 5.0,
+          "vote_count": 1,
+          "origin_country": [
+              "US"
+          ]
+      },
+      {
+          "adult": false,
+          "backdrop_path": "/krFmAu3z3QRwZ0g0wbfqXmCrZRh.jpg",
+          "id": 154668,
+          "name": "情定三生",
+          "original_language": "zh",
+          "original_name": "情定三生",
+          "overview": "",
+          "poster_path": "/fB6FQJkktbBdb3JYCBpXbPHp1jB.jpg",
+          "media_type": "tv",
+          "genre_ids": [
+              18
+          ],
+          "popularity": 10.139,
+          "first_air_date": "2014-07-09",
+          "vote_average": 6.0,
+          "vote_count": 1,
+          "origin_country": [
+              "CN"
+          ]
+      },
+      {
+          "adult": false,
+          "backdrop_path": "/50htNvOhJ8VPyIc1gHz79weIkg8.jpg",
+          "id": 68908,
+          "name": "Ámbar",
+          "original_language": "es",
+          "original_name": "Ámbar",
+          "overview": "Ambar’s school bus driver becomes an important role model for her. He also makes a lasting impression on her mother...",
+          "poster_path": "/owoxHInyOSvu2hoVDGGHmFSWNhg.jpg",
+          "media_type": "tv",
+          "genre_ids": [
+              10766,
+              10751,
+              35,
+              18
+          ],
+          "popularity": 20.881,
+          "first_air_date": "2016-08-22",
+          "vote_average": 2.0,
+          "vote_count": 1,
+          "origin_country": [
+              "CL"
+          ]
+      },
+      {
+          "adult": false,
+          "backdrop_path": null,
+          "id": 48298,
+          "name": "Summer Fever",
+          "original_language": "en",
+          "original_name": "Summer Fever",
+          "overview": "",
+          "poster_path": null,
+          "media_type": "tv",
+          "genre_ids": [],
+          "popularity": 1.497,
+          "first_air_date": "",
+          "vote_average": 10.0,
+          "vote_count": 1,
+          "origin_country": [
+              "CN"
+          ]
+      },
+      {
+          "adult": false,
+          "backdrop_path": "/40DQ08PJCyD84pfsCmL86FX8NUu.jpg",
+          "id": 89562,
+          "name": "Babies: Their Wonderful World",
+          "original_language": "en",
+          "original_name": "Babies: Their Wonderful World",
+          "overview": "200 babies are brought together to take part in an ambitious scientific study exploring how the incredible changes that happen in the first two years of life make us who we are.",
+          "poster_path": "/us7NJxbk4o9oLiDsGsJPZcNN7Pb.jpg",
+          "media_type": "tv",
+          "genre_ids": [
+              99
+          ],
+          "popularity": 4.586,
+          "first_air_date": "2018-11-26",
+          "vote_average": 7.0,
+          "vote_count": 1,
+          "origin_country": [
+              "GB"
+          ]
+      },
+      {
+          "adult": false,
+          "backdrop_path": null,
+          "id": 20442,
+          "name": "Human Prey",
+          "original_language": "en",
+          "original_name": "Human Prey",
+          "overview": "A police officer comes face to face with an angry bull. A ferocious grizzly bear brutally devastates a family hiking in Montana. An Australian diver suddenly finds himself inside the deadly jaws of a great white shark. Recounting bone-chilling attacks by some of the world’s most lethal predators, Human Prey presents harrowing true stories of people who were attacked by wild animals...and lived to tell the tale.",
+          "poster_path": "/iKKulaAnDEY7VI6EF2ufKdl1eCn.jpg",
+          "media_type": "tv",
+          "genre_ids": [],
+          "popularity": 0.745,
+          "first_air_date": "2009-01-01",
+          "vote_average": 8.0,
+          "vote_count": 1,
+          "origin_country": []
+      },
+      {
+          "adult": false,
+          "backdrop_path": "/5jFhzudnRosrYWF8RaTujiGT4GC.jpg",
+          "id": 222365,
+          "name": "Ranman",
+          "original_language": "ja",
+          "original_name": "らんまん",
+          "overview": "The story of Makino Mantaro (Kamiki Ryunosuke), a botanist who ran through the Meiji era (1868-1912) in full bloom, begins. Born the heir to the Tosa sake brewery Mineya, Mantaro (Yurito Mori) is a boy who loves plants and flowers and led a straightforward life. His life was colored by the many vivid encounters he had with many people. People whom Mantaro met in his hometown of Kochi, and whose way of life and words gave him a guideline for his life. \"Ranman,\" is a drama in which charming characters bloom freely around the main character, Mantaro, just like flowers.",
+          "poster_path": "/ajwsAmJ6q3V4i4XLgPAznw1LT1n.jpg",
+          "media_type": "tv",
+          "genre_ids": [],
+          "popularity": 120.981,
+          "first_air_date": "2023-04-03",
+          "vote_average": 8.0,
+          "vote_count": 3,
+          "origin_country": [
+              "JP"
+          ]
+      },
+      {
+          "adult": false,
+          "backdrop_path": "/tnLiazSysECCyrxwmNqJrullIOb.jpg",
+          "id": 81176,
+          "name": "ZERO -The Bravest Money Game-",
+          "original_language": "ja",
+          "original_name": "ゼロ 一獲千金ゲーム",
+          "overview": "The winner of a secret survival game stands to win a large sum of money. However, one player does not seem to be in the game for the money.",
+          "poster_path": "/yV9bpjaqijQn2jHNHNq0VxmyDUp.jpg",
+          "media_type": "tv",
+          "genre_ids": [
+              18
+          ],
+          "popularity": 31.699,
+          "first_air_date": "2018-07-15",
+          "vote_average": 7.7,
+          "vote_count": 3,
+          "origin_country": [
+              "JP"
+          ]
+      },
+      {
+          "adult": false,
+          "backdrop_path": "/jOmaDldMOwSCwRpvy4QUkYlTrVT.jpg",
+          "id": 81164,
+          "name": "AOA's One Fine Day",
+          "original_language": "ko",
+          "original_name": "AOA의 어느 멋진날",
+          "overview": "",
+          "poster_path": "/1TM9mR5Hs0XUTrUoSgACaGImVJh.jpg",
+          "media_type": "tv",
+          "genre_ids": [],
+          "popularity": 0.6,
+          "first_air_date": "2015-06-13",
+          "vote_average": 8.0,
+          "vote_count": 1,
+          "origin_country": []
+      }
+  ],
+  "total_pages": 2,
+  "total_results": 40
+}

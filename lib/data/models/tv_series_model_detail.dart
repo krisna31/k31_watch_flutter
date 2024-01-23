@@ -1,8 +1,9 @@
+import 'package:equatable/equatable.dart';
 import 'package:k31_watch_flutter/data/models/genre_model.dart';
 import 'package:k31_watch_flutter/domain/entities/detail_tv_series.dart';
 import 'dart:convert';
 
-class TvSeriesModelDetail {
+class TvSeriesModelDetail extends Equatable {
   final bool adult;
   final String backdropPath;
   final List<int> episodeRunTime;
@@ -29,7 +30,7 @@ class TvSeriesModelDetail {
   final double voteAverage;
   final int voteCount;
 
-  TvSeriesModelDetail({
+  const TvSeriesModelDetail({
     required this.adult,
     required this.backdropPath,
     required this.episodeRunTime,
@@ -162,4 +163,33 @@ class TvSeriesModelDetail {
       type: type,
       voteAverage: voteAverage,
       voteCount: voteCount);
+
+  @override
+  List<Object?> get props => [
+        adult,
+        backdropPath,
+        episodeRunTime,
+        firstAirDate,
+        genres,
+        homepage,
+        id,
+        inProduction,
+        languages,
+        lastAirDate,
+        name,
+        nextEpisodeToAir,
+        numberOfEpisodes,
+        numberOfSeasons,
+        originCountry,
+        originalLanguage,
+        originalName,
+        overview,
+        popularity,
+        posterPath,
+        status,
+        tagline,
+        type,
+        voteAverage,
+        voteCount,
+      ];
 }
