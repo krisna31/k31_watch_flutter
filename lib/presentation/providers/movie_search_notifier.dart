@@ -1,16 +1,13 @@
-import 'package:flutter/foundation.dart';
 import 'package:k31_watch_flutter/common/request_state.dart';
-import 'package:k31_watch_flutter/domain/entities/movie.dart';
 import 'package:k31_watch_flutter/domain/use_case/search_movies.dart';
+import 'package:k31_watch_flutter/domain/entities/movie.dart';
+import 'package:flutter/foundation.dart';
 
 class MovieSearchNotifier extends ChangeNotifier {
   final SearchMovies searchMovies;
-
   MovieSearchNotifier({required this.searchMovies});
-
   RequestState _state = RequestState.empty;
   RequestState get state => _state;
-
   List<Movie> _searchResult = [];
   List<Movie> get searchResult => _searchResult;
 

@@ -1,6 +1,6 @@
+import 'package:k31_watch_flutter/domain/entities/movie_detail.dart';
 import 'package:equatable/equatable.dart';
 import 'package:k31_watch_flutter/domain/entities/movie.dart';
-import 'package:k31_watch_flutter/domain/entities/movie_detail.dart';
 
 class MovieTable extends Equatable {
   final int id;
@@ -28,22 +28,18 @@ class MovieTable extends Equatable {
         posterPath: map['posterPath'],
         overview: map['overview'],
       );
-
-  Map<String, dynamic> toJson() => {
-        'id': id,
-        'title': title,
-        'posterPath': posterPath,
-        'overview': overview,
-      };
-
   Movie toEntity() => Movie.watchlist(
         id: id,
         overview: overview,
         posterPath: posterPath,
         title: title,
       );
-
+  Map<String, dynamic> toJson() => {
+        'id': id,
+        'title': title,
+        'posterPath': posterPath,
+        'overview': overview,
+      };
   @override
-  // TODO: implement props
   List<Object?> get props => [id, title, posterPath, overview];
 }

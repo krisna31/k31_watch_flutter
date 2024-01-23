@@ -1,7 +1,23 @@
-import 'package:equatable/equatable.dart';
 import 'package:k31_watch_flutter/domain/entities/movie.dart';
+import 'package:equatable/equatable.dart';
 
 class MovieModel extends Equatable {
+
+  final bool adult;
+  final String? backdropPath;
+  final List<int> genreIds;
+  final int id;
+  final String originalLanguage;
+  final String originalTitle;
+  final String overview;
+  final double popularity;
+  final String? posterPath;
+  final String? releaseDate;
+  final String title;
+  final bool video;
+  final double voteAverage;
+  final int voteCount;
+
   const MovieModel({
     required this.adult,
     required this.backdropPath,
@@ -18,21 +34,6 @@ class MovieModel extends Equatable {
     required this.voteAverage,
     required this.voteCount,
   });
-
-  final bool adult;
-  final String? backdropPath;
-  final List<int> genreIds;
-  final int id;
-  final String originalLanguage;
-  final String originalTitle;
-  final String overview;
-  final double popularity;
-  final String? posterPath;
-  final String? releaseDate;
-  final String title;
-  final bool video;
-  final double voteAverage;
-  final int voteCount;
 
   factory MovieModel.fromJson(Map<String, dynamic> json) => MovieModel(
         adult: json["adult"],
@@ -68,6 +69,24 @@ class MovieModel extends Equatable {
         "vote_count": voteCount,
       };
 
+  @override
+  List<Object?> get props => [
+        adult,
+        backdropPath,
+        genreIds,
+        id,
+        originalLanguage,
+        originalTitle,
+        overview,
+        popularity,
+        posterPath,
+        releaseDate,
+        title,
+        video,
+        voteAverage,
+        voteCount,
+      ];
+
   Movie toEntity() {
     return Movie(
       adult: adult,
@@ -86,22 +105,4 @@ class MovieModel extends Equatable {
       voteCount: voteCount,
     );
   }
-
-  @override
-  List<Object?> get props => [
-        adult,
-        backdropPath,
-        genreIds,
-        id,
-        originalLanguage,
-        originalTitle,
-        overview,
-        popularity,
-        posterPath,
-        releaseDate,
-        title,
-        video,
-        voteAverage,
-        voteCount,
-      ];
 }

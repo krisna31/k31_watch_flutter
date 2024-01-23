@@ -1,9 +1,12 @@
 import 'dart:io';
 
 import 'package:dartz/dartz.dart';
-import 'package:k31_watch_flutter/common/exception.dart';
+import 'package:k31_watch_flutter/common/database_exception.dart';
+import 'package:k31_watch_flutter/common/failure_child/connection_failure.dart';
+import 'package:k31_watch_flutter/common/failure_child/database_failure.dart';
+import 'package:k31_watch_flutter/common/failure_child/server_failure.dart';
+import 'package:k31_watch_flutter/common/server_exception.dart';
 import 'package:k31_watch_flutter/common/failure.dart';
-import 'package:k31_watch_flutter/common/failure_child.dart';
 import 'package:k31_watch_flutter/data/datasources/local_data_tv_series_source.dart';
 import 'package:k31_watch_flutter/data/datasources/tv_series_remote_data_source.dart';
 import 'package:k31_watch_flutter/data/models/table_tv_series.dart';

@@ -3,6 +3,28 @@ import 'package:k31_watch_flutter/data/models/genre_model.dart';
 import 'package:k31_watch_flutter/domain/entities/movie_detail.dart';
 
 class MovieDetailResponse extends Equatable {
+  final bool adult;
+  final String? backdropPath;
+  final int budget;
+  final List<GenreModel> genres;
+  final String homepage;
+  final int id;
+  final String? imdbId;
+  final String originalLanguage;
+  final String originalTitle;
+  final String overview;
+  final double popularity;
+  final String posterPath;
+  final String releaseDate;
+  final int revenue;
+  final int runtime;
+  final String status;
+  final String tagline;
+  final String title;
+  final bool video;
+  final double voteAverage;
+  final int voteCount;
+
   const MovieDetailResponse({
     required this.adult,
     required this.backdropPath,
@@ -26,28 +48,6 @@ class MovieDetailResponse extends Equatable {
     required this.voteAverage,
     required this.voteCount,
   });
-
-  final bool adult;
-  final String? backdropPath;
-  final int budget;
-  final List<GenreModel> genres;
-  final String homepage;
-  final int id;
-  final String? imdbId;
-  final String originalLanguage;
-  final String originalTitle;
-  final String overview;
-  final double popularity;
-  final String posterPath;
-  final String releaseDate;
-  final int revenue;
-  final int runtime;
-  final String status;
-  final String tagline;
-  final String title;
-  final bool video;
-  final double voteAverage;
-  final int voteCount;
 
   factory MovieDetailResponse.fromJson(Map<String, dynamic> json) =>
       MovieDetailResponse(
@@ -99,24 +99,6 @@ class MovieDetailResponse extends Equatable {
         "vote_count": voteCount,
       };
 
-  MovieDetail toEntity() {
-    return MovieDetail(
-      adult: adult,
-      backdropPath: backdropPath,
-      genres: genres.map((genre) => genre.toEntity()).toList(),
-      id: id,
-      originalLanguage: originalLanguage,
-      originalTitle: originalTitle,
-      overview: overview,
-      posterPath: posterPath,
-      releaseDate: releaseDate,
-      runtime: runtime,
-      title: title,
-      voteAverage: voteAverage,
-      voteCount: voteCount,
-    );
-  }
-
   @override
   List<Object?> get props => [
         adult,
@@ -141,4 +123,22 @@ class MovieDetailResponse extends Equatable {
         voteAverage,
         voteCount,
       ];
+
+  MovieDetail toEntity() {
+    return MovieDetail(
+      adult: adult,
+      backdropPath: backdropPath,
+      genres: genres.map((genre) => genre.toEntity()).toList(),
+      id: id,
+      originalLanguage: originalLanguage,
+      originalTitle: originalTitle,
+      overview: overview,
+      posterPath: posterPath,
+      releaseDate: releaseDate,
+      runtime: runtime,
+      title: title,
+      voteAverage: voteAverage,
+      voteCount: voteCount,
+    );
+  }
 }

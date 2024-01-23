@@ -1,7 +1,5 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:k31_watch_flutter/common/constants.dart';
-import 'package:k31_watch_flutter/common/index.dart';
 import 'package:k31_watch_flutter/presentation/pages/about_page.dart';
 import 'package:k31_watch_flutter/presentation/pages/detail_tv_series_page.dart';
 import 'package:k31_watch_flutter/presentation/pages/movie_page.dart';
@@ -16,10 +14,10 @@ import 'package:k31_watch_flutter/presentation/pages/tv_series_top_rated_page.da
 import 'package:k31_watch_flutter/presentation/pages/tv_series_popular_page.dart';
 import 'package:k31_watch_flutter/presentation/pages/watchlist_movie_page.dart';
 import 'package:k31_watch_flutter/presentation/pages/watchlist_tv_series_page.dart';
-import 'package:k31_watch_flutter/presentation/providers/detail_tv_series_notifier.dart';
 import 'package:k31_watch_flutter/presentation/providers/movie_detail_notifier.dart';
 import 'package:k31_watch_flutter/presentation/providers/movie_list_notifier.dart';
 import 'package:k31_watch_flutter/presentation/providers/movie_search_notifier.dart';
+import 'package:k31_watch_flutter/presentation/providers/detail_tv_series_notifier.dart';
 import 'package:k31_watch_flutter/presentation/providers/popular_movie.notifier.dart';
 import 'package:k31_watch_flutter/presentation/providers/search_tv_notifier.dart';
 import 'package:k31_watch_flutter/presentation/providers/top_rated_movie_notifier.dart';
@@ -29,8 +27,11 @@ import 'package:k31_watch_flutter/presentation/providers/tv_series_popular_notif
 import 'package:k31_watch_flutter/presentation/providers/tv_series_top_rated_notifier.dart';
 import 'package:k31_watch_flutter/presentation/providers/watch_list_movie_notifier.dart';
 import 'package:k31_watch_flutter/presentation/providers/watch_list_tv_series_notifier.dart';
+
 import 'package:provider/provider.dart';
 import 'package:k31_watch_flutter/injection.dart' as di;
+
+final RouteObserver<ModalRoute> routeObserver = RouteObserver<ModalRoute>();
 
 void main() {
   di.init();
@@ -39,28 +40,33 @@ void main() {
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
-
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(
-          create: (_) => di.locator<MovieListNotifier>()
+          create: (_) => di.locator<SearchTvNotifier>(),
         ),
         ChangeNotifierProvider(
-            create: (_) => di.locator<MovieDetailNotifier>()
+          create: (_) => di.locator<WatchlistTvSeriesNotifier>(),
         ),
         ChangeNotifierProvider(
-            create: (_) => di.locator<MovieSearchNotifier>()
+          create: (_) => di.locator<MovieDetailNotifier>(),
         ),
         ChangeNotifierProvider(
-            create: (_) => di.locator<TopRatedMoviesNotifier>()
+          create: (_) => di.locator<MovieListNotifier>(),
         ),
         ChangeNotifierProvider(
-            create: (_) => di.locator<PopularMoviesNotifier>()
+          create: (_) => di.locator<MovieSearchNotifier>(),
         ),
         ChangeNotifierProvider(
-            create: (_) => di.locator<WatchlistMovieNotifier>()
+          create: (_) => di.locator<TopRatedMoviesNotifier>(),
+        ),
+        ChangeNotifierProvider(
+          create: (_) => di.locator<PopularMoviesNotifier>(),
+        ),
+        ChangeNotifierProvider(
+          create: (_) => di.locator<WatchlistMovieNotifier>(),
         ),
         ChangeNotifierProvider(
           create: (_) => di.locator<TvSeriesListNotifier>(),
@@ -77,23 +83,19 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(
           create: (_) => di.locator<DetailTvSeriesNotifier>(),
         ),
-        ChangeNotifierProvider(
-          create: (_) => di.locator<SearchTvNotifier>(),
-        ),
-        ChangeNotifierProvider(
-          create: (_) => di.locator<WatchlistTvSeriesNotifier>(),
-        ),
       ],
       child: MaterialApp(
-        title: 'K31 Movie',
         theme: ThemeData.dark().copyWith(
-          colorScheme: k31ColorScheme,
+          colorScheme: k31ColorScheme.copyWith(primary: primary),
           primaryColor: primary,
           scaffoldBackgroundColor: primary,
-          textTheme: myTextTheme,
+          textTheme: myTextTheme.copyWith(
+            titleLarge: myTextTheme.titleLarge,
+          ),
         ),
-        home: const HomeTvSeriesPage(),
+        title: 'K31 Movie',
         navigatorObservers: [routeObserver],
+        home: const HomeTvSeriesPage(),
         onGenerateRoute: (RouteSettings settings) {
           switch (settings.name) {
             case HomeTvSeriesPage.ROUTE_NAME:
@@ -131,7 +133,7 @@ class MyApp extends StatelessWidget {
                 builder: (_) => const MoviePage(),
               );
             case PopularMoviesPage.ROUTE_NAME:
-              return CupertinoPageRoute(
+              return MaterialPageRoute(
                   builder: (_) => const PopularMoviesPage());
             case TopRatedMoviesPage.ROUTE_NAME:
               return MaterialPageRoute(
@@ -142,22 +144,79 @@ class MyApp extends StatelessWidget {
                 settings: settings,
               );
             case SearchPage.ROUTE_NAME:
-              return MaterialPageRoute(builder: (_) => const SearchPage());
+              return MaterialPageRoute(
+                builder: (_) => const SearchPage(),
+              );
             case WatchlistMoviesPage.ROUTE_NAME:
               return MaterialPageRoute(
                   builder: (_) => const WatchlistMoviesPage());
             case AboutPage.ROUTE_NAME:
-              return MaterialPageRoute(builder: (_) => const AboutPage());
+              return MaterialPageRoute(
+                builder: (_) => const AboutPage(),
+              );
             default:
-              return MaterialPageRoute(builder: (_) {
-                return const Scaffold(
-                  body: Center(
-                    child: Text('404 NOT FOUND 404'),
-                  ),
-                );
-              });
+              return MaterialPageRoute(
+                builder: (_) => const PageNotFoundWidget(),
+              );
           }
         },
+      ),
+    );
+  }
+}
+
+class PageNotFoundWidget extends StatelessWidget {
+  const PageNotFoundWidget({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            const Text(
+              '404',
+              style: TextStyle(
+                fontSize: 72.0,
+                fontWeight: FontWeight.bold,
+                color: Colors.redAccent,
+              ),
+            ),
+            const SizedBox(height: 20.0),
+            Text(
+              'NOT FOUND',
+              style: TextStyle(
+                fontSize: 24.0,
+                fontWeight: FontWeight.bold,
+                color: Colors.grey[700],
+              ),
+            ),
+            const SizedBox(height: 20.0),
+            Text(
+              'Oops! The page you are looking for does not exist.',
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                fontSize: 16.0,
+                color: Colors.grey[500],
+              ),
+            ),
+            const SizedBox(height: 20.0),
+            ElevatedButton(
+              onPressed: () {
+                // Add navigation logic or handle the button click
+              },
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.blue,
+                textStyle: const TextStyle(
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              child: const Text('Go Home'),
+            ),
+          ],
+        ),
       ),
     );
   }

@@ -1,7 +1,5 @@
-import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter/material.dart';
-
-const String baseImageUrl = 'https://image.tmdb.org/t/p/w500';
+import 'package:google_fonts/google_fonts.dart';
 
 final myTextTheme = TextTheme(
   headlineSmall: GoogleFonts.poppins(
@@ -21,12 +19,11 @@ final myTextTheme = TextTheme(
   ),
 );
 
-const Color primary = Color.fromRGBO(9, 91, 163, 0.965);
-const Color darkBlue = Color.fromARGB(228, 10, 46, 86);
-const Color success = Color.fromARGB(255, 6, 65, 120);
-const Color warning = Color.fromARGB(255, 225, 177, 18);
-const Color lightGray = Color.fromARGB(255, 87, 99, 106);
-const Color darkGray = Color.fromARGB(255, 39, 37, 37);
+const String baseApiUrl = 'https://api.themoviedb.org/3';
+
+const String apiKey = 'api_key=2174d146bb9c0eab47529b2e77d6b526';
+
+const String baseImageUrl = 'https://image.tmdb.org/t/p/w500';
 
 const k31ColorScheme = ColorScheme(
   primary: warning,
@@ -43,3 +40,10 @@ const k31ColorScheme = ColorScheme(
   onError: Colors.blue,
   brightness: Brightness.dark,
 );
+
+const Color primary = Color.fromRGBO(9, 91, 163, 0.965);
+const Color darkBlue = Color.fromARGB(228, 10, 46, 86);
+const Color success = Color.fromARGB(255, 6, 65, 120);
+const Color warning = Color.fromARGB(255, 225, 177, 18);
+const Color lightGray = Color.fromARGB(255, 87, 99, 106);
+const Color darkGray = Color.fromARGB(255, 39, 37, 37);

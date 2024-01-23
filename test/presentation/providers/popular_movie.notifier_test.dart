@@ -1,6 +1,6 @@
 import 'package:dartz/dartz.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:k31_watch_flutter/common/failure_child.dart';
+import 'package:k31_watch_flutter/common/failure_child/server_failure.dart';
 import 'package:k31_watch_flutter/common/request_state.dart';
 import 'package:k31_watch_flutter/domain/entities/movie.dart';
 import 'package:k31_watch_flutter/domain/use_case/get_popular_movies.dart';

@@ -4,10 +4,8 @@ import 'package:k31_watch_flutter/domain/entities/movie.dart';
 import 'package:k31_watch_flutter/domain/repositories/movie_repositories.dart';
 
 class GetNowPlayingMovies {
-  final MovieRepository repository;
-
   GetNowPlayingMovies(this.repository);
-
+  final MovieRepository repository;
   Future<Either<Failure, List<Movie>>> execute() {
     return repository.getNowPlayingMovies();
   }

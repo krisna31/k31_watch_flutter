@@ -1,26 +1,14 @@
-import 'dart:convert';
-
-import 'package:http/http.dart' as http;
-import 'package:k31_watch_flutter/common/exception.dart';
+import 'package:k31_watch_flutter/common/constants.dart';
+import 'package:k31_watch_flutter/common/server_exception.dart';
 import 'package:k31_watch_flutter/data/models/tv_series_model.dart';
+import 'dart:convert';
+import 'package:http/http.dart' as http;
 import 'package:k31_watch_flutter/data/models/tv_series_model_detail.dart';
+
 import 'package:k31_watch_flutter/data/models/tv_series_response.dart';
 
-abstract class TvSeriesRemoteDataSource {
-  Future<List<TvSeriesModel>> getNowPlayingTvSeries();
-  Future<List<TvSeriesModel>> getPopularTvSeries();
-  Future<List<TvSeriesModel>> getTopRatedTvSeries();
-  Future<TvSeriesModelDetail> getDetailTvSeries(int id);
-  Future<List<TvSeriesModel>> getRecommendationsTvSeries(int id);
-  Future<List<TvSeriesModel>> searchTvSeries(String query);
-}
-
 class TvSeriesRemoteDataSourceImpl implements TvSeriesRemoteDataSource {
-  static const apiKey = 'api_key=2174d146bb9c0eab47529b2e77d6b526';
-  static const baseApiUrl = 'https://api.themoviedb.org/3';
-
   final http.Client client;
-
   TvSeriesRemoteDataSourceImpl({required this.client});
 
   @override
@@ -96,4 +84,13 @@ class TvSeriesRemoteDataSourceImpl implements TvSeriesRemoteDataSource {
 
     return TvSeriesResponse.fromJson(json.decode(response.body)).tvSeriesList;
   }
+}
+
+abstract class TvSeriesRemoteDataSource {
+  Future<List<TvSeriesModel>> getTopRatedTvSeries();
+  Future<TvSeriesModelDetail> getDetailTvSeries(int id);
+  Future<List<TvSeriesModel>> getNowPlayingTvSeries();
+  Future<List<TvSeriesModel>> getPopularTvSeries();
+  Future<List<TvSeriesModel>> searchTvSeries(String query);
+  Future<List<TvSeriesModel>> getRecommendationsTvSeries(int id);
 }

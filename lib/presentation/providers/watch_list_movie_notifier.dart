@@ -1,12 +1,12 @@
+import 'package:k31_watch_flutter/domain/use_case/get_watch_list_movies.dart';
 import 'package:flutter/foundation.dart';
 import 'package:k31_watch_flutter/common/request_state.dart';
 import 'package:k31_watch_flutter/domain/entities/movie.dart';
-import 'package:k31_watch_flutter/domain/use_case/get_watch_list_movies.dart';
 
 class WatchlistMovieNotifier extends ChangeNotifier {
+  final GetWatchlistMovies getWatchlistMovies;
   var _watchlistMovies = <Movie>[];
   List<Movie> get watchlistMovies => _watchlistMovies;
-
   var _watchlistState = RequestState.empty;
   RequestState get watchlistState => _watchlistState;
 
@@ -14,13 +14,9 @@ class WatchlistMovieNotifier extends ChangeNotifier {
   String get message => _message;
 
   WatchlistMovieNotifier({required this.getWatchlistMovies});
-
-  final GetWatchlistMovies getWatchlistMovies;
-
   Future<void> fetchWatchlistMovies() async {
     _watchlistState = RequestState.loading;
     notifyListeners();
-
     final result = await getWatchlistMovies.execute();
     result.fold(
       (failure) {

@@ -1,6 +1,6 @@
+import 'package:k31_watch_flutter/domain/entities/tv_series.dart';
 import 'package:equatable/equatable.dart';
 import 'package:k31_watch_flutter/domain/entities/detail_tv_series.dart';
-import 'package:k31_watch_flutter/domain/entities/tv_series.dart';
 
 class TableTvSeries extends Equatable {
   final int id;

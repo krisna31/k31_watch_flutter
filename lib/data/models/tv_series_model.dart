@@ -1,8 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'dart:convert';
-
 import 'package:k31_watch_flutter/domain/entities/tv_series.dart';
-
 class TvSeriesModel extends Equatable {
   final bool adult;
   final String? backdropPath;
@@ -10,26 +8,26 @@ class TvSeriesModel extends Equatable {
   final int id;
   final List<String> originCountry;
   final String originalLanguage;
+  final int voteCount;
   final String originalName;
-  final String overview;
   final double popularity;
-  final String? posterPath;
+  final String overview;
   final String firstAirDate;
   final String name;
+  final String? posterPath;
   final double voteAverage;
-  final int voteCount;
 
   const TvSeriesModel({
     required this.adult,
     required this.backdropPath,
-    required this.genreIds,
     required this.id,
     required this.originCountry,
+    required this.genreIds,
     required this.originalLanguage,
     required this.originalName,
-    required this.overview,
     required this.popularity,
     required this.posterPath,
+    required this.overview,
     required this.firstAirDate,
     required this.name,
     required this.voteAverage,
@@ -61,9 +59,13 @@ class TvSeriesModel extends Equatable {
   Map<String, dynamic> toJson() => {
         "adult": adult,
         "backdrop_path": backdropPath,
-        "genre_ids": List<dynamic>.from(genreIds.map((x) => x)),
+        "genre_ids": List<dynamic>.from(
+          genreIds.map((x) => x),
+        ),
         "id": id,
-        "origin_country": List<dynamic>.from(originCountry.map((x) => x)),
+        "origin_country": List<dynamic>.from(
+          originCountry.map((x) => x),
+        ),
         "original_language": originalLanguage,
         "original_name": originalName,
         "overview": overview,

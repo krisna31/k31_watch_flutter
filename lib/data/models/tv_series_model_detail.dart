@@ -58,7 +58,9 @@ class TvSeriesModelDetail {
   });
 
   factory TvSeriesModelDetail.fromRawJson(String str) =>
-      TvSeriesModelDetail.fromJson(json.decode(str));
+      TvSeriesModelDetail.fromJson(
+        json.decode(str),
+      );
 
   String toRawJson() => json.encode(toJson());
 
@@ -66,20 +68,26 @@ class TvSeriesModelDetail {
       TvSeriesModelDetail(
         adult: json["adult"],
         backdropPath: json["backdrop_path"],
-        episodeRunTime: List<int>.from(json["episode_run_time"].map((x) => x)),
+        episodeRunTime: List<int>.from(
+          json["episode_run_time"].map((x) => x),
+        ),
         firstAirDate: json["first_air_date"],
         genres: List<GenreModel>.from(
             json["genres"].map((x) => GenreModel.fromJson(x))),
         homepage: json["homepage"],
         id: json["id"],
         inProduction: json["in_production"],
-        languages: List<String>.from(json["languages"].map((x) => x)),
+        languages: List<String>.from(
+          json["languages"].map((x) => x),
+        ),
         lastAirDate: json["last_air_date"],
         name: json["name"],
         nextEpisodeToAir: json["next_episode_to_air"],
         numberOfEpisodes: json["number_of_episodes"],
         numberOfSeasons: json["number_of_seasons"],
-        originCountry: List<String>.from(json["origin_country"].map((x) => x)),
+        originCountry: List<String>.from(
+          json["origin_country"].map((x) => x),
+        ),
         originalLanguage: json["original_language"],
         originalName: json["original_name"],
         overview: json["overview"],
@@ -97,17 +105,25 @@ class TvSeriesModelDetail {
         "backdrop_path": backdropPath,
         "episode_run_time": List<dynamic>.from(episodeRunTime.map((x) => x)),
         "first_air_date": firstAirDate,
-        "genres": List<dynamic>.from(genres.map((x) => x.toJson())),
+        "genres": List<dynamic>.from(
+          genres.map(
+            (x) => x.toJson(),
+          ),
+        ),
         "homepage": homepage,
         "id": id,
         "in_production": inProduction,
-        "languages": List<dynamic>.from(languages.map((x) => x)),
+        "languages": List<dynamic>.from(
+          languages.map((x) => x),
+        ),
         "last_air_date": lastAirDate,
         "name": name,
         "next_episode_to_air": nextEpisodeToAir,
         "number_of_episodes": numberOfEpisodes,
         "number_of_seasons": numberOfSeasons,
-        "origin_country": List<dynamic>.from(originCountry.map((x) => x)),
+        "origin_country": List<dynamic>.from(
+          originCountry.map((x) => x),
+        ),
         "original_language": originalLanguage,
         "original_name": originalName,
         "overview": overview,

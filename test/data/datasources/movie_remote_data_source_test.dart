@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter_test/flutter_test.dart';
 import 'package:http/http.dart' as http;
-import 'package:k31_watch_flutter/common/exception.dart';
+import 'package:k31_watch_flutter/common/server_exception.dart';
 import 'package:k31_watch_flutter/data/datasources/movie_remote_data_source.dart';
 import 'package:k31_watch_flutter/data/models/movie_detail_model.dart';
 import 'package:k31_watch_flutter/data/models/movie_response.dart';
@@ -16,12 +16,12 @@ void main() {
   const apiKey = 'api_key=2174d146bb9c0eab47529b2e77d6b526';
   const baseUrl = 'https://api.themoviedb.org/3';
 
-  late MovieRemoteDataSourceImpl dataSource;
+  late MovieRemoteDataSourceImplementation dataSource;
   late MockHttpClient mockHttpClient;
 
   setUp(() {
     mockHttpClient = MockHttpClient();
-    dataSource = MovieRemoteDataSourceImpl(client: mockHttpClient);
+    dataSource = MovieRemoteDataSourceImplementation(client: mockHttpClient);
   });
 
   group('get Now Playing Movies', () {

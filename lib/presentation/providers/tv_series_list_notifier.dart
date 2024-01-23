@@ -1,42 +1,36 @@
-import 'package:flutter/material.dart';
 import 'package:k31_watch_flutter/common/request_state.dart';
 import 'package:k31_watch_flutter/domain/entities/tv_series.dart';
 import 'package:k31_watch_flutter/domain/use_case/get_now_playing_tv_series.dart';
+import 'package:flutter/material.dart';
 import 'package:k31_watch_flutter/domain/use_case/get_popular_tv_series.dart';
 import 'package:k31_watch_flutter/domain/use_case/get_top_rated_tv_series.dart';
 
 class TvSeriesListNotifier extends ChangeNotifier {
+  final GetNowPlayingTvSeries getNowPlayingTvSeries;
+  final GetPopularTvSeries getPopularTvSeries;
+  final GetTopRatedTvSeries getTopRatedTvSeries;
   var _nowPlayingTvSeries = <TvSeries>[];
   List<TvSeries> get nowPlayingTvSeries => _nowPlayingTvSeries;
-
   RequestState _nowPlayingState = RequestState.empty;
   RequestState get nowPlayingState => _nowPlayingState;
 
   var _popularTvSeries = <TvSeries>[];
   List<TvSeries> get popularTvSeries => _popularTvSeries;
-
   RequestState _popularTvSeriesState = RequestState.empty;
   RequestState get popularTvSeriesState => _popularTvSeriesState;
 
   var _topRatedTvSeries = <TvSeries>[];
   List<TvSeries> get topRatedTvSeries => _topRatedTvSeries;
-
   RequestState _topRatedTvSeriesState = RequestState.empty;
   RequestState get topRatedTvSeriesState => _topRatedTvSeriesState;
 
   String _message = '';
   String get message => _message;
-
   TvSeriesListNotifier({
     required this.getNowPlayingTvSeries,
     required this.getPopularTvSeries,
     required this.getTopRatedTvSeries,
   });
-
-  final GetNowPlayingTvSeries getNowPlayingTvSeries;
-  final GetPopularTvSeries getPopularTvSeries;
-  final GetTopRatedTvSeries getTopRatedTvSeries;
-
   Future<void> fetchNowPlayingTvSeries() async {
     _nowPlayingState = RequestState.loading;
     notifyListeners();

@@ -10,14 +10,28 @@ import 'package:k31_watch_flutter/domain/use_case/remove_watch_list.dart';
 import 'package:k31_watch_flutter/domain/use_case/save_watch_list.dart';
 
 class MovieDetailNotifier extends ChangeNotifier {
-  static const watchlistAddSuccessMessage = 'Added to Watchlist';
-  static const watchlistRemoveSuccessMessage = 'Removed from Watchlist';
-
   final GetMovieDetail getMovieDetail;
   final GetMovieRecommendations getMovieRecommendations;
   final GetWatchListStatus getWatchListStatus;
   final SaveWatchlist saveWatchlist;
   final RemoveWatchlist removeWatchlist;
+  static const watchlistAddSuccessMessage = 'Added to Watchlist Movies';
+  static const watchlistRemoveSuccessMessage = 'Removed from Watchlist Movies';
+
+  late MovieDetail _movie;
+  MovieDetail get movie => _movie;
+  RequestState _movieState = RequestState.empty;
+  RequestState get movieState => _movieState;
+
+  List<Movie> _movieRecommendations = [];
+  List<Movie> get movieRecommendations => _movieRecommendations;
+  RequestState _recommendationState = RequestState.empty;
+  RequestState get recommendationState => _recommendationState;
+
+  String _message = '';
+  String get message => _message;
+  bool _isAddedtoWatchlist = false;
+  bool get isAddedToWatchlist => _isAddedtoWatchlist;
 
   MovieDetailNotifier({
     required this.getMovieDetail,
@@ -27,23 +41,8 @@ class MovieDetailNotifier extends ChangeNotifier {
     required this.removeWatchlist,
   });
 
-  late MovieDetail _movie;
-  MovieDetail get movie => _movie;
-
-  RequestState _movieState = RequestState.empty;
-  RequestState get movieState => _movieState;
-
-  List<Movie> _movieRecommendations = [];
-  List<Movie> get movieRecommendations => _movieRecommendations;
-
-  RequestState _recommendationState = RequestState.empty;
-  RequestState get recommendationState => _recommendationState;
-
-  String _message = '';
-  String get message => _message;
-
-  bool _isAddedtoWatchlist = false;
-  bool get isAddedToWatchlist => _isAddedtoWatchlist;
+  String _watchlistMessage = '';
+  String get watchlistMessage => _watchlistMessage;
 
   Future<void> fetchMovieDetail(int id) async {
     _movieState = RequestState.loading;
@@ -76,22 +75,10 @@ class MovieDetailNotifier extends ChangeNotifier {
     );
   }
 
-  String _watchlistMessage = '';
-  String get watchlistMessage => _watchlistMessage;
-
-  Future<void> addWatchlist(MovieDetail movie) async {
-    final result = await saveWatchlist.execute(movie);
-
-    await result.fold(
-      (failure) async {
-        _watchlistMessage = failure.message;
-      },
-      (successMessage) async {
-        _watchlistMessage = successMessage;
-      },
-    );
-
-    await loadWatchlistStatus(movie.id);
+  Future<void> loadWatchlistStatus(int id) async {
+    final result = await getWatchListStatus.execute(id);
+    _isAddedtoWatchlist = result;
+    notifyListeners();
   }
 
   Future<void> removeFromWatchlist(MovieDetail movie) async {
@@ -109,9 +96,18 @@ class MovieDetailNotifier extends ChangeNotifier {
     await loadWatchlistStatus(movie.id);
   }
 
-  Future<void> loadWatchlistStatus(int id) async {
-    final result = await getWatchListStatus.execute(id);
-    _isAddedtoWatchlist = result;
-    notifyListeners();
+  Future<void> addWatchlist(MovieDetail movie) async {
+    final result = await saveWatchlist.execute(movie);
+
+    await result.fold(
+      (failure) async {
+        _watchlistMessage = failure.message;
+      },
+      (successMessage) async {
+        _watchlistMessage = successMessage;
+      },
+    );
+
+    await loadWatchlistStatus(movie.id);
   }
 }

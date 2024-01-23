@@ -1,20 +1,17 @@
-import 'package:flutter/material.dart';
 import 'package:k31_watch_flutter/common/request_state.dart';
 import 'package:k31_watch_flutter/domain/entities/tv_series.dart';
 import 'package:k31_watch_flutter/domain/use_case/get_popular_tv_series.dart';
+import 'package:flutter/material.dart';
 
 class TvSeriesPopularNotifier extends ChangeNotifier {
+  final GetPopularTvSeries getPopularTvSeries;
   var _popularTvSeries = <TvSeries>[];
   List<TvSeries> get popularTvSeries => _popularTvSeries;
-
   RequestState _popularTvSeriesState = RequestState.empty;
   RequestState get popularTvSeriesState => _popularTvSeriesState;
 
   String _message = '';
   String get message => _message;
-
-  final GetPopularTvSeries getPopularTvSeries;
-
   TvSeriesPopularNotifier({
     required this.getPopularTvSeries,
   });
