@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:k31_watch_flutter/common/constants.dart';
 import 'package:k31_watch_flutter/common/request_state.dart';
+import 'package:k31_watch_flutter/domain/entities/movie.dart';
 import 'package:k31_watch_flutter/presentation/providers/movie_search_notifier.dart';
 import 'package:k31_watch_flutter/presentation/widgets/movie_card_list.dart';
 import 'package:provider/provider.dart';
@@ -15,7 +16,7 @@ class SearchPageMovie extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Search'),
+        title: const Text('Search Movies'),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -28,7 +29,7 @@ class SearchPageMovie extends StatelessWidget {
                     .fetchMovieSearch(query);
               },
               decoration: const InputDecoration(
-                hintText: 'Search title',
+                hintText: 'Search title movie',
                 prefixIcon: Icon(Icons.search),
                 border: OutlineInputBorder(),
               ),
@@ -41,31 +42,43 @@ class SearchPageMovie extends StatelessWidget {
             ),
             Consumer<MovieSearchNotifier>(
               builder: (context, data, child) {
-                if (data.state == RequestState.loading) {
-                  return const Center(
-                    child: CircularProgressIndicator(),
-                  );
-                } else if (data.state == RequestState.loaded) {
-                  final result = data.searchResult;
-                  return Expanded(
-                    child: ListView.builder(
-                      padding: const EdgeInsets.all(8),
-                      itemBuilder: (context, index) {
-                        final movie = data.searchResult[index];
-                        return MovieCard(movie);
-                      },
-                      itemCount: result.length,
-                    ),
-                  );
-                } else {
-                  return Expanded(
-                    child: Container(),
-                  );
+                switch (data.state) {
+                  case RequestState.loading:
+                    return const Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  case RequestState.loaded:
+                    final result = data.searchResult;
+                    return ShowWidgetResultMovie(result: result);
+                  default:
+                    return Expanded(
+                      child: Container(),
+                    );
                 }
               },
             ),
           ],
         ),
+      ),
+    );
+  }
+}
+
+class ShowWidgetResultMovie extends StatelessWidget {
+  const ShowWidgetResultMovie({
+    super.key,
+    required this.result,
+  });
+
+  final List<Movie> result;
+
+  @override
+  Widget build(BuildContext context) {
+    return Expanded(
+      child: ListView.builder(
+        padding: const EdgeInsets.all(8),
+        itemBuilder: (context, index) => MovieCard(result[index]),
+        itemCount: result.length,
       ),
     );
   }

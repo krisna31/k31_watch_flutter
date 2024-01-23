@@ -5,11 +5,13 @@ import 'package:k31_watch_flutter/presentation/widgets/movie_card_list.dart';
 import 'package:provider/provider.dart';
 
 class TopRatedMoviesPage extends StatefulWidget {
+  // ignore: constant_identifier_names
   static const ROUTE_NAME = '/top-rated-movie';
 
   const TopRatedMoviesPage({super.key});
 
   @override
+  // ignore: library_private_types_in_public_api
   _TopRatedMoviesPageState createState() => _TopRatedMoviesPageState();
 }
 
@@ -19,7 +21,8 @@ class _TopRatedMoviesPageState extends State<TopRatedMoviesPage> {
     super.initState();
     Future.microtask(() =>
         Provider.of<TopRatedMoviesNotifier>(context, listen: false)
-            .fetchTopRatedMovies());
+          .fetchTopRatedMovies(),
+    );
   }
 
   @override
@@ -32,23 +35,24 @@ class _TopRatedMoviesPageState extends State<TopRatedMoviesPage> {
         padding: const EdgeInsets.all(8.0),
         child: Consumer<TopRatedMoviesNotifier>(
           builder: (context, data, child) {
-            if (data.state == RequestState.loading) {
-              return const Center(
-                child: CircularProgressIndicator(),
-              );
-            } else if (data.state == RequestState.loaded) {
-              return ListView.builder(
-                itemBuilder: (context, index) {
-                  final movie = data.movies[index];
-                  return MovieCard(movie);
-                },
-                itemCount: data.movies.length,
-              );
-            } else {
-              return Center(
-                key: const Key('error_message'),
-                child: Text(data.message),
-              );
+            switch (data.state) {
+              case RequestState.loading:
+                return const Center(
+                  child: CircularProgressIndicator(),
+                );
+              case RequestState.loaded:
+                return ListView.builder(
+                  itemBuilder: (context, index) {
+                    final movie = data.movies[index];
+                    return MovieCard(movie);
+                  },
+                  itemCount: data.movies.length,
+                );
+              default:
+                return Center(
+                  key: const Key('error_message'),
+                  child: Text(data.message),
+                );
             }
           },
         ),

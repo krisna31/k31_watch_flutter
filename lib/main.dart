@@ -92,7 +92,7 @@ class MyApp extends StatelessWidget {
             titleLarge: myTextTheme.titleLarge,
           ),
         ),
-        title: 'K31 Movie',
+        title: 'K31 Watch Flutter',
         navigatorObservers: [routeObserver],
         home: const HomeTvSeriesPage(),
         onGenerateRoute: (RouteSettings settings) {

@@ -1,6 +1,7 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:k31_watch_flutter/common/constants.dart';
 import 'package:k31_watch_flutter/common/request_state.dart';
 import 'package:k31_watch_flutter/domain/entities/detail_tv_series.dart';
@@ -8,13 +9,13 @@ import 'package:k31_watch_flutter/presentation/providers/detail_tv_series_notifi
 import 'package:provider/provider.dart';
 
 class DetailTvSeriesPage extends StatefulWidget {
-  const DetailTvSeriesPage({super.key, required this.id});
-  // ignore: constant_identifier_names
+  const DetailTvSeriesPage({Key? key, required this.id}) : super(key: key);
 
   final int id;
 
   // ignore: constant_identifier_names
   static const ROUTE_NAME = '/detail-tv-series';
+
   @override
   // ignore: library_private_types_in_public_api
   _DetailTvSeriesPageState createState() => _DetailTvSeriesPageState();
@@ -46,12 +47,11 @@ class _DetailTvSeriesPageState extends State<DetailTvSeriesPage> {
             );
           } else if (provider.tvSeriesState == RequestState.loaded) {
             final tvSeries = provider.tvSeries;
-            return DetailContent(
-              tvSeries,
-              provider.isAddedToWatchlist,
-            );
+            return TvSeriesDetailContent(tvSeries, provider.isAddedToWatchlist);
           } else {
-            return Text(provider.message);
+            return Center(
+              child: Text(provider.message),
+            );
           }
         },
       ),
@@ -59,28 +59,33 @@ class _DetailTvSeriesPageState extends State<DetailTvSeriesPage> {
   }
 }
 
-class DetailContent extends StatelessWidget {
+class TvSeriesDetailContent extends StatelessWidget {
   final DetailTvSeries tvSeries;
   final bool isAddedWatchlist;
 
-  const DetailContent(this.tvSeries, this.isAddedWatchlist, {super.key});
+  const TvSeriesDetailContent(this.tvSeries, this.isAddedWatchlist, {Key? key})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return ListView(
       children: [
-        CachedNetworkImage(
-          imageUrl: 'https://image.tmdb.org/t/p/w500${tvSeries.posterPath}',
-          width: MediaQuery.of(context).size.width,
-          height: MediaQuery.of(context).size.height * 0.4,
-          placeholder: (context, url) => const Center(
-            child: CircularProgressIndicator(),
+        Hero(
+          tag: 'tvSeriesHero${tvSeries.id}',
+          child: CachedNetworkImage(
+            imageUrl: 'https://image.tmdb.org/t/p/w500${tvSeries.posterPath}',
+            width: MediaQuery.of(context).size.width,
+            height: MediaQuery.of(context).size.height * 0.4,
+            placeholder: (context, url) => const Center(
+              child: CircularProgressIndicator(),
+            ),
+            errorWidget: (context, url, error) => const Icon(Icons.error),
           ),
-          errorWidget: (context, url, error) => const Icon(Icons.error),
         ),
         Container(
-          padding: const EdgeInsets.all(8),
+          padding: const EdgeInsets.all(16),
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Container(
                 margin: const EdgeInsets.only(top: 16),
@@ -89,60 +94,69 @@ class DetailContent extends StatelessWidget {
                   children: [
                     Text(
                       tvSeries.name!,
-                      style: myTextTheme.titleLarge,
+                      style: const TextStyle(
+                        fontSize: 24,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                     ElevatedButton(
                       onPressed: () async {
-                        if (!isAddedWatchlist) {
-                          await Provider.of<DetailTvSeriesNotifier>(context,
-                                  listen: false)
-                              .addWatchlist(tvSeries);
-                        } else {
+                        if (isAddedWatchlist) {
                           await Provider.of<DetailTvSeriesNotifier>(context,
                                   listen: false)
                               .removeFromWatchlist(tvSeries);
-                        }
-
-                        final message =
-                            // ignore: use_build_context_synchronously
-                            Provider.of<DetailTvSeriesNotifier>(context,
-                                    listen: false)
-                                .watchlistMessage;
-
-                        if (message ==
-                                DetailTvSeriesNotifier
-                                    .watchlistAddSuccessMessage ||
-                            message ==
-                                DetailTvSeriesNotifier
-                                    .watchlistRemoveSuccessMessage) {
-                          // ignore: use_build_context_synchronously
-                          ScaffoldMessenger.of(context)
-                              .showSnackBar(SnackBar(content: Text(message)));
                         } else {
-                          // ignore: use_build_context_synchronously
-                          showDialog(
-                              context: context,
-                              builder: (context) {
-                                return AlertDialog(
-                                  content: Text(message),
-                                );
-                              });
+                          await Provider.of<DetailTvSeriesNotifier>(context,
+                                  listen: false)
+                              .addWatchlist(tvSeries);
                         }
+
+                        Fluttertoast.showToast(
+                          // ignore: use_build_context_synchronously
+                          msg: context
+                              .read<DetailTvSeriesNotifier>()
+                              .watchlistMessage,
+                          toastLength: Toast.LENGTH_SHORT,
+                          gravity: ToastGravity.BOTTOM,
+                          backgroundColor: Colors.black87,
+                          textColor: Colors.white,
+                        );
                       },
-                      child: Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          isAddedWatchlist
-                              ? const Icon(Icons.check)
-                              : const Icon(Icons.add),
-                          const Text('Watchlist'),
-                        ],
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor:
+                            isAddedWatchlist ? Colors.green : Colors.blue,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10.0),
+                        ),
+                        elevation: 4,
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(
+                            vertical: 10, horizontal: 16),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Icon(
+                              isAddedWatchlist ? Icons.check : Icons.add,
+                              color: Colors.white,
+                            ),
+                            const SizedBox(width: 8),
+                            const Text(
+                              'Watchlist',
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                     const SizedBox(height: 16),
                     Wrap(
-                      spacing: 8.0, // Space between chips
-                      runSpacing: 8.0, // Space between chip rows
+                      spacing: 8.0,
+                      runSpacing: 8.0,
                       children: tvSeries.genres!
                           .map((genre) => buildGenreChip(genre.name))
                           .toList(),
@@ -159,21 +173,38 @@ class DetailContent extends StatelessWidget {
                           ),
                           itemSize: 24,
                         ),
-                        Text('${tvSeries.voteAverage}')
+                        const SizedBox(width: 8),
+                        Text(
+                          '${tvSeries.voteAverage}',
+                          style: const TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
                       ],
                     ),
                     const SizedBox(height: 16),
-                    Text(
+                    const Text(
                       'Overview',
-                      style: myTextTheme.titleLarge,
+                      style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
+                    const SizedBox(height: 8),
                     Text(
                       tvSeries.overview!,
+                      style: const TextStyle(
+                        fontSize: 16,
+                      ),
                     ),
                     const SizedBox(height: 16),
-                    Text(
+                    const Text(
                       'Recommendations',
-                      style: myTextTheme.titleLarge,
+                      style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                     Consumer<DetailTvSeriesNotifier>(
                       builder: (context, data, child) {
@@ -186,6 +217,11 @@ class DetailContent extends StatelessWidget {
                           return Center(
                             child: Text(
                               data.message,
+                              style: const TextStyle(
+                                fontSize: 16,
+                                color: Colors.red,
+                                fontWeight: FontWeight.bold,
+                              ),
                             ),
                           );
                         } else if (data.recommendationState ==
@@ -198,7 +234,8 @@ class DetailContent extends StatelessWidget {
                                 final tvSeries =
                                     data.recommendationsTvSEries[index];
                                 return Padding(
-                                  padding: const EdgeInsets.all(4.0),
+                                  padding:
+                                      const EdgeInsets.symmetric(horizontal: 8),
                                   child: InkWell(
                                     onTap: () {
                                       Navigator.pushReplacementNamed(
@@ -207,19 +244,32 @@ class DetailContent extends StatelessWidget {
                                         arguments: tvSeries.id,
                                       );
                                     },
-                                    child: ClipRRect(
-                                      borderRadius: const BorderRadius.all(
-                                        Radius.circular(8),
+                                    child: Container(
+                                      width: 120,
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(12),
+                                        boxShadow: [
+                                          BoxShadow(
+                                            color: Colors.grey.withOpacity(0.5),
+                                            spreadRadius: 2,
+                                            blurRadius: 5,
+                                            offset: const Offset(0, 3),
+                                          ),
+                                        ],
                                       ),
-                                      child: CachedNetworkImage(
-                                        imageUrl:
-                                            'https://image.tmdb.org/t/p/w500${tvSeries.posterPath}',
-                                        placeholder: (context, url) =>
-                                            const Center(
-                                          child: CircularProgressIndicator(),
+                                      child: ClipRRect(
+                                        borderRadius: BorderRadius.circular(12),
+                                        child: CachedNetworkImage(
+                                          imageUrl:
+                                              'https://image.tmdb.org/t/p/w500${tvSeries.posterPath}',
+                                          fit: BoxFit.cover,
+                                          placeholder: (context, url) =>
+                                              const Center(
+                                            child: CircularProgressIndicator(),
+                                          ),
+                                          errorWidget: (context, url, error) =>
+                                              const Icon(Icons.error),
                                         ),
-                                        errorWidget: (context, url, error) =>
-                                            const Icon(Icons.error),
                                       ),
                                     ),
                                   ),
@@ -231,7 +281,12 @@ class DetailContent extends StatelessWidget {
                         } else {
                           return const Center(
                             child: Text(
-                              "Samthing is wrong",
+                              "Something went wrong",
+                              style: TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.red,
+                              ),
                             ),
                           );
                         }
@@ -251,9 +306,12 @@ class DetailContent extends StatelessWidget {
     return Chip(
       label: Text(genre),
       backgroundColor: Colors.blue,
-      labelStyle: const TextStyle(color: Colors.white),
+      labelStyle: const TextStyle(
+        color: Colors.white,
+        fontWeight: FontWeight.bold,
+      ),
       elevation: 2,
-      padding: const EdgeInsets.all(2),
+      padding: const EdgeInsets.all(8),
     );
   }
 }

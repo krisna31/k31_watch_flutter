@@ -14,7 +14,7 @@ void main() {
   testWidgets('Check The  main app run  smooth', (WidgetTester tester) async {
     // Build our app and trigger a frame.
     await tester.pumpWidget(const MyApp());
-    
-    // expect("K31 Movie", Title)
+
+    expect(find.text("K31 Watch Flutter"), findsOneWidget);
   });
 }

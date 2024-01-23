@@ -1,8 +1,8 @@
-import 'package:flutter/material.dart';
 import 'package:k31_watch_flutter/common/constants.dart';
 import 'package:k31_watch_flutter/presentation/common/utils.dart';
 import 'package:k31_watch_flutter/presentation/providers/movie_list_notifier.dart';
 import 'package:k31_watch_flutter/presentation/pages/popular_movie_page.dart';
+import 'package:flutter/material.dart';
 import 'package:k31_watch_flutter/presentation/pages/search_page_movie.dart';
 import 'package:k31_watch_flutter/presentation/pages/top_rated_movie_page.dart';
 import 'package:k31_watch_flutter/presentation/widgets/my_drawer.dart';
@@ -12,9 +12,7 @@ import 'package:provider/provider.dart';
 class MoviePage extends StatefulWidget {
   // ignore: constant_identifier_names
   static const ROUTE_NAME = '/movie-page';
-
   const MoviePage({super.key});
-
   @override
   // ignore: library_private_types_in_public_api
   _MoviePageState createState() => _MoviePageState();
@@ -26,11 +24,10 @@ class _MoviePageState extends State<MoviePage> {
     super.initState();
     Future.microtask(
         () => Provider.of<MovieListNotifier>(context, listen: false)
-          ..fetchNowPlayingMovies()
           ..fetchPopularMovies()
+          ..fetchNowPlayingMovies()
           ..fetchTopRatedMovies());
   }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(

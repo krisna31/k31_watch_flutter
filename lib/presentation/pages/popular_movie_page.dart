@@ -7,9 +7,7 @@ import 'package:provider/provider.dart';
 class PopularMoviesPage extends StatefulWidget {
   // ignore: constant_identifier_names
   static const ROUTE_NAME = '/popular-movie';
-
   const PopularMoviesPage({super.key});
-
   @override
   // ignore: library_private_types_in_public_api
   _PopularMoviesPageState createState() => _PopularMoviesPageState();
@@ -34,23 +32,24 @@ class _PopularMoviesPageState extends State<PopularMoviesPage> {
         padding: const EdgeInsets.all(8.0),
         child: Consumer<PopularMoviesNotifier>(
           builder: (context, data, child) {
-            if (data.state == RequestState.loading) {
-              return const Center(
-                child: CircularProgressIndicator(),
-              );
-            } else if (data.state == RequestState.loaded) {
-              return ListView.builder(
-                itemBuilder: (context, index) {
-                  final movie = data.movies[index];
-                  return MovieCard(movie);
-                },
-                itemCount: data.movies.length,
-              );
-            } else {
-              return Center(
-                key: const Key('error_message'),
-                child: Text(data.message),
-              );
+            switch (data.state) {
+              case RequestState.loading:
+                return const Center(
+                  child: CircularProgressIndicator(),
+                );
+              case RequestState.loaded:
+                return ListView.builder(
+                  itemBuilder: (context, index) {
+                    final movie = data.movies[index];
+                    return MovieCard(movie);
+                  },
+                  itemCount: data.movies.length,
+                );
+              default:
+                return Center(
+                  key: const Key('error_message'),
+                  child: Text(data.message),
+                );
             }
           },
         ),

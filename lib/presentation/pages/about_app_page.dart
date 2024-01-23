@@ -3,7 +3,7 @@ import 'package:k31_watch_flutter/common/constants.dart';
 
 class AboutAppPage extends StatelessWidget {
   // ignore: constant_identifier_names
-  static const ROUTE_NAME = '/about';
+  static const ROUTE_NAME = '/about-page';
 
   const AboutAppPage({super.key});
 
@@ -16,18 +16,17 @@ class AboutAppPage extends StatelessWidget {
       body: Stack(
         children: [
           Column(
-            // mainAxisAlignment: MainAxisAlignment.center,
-            // crossAxisAlignment: CrossAxisAlignment.center,
-            // mainAxisSize: MainAxisSize.min,
-            // textDirection: TextDirection.ltr,
             children: [
               Expanded(
                 child: Container(
                   color: success,
                   child: Center(
-                    child: Image.asset(
-                      'assets/logo.jpg',
-                      width: 120,
+                    child: Hero(
+                      tag: 'appLogo',
+                      child: Image.asset(
+                        'assets/logo.jpg',
+                        width: 120,
+                      ),
                     ),
                   ),
                 ),
