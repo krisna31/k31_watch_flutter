@@ -16,7 +16,7 @@ void main() {
     episodeRunTime: const [1, 2, 3],
     firstAirDate: '2020-05-05',
     genres: const [Genre(id: 1, name: 'Action')],
-    homepage: 'https://google.com',
+    homepage: 'https://k31.my.id',
     id: 1,
     inProduction: false,
     languages: const ['en'],

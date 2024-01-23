@@ -202,7 +202,7 @@ void main() {
       backdropPath: 'backdropPath',
       budget: 100,
       genres: [GenreModel(id: 1, name: 'Action')],
-      homepage: "https://google.com",
+      homepage: "https://k31.my.id",
       id: 1,
       imdbId: 'imdb1',
       originalLanguage: 'en',
