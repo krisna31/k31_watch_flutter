@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:k31_watch_flutter/common/index.dart';
 import 'package:k31_watch_flutter/common/request_state.dart';
+import 'package:k31_watch_flutter/common/route_observer.dart';
 import 'package:k31_watch_flutter/presentation/providers/watch_list_tv_series_notifier.dart';
 import 'package:k31_watch_flutter/presentation/widgets/tv_series_list_widget.dart';
 import 'package:provider/provider.dart';
@@ -24,6 +24,12 @@ class _WatchlistTvSeriesPageState extends State<WatchlistTvSeriesPage>
     Future.microtask(() =>
         Provider.of<WatchlistTvSeriesNotifier>(context, listen: false)
             .fetchWatchlistTvSeriess());
+  }
+
+  @override
+  void dispose() {
+    routeObserver.unsubscribe(this);
+    super.dispose();
   }
 
   @override
@@ -71,11 +77,5 @@ class _WatchlistTvSeriesPageState extends State<WatchlistTvSeriesPage>
         ),
       ),
     );
-  }
-
-  @override
-  void dispose() {
-    routeObserver.unsubscribe(this);
-    super.dispose();
   }
 }

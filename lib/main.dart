@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:k31_watch_flutter/common/constants.dart';
-import 'package:k31_watch_flutter/presentation/pages/about_page.dart';
+import 'package:k31_watch_flutter/common/route_observer.dart';
+import 'package:k31_watch_flutter/presentation/pages/about_app_page.dart';
 import 'package:k31_watch_flutter/presentation/pages/detail_tv_series_page.dart';
 import 'package:k31_watch_flutter/presentation/pages/movie_page.dart';
 import 'package:k31_watch_flutter/presentation/pages/home_tv_series_page.dart';
 import 'package:k31_watch_flutter/presentation/pages/movie_detail_page.dart';
 import 'package:k31_watch_flutter/presentation/pages/popular_movie_page.dart';
-import 'package:k31_watch_flutter/presentation/pages/search_page.dart';
+import 'package:k31_watch_flutter/presentation/pages/search_page_movie.dart';
 import 'package:k31_watch_flutter/presentation/pages/search_page_tv.dart';
 import 'package:k31_watch_flutter/presentation/pages/top_rated_movie_page.dart';
 import 'package:k31_watch_flutter/presentation/pages/tv_series_now_play_page.dart';
@@ -30,8 +31,6 @@ import 'package:k31_watch_flutter/presentation/providers/watch_list_tv_series_no
 
 import 'package:provider/provider.dart';
 import 'package:k31_watch_flutter/injection.dart' as di;
-
-final RouteObserver<ModalRoute> routeObserver = RouteObserver<ModalRoute>();
 
 void main() {
   di.init();
@@ -124,6 +123,7 @@ class MyApp extends StatelessWidget {
                     DetailTvSeriesPage(id: settings.arguments as int),
                 settings: settings,
               );
+            // ! test 404 page
             case SearchPageTv.ROUTE_NAME:
               return MaterialPageRoute(
                 builder: (_) => const SearchPageTv(),
@@ -143,16 +143,16 @@ class MyApp extends StatelessWidget {
                 builder: (_) => MovieDetailPage(id: settings.arguments as int),
                 settings: settings,
               );
-            case SearchPage.ROUTE_NAME:
+            case SearchPageMovie.ROUTE_NAME:
               return MaterialPageRoute(
-                builder: (_) => const SearchPage(),
+                builder: (_) => const SearchPageMovie(),
               );
             case WatchlistMoviesPage.ROUTE_NAME:
               return MaterialPageRoute(
                   builder: (_) => const WatchlistMoviesPage());
-            case AboutPage.ROUTE_NAME:
+            case AboutAppPage.ROUTE_NAME:
               return MaterialPageRoute(
-                builder: (_) => const AboutPage(),
+                builder: (_) => const AboutAppPage(),
               );
             default:
               return MaterialPageRoute(
@@ -205,7 +205,7 @@ class PageNotFoundWidget extends StatelessWidget {
             const SizedBox(height: 20.0),
             ElevatedButton(
               onPressed: () {
-                // Add navigation logic or handle the button click
+                Navigator.pushNamed(context, HomeTvSeriesPage.ROUTE_NAME);
               },
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.blue,

@@ -5,11 +5,11 @@ import 'package:k31_watch_flutter/presentation/providers/movie_search_notifier.d
 import 'package:k31_watch_flutter/presentation/widgets/movie_card_list.dart';
 import 'package:provider/provider.dart';
 
-class SearchPage extends StatelessWidget {
+class SearchPageMovie extends StatelessWidget {
   // ignore: constant_identifier_names
   static const ROUTE_NAME = '/search-movies';
 
-  const SearchPage({super.key});
+  const SearchPageMovie({super.key});
 
   @override
   Widget build(BuildContext context) {

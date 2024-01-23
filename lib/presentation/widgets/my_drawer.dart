@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:k31_watch_flutter/presentation/pages/about_page.dart';
+import 'package:k31_watch_flutter/presentation/pages/about_app_page.dart';
 import 'package:k31_watch_flutter/presentation/pages/movie_page.dart';
 import 'package:k31_watch_flutter/presentation/pages/home_tv_series_page.dart';
 import 'package:k31_watch_flutter/presentation/pages/watchlist_movie_page.dart';
@@ -17,7 +17,7 @@ class MyDrawer extends StatelessWidget {
         children: [
           const UserAccountsDrawerHeader(
             currentAccountPicture: CircleAvatar(
-              backgroundImage: AssetImage('assets/logo.jpg'),
+              backgroundImage: AssetImage('assets/logo.png'),
             ),
             accountName: Text('Ditonton'),
             accountEmail: Text('ditonton@dicoding.com'),
@@ -52,7 +52,7 @@ class MyDrawer extends StatelessWidget {
           ),
           ListTile(
             onTap: () {
-              Navigator.pushNamed(context, AboutPage.ROUTE_NAME);
+              Navigator.pushNamed(context, AboutAppPage.ROUTE_NAME);
             },
             leading: const Icon(Icons.info_outline),
             title: const Text('About'),

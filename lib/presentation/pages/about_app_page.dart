@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:k31_watch_flutter/common/constants.dart';
 
-class AboutPage extends StatelessWidget {
+class AboutAppPage extends StatelessWidget {
   // ignore: constant_identifier_names
   static const ROUTE_NAME = '/about';
 
-  const AboutPage({super.key});
+  const AboutAppPage({super.key});
 
   @override
   Widget build(BuildContext context) {

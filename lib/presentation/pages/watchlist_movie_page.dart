@@ -1,16 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:k31_watch_flutter/common/index.dart';
 import 'package:k31_watch_flutter/common/request_state.dart';
+import 'package:k31_watch_flutter/common/route_observer.dart';
 import 'package:k31_watch_flutter/presentation/providers/watch_list_movie_notifier.dart';
 import 'package:k31_watch_flutter/presentation/widgets/movie_card_list.dart';
 import 'package:provider/provider.dart';
 
 class WatchlistMoviesPage extends StatefulWidget {
+  // ignore: constant_identifier_names
   static const ROUTE_NAME = '/watchlist-movie';
 
   const WatchlistMoviesPage({super.key});
 
   @override
+  // ignore: library_private_types_in_public_api
   _WatchlistMoviesPageState createState() => _WatchlistMoviesPageState();
 }
 
