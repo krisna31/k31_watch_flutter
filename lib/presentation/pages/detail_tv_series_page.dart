@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:k31_watch_flutter/common/constants.dart';
-import 'package:k31_watch_flutter/common/request_state.dart';
 import 'package:k31_watch_flutter/domain/entities/detail_tv_series.dart';
-import 'package:k31_watch_flutter/presentation/providers/detail_tv_series_notifier.dart';
-import 'package:provider/provider.dart';
+import 'package:k31_watch_flutter/presentation/bloc/detail_tv_series_bloc.dart';
+import 'package:k31_watch_flutter/presentation/bloc/tv_recommendations_bloc.dart';
+import 'package:k31_watch_flutter/presentation/bloc/tv_watchlist_status_bloc.dart';
 
 class DetailTvSeriesPage extends StatefulWidget {
   const DetailTvSeriesPage({Key? key, required this.id}) : super(key: key);
@@ -26,10 +27,12 @@ class _DetailTvSeriesPageState extends State<DetailTvSeriesPage> {
   void initState() {
     super.initState();
     Future.microtask(() {
-      Provider.of<DetailTvSeriesNotifier>(context, listen: false)
-          .fetchDetailTvSeries(widget.id);
-      Provider.of<DetailTvSeriesNotifier>(context, listen: false)
-          .loadWatchlistStatus(widget.id);
+      BlocProvider.of<DetailTvSeriesBloc>(context)
+          .add(FetchDetailTvSeriesEvent(id: widget.id));
+      BlocProvider.of<TvWatchlistStatusBloc>(context)
+          .add(FetchTvWatchlistStatusEvent(id: widget.id));
+      BlocProvider.of<TvRecommendationsBloc>(context)
+          .add(FetchTvRecommendationsEvent(id: widget.id));
     });
   }
 
@@ -39,18 +42,21 @@ class _DetailTvSeriesPageState extends State<DetailTvSeriesPage> {
       appBar: AppBar(
         title: const Text('Detail Tv Series'),
       ),
-      body: Consumer<DetailTvSeriesNotifier>(
-        builder: (context, provider, child) {
-          if (provider.tvSeriesState == RequestState.loading) {
+      body: BlocBuilder<DetailTvSeriesBloc, DetailTvSeriesState>(
+        builder: (context, state) {
+          if (state is DetailTvSeriesLoading) {
             return const Center(
               child: CircularProgressIndicator(),
             );
-          } else if (provider.tvSeriesState == RequestState.loaded) {
-            final tvSeries = provider.tvSeries;
-            return TvSeriesDetailContent(tvSeries, provider.isAddedToWatchlist);
-          } else {
+          } else if (state is DetailTvSeriesLoaded) {
+            return TvSeriesDetailContent(state.tvSeries);
+          } else if (state is DetailTvSeriesError) {
             return Center(
-              child: Text(provider.message),
+              child: Text(state.message),
+            );
+          } else {
+            return const Center(
+              child: Text("Something went wrong"),
             );
           }
         },
@@ -61,10 +67,8 @@ class _DetailTvSeriesPageState extends State<DetailTvSeriesPage> {
 
 class TvSeriesDetailContent extends StatelessWidget {
   final DetailTvSeries tvSeries;
-  final bool isAddedWatchlist;
 
-  const TvSeriesDetailContent(this.tvSeries, this.isAddedWatchlist, {Key? key})
-      : super(key: key);
+  const TvSeriesDetailContent(this.tvSeries, {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -99,59 +103,82 @@ class TvSeriesDetailContent extends StatelessWidget {
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                    ElevatedButton(
-                      onPressed: () async {
-                        if (isAddedWatchlist) {
-                          await Provider.of<DetailTvSeriesNotifier>(context,
-                                  listen: false)
-                              .removeFromWatchlist(tvSeries);
-                        } else {
-                          await Provider.of<DetailTvSeriesNotifier>(context,
-                                  listen: false)
-                              .addWatchlist(tvSeries);
-                        }
+                    BlocBuilder<TvWatchlistStatusBloc, TvWatchlistStatusState>(
+                      builder: (context, state) {
+                        if (state is TvWatchlistStatusLoaded) {
+                          var isAddedWatchlist = state.isAdded;
+                          return ElevatedButton(
+                            onPressed: () async {
+                              if (isAddedWatchlist) {
+                                context.read<TvWatchlistStatusBloc>().add(
+                                      RemoveTvWatchlistEvent(
+                                          tvSeries: tvSeries),
+                                    );
+                              } else {
+                                context.read<TvWatchlistStatusBloc>().add(
+                                      AddTvWatchlistEvent(tvSeries: tvSeries),
+                                    );
+                              }
 
-                        Fluttertoast.showToast(
-                          // ignore: use_build_context_synchronously
-                          msg: context
-                              .read<DetailTvSeriesNotifier>()
-                              .watchlistMessage,
-                          toastLength: Toast.LENGTH_SHORT,
-                          gravity: ToastGravity.BOTTOM,
-                          backgroundColor: Colors.black87,
-                          textColor: Colors.white,
-                        );
-                      },
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor:
-                            isAddedWatchlist ? Colors.green : Colors.blue,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10.0),
-                        ),
-                        elevation: 4,
-                      ),
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(
-                            vertical: 10, horizontal: 16),
-                        child: Row(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            Icon(
-                              isAddedWatchlist ? Icons.check : Icons.add,
-                              color: Colors.white,
+                              Fluttertoast.showToast(
+                                // ignore: use_build_context_synchronously
+                                msg: state.isAdded
+                                    ? removedFromTvList
+                                    : addedFromTvList,
+                                toastLength: Toast.LENGTH_SHORT,
+                                gravity: ToastGravity.BOTTOM,
+                                backgroundColor: Colors.black87,
+                                textColor: Colors.white,
+                              );
+                            },
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor:
+                                  isAddedWatchlist ? Colors.green : Colors.blue,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(10.0),
+                              ),
+                              elevation: 4,
                             ),
-                            const SizedBox(width: 8),
-                            const Text(
-                              'Watchlist',
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 18,
-                                fontWeight: FontWeight.bold,
+                            child: Padding(
+                              padding: const EdgeInsets.symmetric(
+                                  vertical: 10, horizontal: 16),
+                              child: Row(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  Icon(
+                                    isAddedWatchlist ? Icons.check : Icons.add,
+                                    color: Colors.white,
+                                  ),
+                                  const SizedBox(width: 8),
+                                  const Text(
+                                    'Watchlist',
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                ],
                               ),
                             ),
-                          ],
-                        ),
-                      ),
+                          );
+                        } else if (state is TvWatchlistStatusLoading) {
+                          return const Center(
+                            child: CircularProgressIndicator(),
+                          );
+                        } else {
+                          return const Center(
+                            child: Text(
+                              "Something went wrong",
+                              style: TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.red,
+                              ),
+                            ),
+                          );
+                        }
+                      },
                     ),
                     const SizedBox(height: 16),
                     Wrap(
@@ -206,17 +233,16 @@ class TvSeriesDetailContent extends StatelessWidget {
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                    Consumer<DetailTvSeriesNotifier>(
-                      builder: (context, data, child) {
-                        if (data.recommendationState == RequestState.loading) {
+                    BlocBuilder<TvRecommendationsBloc, TvRecommendationsState>(
+                      builder: (context, state) {
+                        if (state is TvRecommendationsLoading) {
                           return const Center(
                             child: CircularProgressIndicator(),
                           );
-                        } else if (data.recommendationState ==
-                            RequestState.error) {
+                        } else if (state is TvRecommendationsError) {
                           return Center(
                             child: Text(
-                              data.message,
+                              state.message,
                               style: const TextStyle(
                                 fontSize: 16,
                                 color: Colors.red,
@@ -224,15 +250,13 @@ class TvSeriesDetailContent extends StatelessWidget {
                               ),
                             ),
                           );
-                        } else if (data.recommendationState ==
-                            RequestState.loaded) {
+                        } else if (state is TvRecommendationsHasData) {
                           return SizedBox(
                             height: 150,
                             child: ListView.builder(
                               scrollDirection: Axis.horizontal,
                               itemBuilder: (context, index) {
-                                final tvSeries =
-                                    data.recommendationsTvSEries[index];
+                                final tvSeries = state.tvSeries[index];
                                 return Padding(
                                   padding:
                                       const EdgeInsets.symmetric(horizontal: 8),
@@ -275,7 +299,7 @@ class TvSeriesDetailContent extends StatelessWidget {
                                   ),
                                 );
                               },
-                              itemCount: data.recommendationsTvSEries.length,
+                              itemCount: state.tvSeries.length,
                             ),
                           );
                         } else {

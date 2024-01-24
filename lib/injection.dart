@@ -30,9 +30,11 @@ import 'package:k31_watch_flutter/domain/use_case/remove_watch_list_tv.dart';
 import 'package:k31_watch_flutter/domain/use_case/save_watch_list.dart';
 import 'package:k31_watch_flutter/domain/use_case/save_watch_list_tv.dart';
 import 'package:k31_watch_flutter/domain/use_case/search_movies.dart';
+import 'package:k31_watch_flutter/presentation/bloc/detail_tv_series_bloc.dart';
 import 'package:k31_watch_flutter/presentation/bloc/search_movie_bloc.dart';
 import 'package:k31_watch_flutter/presentation/bloc/search_tv_series_bloc.dart';
-import 'package:k31_watch_flutter/presentation/providers/detail_tv_series_notifier.dart';
+import 'package:k31_watch_flutter/presentation/bloc/tv_recommendations_bloc.dart';
+import 'package:k31_watch_flutter/presentation/bloc/tv_watchlist_status_bloc.dart';
 import 'package:k31_watch_flutter/presentation/providers/movie_detail_notifier.dart';
 import 'package:k31_watch_flutter/presentation/providers/movie_list_notifier.dart';
 import 'package:k31_watch_flutter/presentation/providers/popular_movie.notifier.dart';
@@ -46,15 +48,6 @@ import 'package:k31_watch_flutter/presentation/providers/watch_list_movie_notifi
 final locator = GetIt.instance;
 void init() {
   // provider
-  locator.registerFactory(
-    () => DetailTvSeriesNotifier(
-      getDetailTvSeries: locator(),
-      getRecommendationsTvSeries: locator(),
-      getWatchListStatusTv: locator(),
-      saveWatchlistTv: locator(),
-      removeWatchlistTv: locator(),
-    ),
-  );
   locator.registerFactory(
     () => WatchlistTvSeriesNotifier(
       getWatchlistTv: locator(),
@@ -125,6 +118,25 @@ void init() {
       locator(),
     ),
   );
+  locator.registerFactory(
+    () => DetailTvSeriesBloc(
+      locator(),
+    ),
+  );
+  locator.registerFactory(
+    () => TvRecommendationsBloc(
+      locator(),
+    ),
+  );
+  locator.registerFactory(
+    () => TvWatchlistStatusBloc(
+      getWatchListStatus: locator(),
+      saveWatchlistTv: locator(),
+      removeWatchlistTv: locator(),
+    ),
+  );
+
+
 
 
   // use case

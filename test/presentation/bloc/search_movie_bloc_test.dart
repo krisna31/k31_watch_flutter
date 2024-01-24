@@ -8,7 +8,7 @@ import 'package:k31_watch_flutter/presentation/bloc/search_movie_bloc.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 
-import '../providers/movie_search_notifier_test.mocks.dart';
+import 'search_movie_bloc_test.mocks.dart';
 
 @GenerateMocks([SearchMovies])
 void main() {
