@@ -24,7 +24,7 @@ class AboutAppPage extends StatelessWidget {
                     child: Hero(
                       tag: 'appLogo',
                       child: Image.asset(
-                        'assets/logo.jpg',
+                        'assets/logo-circle.jpg',
                         width: 120,
                       ),
                     ),

@@ -17,7 +17,7 @@ class MyDrawer extends StatelessWidget {
         children: [
           const UserAccountsDrawerHeader(
             currentAccountPicture: CircleAvatar(
-              backgroundImage: AssetImage('assets/logo.png'),
+              backgroundImage: AssetImage('assets/logo-circle.jpg'),
             ),
             accountName: Text('Ditonton'),
             accountEmail: Text('ditonton@dicoding.com'),
