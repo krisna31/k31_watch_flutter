@@ -30,12 +30,12 @@ import 'package:k31_watch_flutter/domain/use_case/remove_watch_list_tv.dart';
 import 'package:k31_watch_flutter/domain/use_case/save_watch_list.dart';
 import 'package:k31_watch_flutter/domain/use_case/save_watch_list_tv.dart';
 import 'package:k31_watch_flutter/domain/use_case/search_movies.dart';
+import 'package:k31_watch_flutter/presentation/bloc/search_movie_bloc.dart';
+import 'package:k31_watch_flutter/presentation/bloc/search_tv_series_bloc.dart';
 import 'package:k31_watch_flutter/presentation/providers/detail_tv_series_notifier.dart';
 import 'package:k31_watch_flutter/presentation/providers/movie_detail_notifier.dart';
 import 'package:k31_watch_flutter/presentation/providers/movie_list_notifier.dart';
-import 'package:k31_watch_flutter/presentation/providers/movie_search_notifier.dart';
 import 'package:k31_watch_flutter/presentation/providers/popular_movie.notifier.dart';
-import 'package:k31_watch_flutter/presentation/providers/search_tv_notifier.dart';
 import 'package:k31_watch_flutter/presentation/providers/top_rated_movie_notifier.dart';
 import 'package:k31_watch_flutter/presentation/providers/watch_list_tv_series_notifier.dart';
 import 'package:k31_watch_flutter/presentation/providers/tv_series_list_notifier.dart';
@@ -53,11 +53,6 @@ void init() {
       getWatchListStatusTv: locator(),
       saveWatchlistTv: locator(),
       removeWatchlistTv: locator(),
-    ),
-  );
-  locator.registerFactory(
-    () => SearchTvNotifier(
-      searchTv: locator(),
     ),
   );
   locator.registerFactory(
@@ -79,11 +74,6 @@ void init() {
       getWatchListStatus: locator(),
       saveWatchlist: locator(),
       removeWatchlist: locator(),
-    ),
-  );
-  locator.registerFactory(
-    () => MovieSearchNotifier(
-      searchMovies: locator(),
     ),
   );
   locator.registerFactory(
@@ -123,6 +113,20 @@ void init() {
       getPopularTvSeries: locator(),
     ),
   );
+
+  // bloc
+  locator.registerFactory(
+    () => SearchTvSeriesBloc(
+      locator(),
+    ),
+  );
+  locator.registerFactory(
+    () => SearchMovieBloc(
+      locator(),
+    ),
+  );
+
+
   // use case
   locator.registerLazySingleton(() => GetNowPlayingMovies(locator()));
   locator.registerLazySingleton(() => GetPopularMovies(locator()));
@@ -144,6 +148,7 @@ void init() {
   locator.registerLazySingleton(() => RemoveWatchlistTv(locator()));
   locator.registerLazySingleton(() => GetWatchlistTv(locator()));
   locator.registerLazySingleton(() => GetWatchListStatusTv(locator()));
+  
   // repository
   locator.registerLazySingleton<MovieRepository>(
     () => MovieRepositoryImplementation(

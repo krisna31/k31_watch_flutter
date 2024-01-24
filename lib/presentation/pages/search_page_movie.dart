@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:k31_watch_flutter/common/constants.dart';
-import 'package:k31_watch_flutter/common/request_state.dart';
 import 'package:k31_watch_flutter/domain/entities/movie.dart';
-import 'package:k31_watch_flutter/presentation/providers/movie_search_notifier.dart';
+import 'package:k31_watch_flutter/presentation/bloc/search_movie_bloc.dart';
 import 'package:k31_watch_flutter/presentation/widgets/movie_card_list.dart';
-import 'package:provider/provider.dart';
 
 class SearchPageMovie extends StatelessWidget {
   // ignore: constant_identifier_names
@@ -24,10 +23,9 @@ class SearchPageMovie extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             TextField(
-              onSubmitted: (query) {
-                Provider.of<MovieSearchNotifier>(context, listen: false)
-                    .fetchMovieSearch(query);
-              },
+              onChanged: (query) => context
+                  .read<SearchMovieBloc>()
+                  .add(QuerySearchMovieFromBloc(query)),
               decoration: const InputDecoration(
                 hintText: 'Search title movie',
                 prefixIcon: Icon(Icons.search),
@@ -40,16 +38,21 @@ class SearchPageMovie extends StatelessWidget {
               'Search Result',
               style: myTextTheme.titleLarge,
             ),
-            Consumer<MovieSearchNotifier>(
-              builder: (context, data, child) {
-                switch (data.state) {
-                  case RequestState.loading:
+            BlocBuilder<SearchMovieBloc, SearchMovieState>(
+              builder: (context, state) {
+                switch (state) {
+                  case SearchMovieLoading():
                     return const Center(
                       child: CircularProgressIndicator(),
                     );
-                  case RequestState.loaded:
-                    final result = data.searchResult;
-                    return ShowWidgetResultMovie(result: result);
+                  case SearchMovieHasData():
+                    return ShowWidgetResultMovie(result: state.result);
+                  case SearchMovieError():
+                    return Center(
+                      child: Center(
+                        child: Text(state.message),
+                      ),
+                    );
                   default:
                     return Expanded(
                       child: Container(),
@@ -74,6 +77,12 @@ class ShowWidgetResultMovie extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    if (result.isEmpty) {
+      return const Center(
+        child: Text('No Result Founded'),
+      );
+    }
+
     return Expanded(
       child: ListView.builder(
         padding: const EdgeInsets.all(8),

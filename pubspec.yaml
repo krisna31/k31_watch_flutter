@@ -47,6 +47,8 @@ dependencies:
   http: ^1.2.0
   fluttertoast: ^8.2.4
   flutter_launcher_icons: ^0.13.1
+  flutter_bloc: ^8.0.0
+  rxdart: ^0.27.1
 
 dev_dependencies:
   flutter_test:
@@ -60,6 +62,7 @@ dev_dependencies:
   flutter_lints: ^2.0.0
   build_runner: ^2.4.8
   mockito: ^5.4.4
+  bloc_test: ^9.0.0
 
 flutter_launcher_icons:
   android: "launcher_icon"
