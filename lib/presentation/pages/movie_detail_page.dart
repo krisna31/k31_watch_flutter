@@ -150,9 +150,10 @@ class DetailContent extends StatelessWidget {
                               child: Row(
                                 mainAxisSize: MainAxisSize.min,
                                 children: [
-                                  isAddedWatchlist
-                                      ? const Icon(Icons.check)
-                                      : const Icon(Icons.add),
+                                  Icon(
+                                    isAddedWatchlist ? Icons.check : Icons.add,
+                                    color: Colors.white,
+                                  ),
                                   const Text(
                                     'Watchlist',
                                     style: TextStyle(color: Colors.white),
