@@ -1,6 +1,6 @@
 # k31_watch_flutter
 
-A new Flutter project.
+[![Codemagic build status](https://api.codemagic.io/apps/65b1fb95e1690711b93bfd58/65b1fb95e1690711b93bfd57/status_badge.svg)](https://codemagic.io/apps/65b1fb95e1690711b93bfd58/65b1fb95e1690711b93bfd57/latest_build)
 
 ## Getting Started
 
