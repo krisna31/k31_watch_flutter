@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "526710490917",
+    "project_id": "k31-watch",
+    "storage_bucket": "k31-watch.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:526710490917:android:426526dced00d57febfccc",
+        "android_client_info": {
+          "package_name": "com.example.k31_watch_flutter"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAdYd35WMWEK-kxOU4BnuGN6k-RW2w9moI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

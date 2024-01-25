@@ -1,3 +1,4 @@
+// import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:k31_watch_flutter/presentation/bloc/tv_series_now_playing_bloc.dart';
@@ -10,7 +11,6 @@ import 'package:k31_watch_flutter/presentation/pages/tv_series_top_rated_page.da
 import 'package:k31_watch_flutter/presentation/widgets/my_drawer.dart';
 import 'package:k31_watch_flutter/presentation/widgets/subtitle_widget.dart';
 import 'package:k31_watch_flutter/presentation/widgets/tv_series_list.dart';
-import 'package:provider/provider.dart';
 
 class HomeTvSeriesPage extends StatefulWidget {
   // ignore: constant_identifier_names
@@ -49,6 +49,7 @@ class _HomeTvSeriesPageState extends State<HomeTvSeriesPage> {
         actions: [
           IconButton(
             onPressed: () {
+              // FirebaseCrashlytics.instance.crash();
               Navigator.pushNamed(context, SearchPageTv.ROUTE_NAME);
             },
             icon: const Icon(Icons.search),

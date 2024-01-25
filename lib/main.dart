@@ -1,7 +1,9 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:k31_watch_flutter/common/constants.dart';
 import 'package:k31_watch_flutter/common/route_observer.dart';
+import 'package:k31_watch_flutter/firebase_options.dart';
 import 'package:k31_watch_flutter/presentation/bloc/detail_tv_series_bloc.dart';
 import 'package:k31_watch_flutter/presentation/bloc/movie_detail_bloc.dart';
 import 'package:k31_watch_flutter/presentation/bloc/movie_recommendations_bloc.dart';
@@ -38,6 +40,9 @@ import 'package:k31_watch_flutter/injection.dart' as di;
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   await di.init();
   runApp(const MyApp());
 }
