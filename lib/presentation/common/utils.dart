@@ -5,7 +5,7 @@ import 'package:k31_watch_flutter/domain/entities/tv_series.dart';
 import 'package:k31_watch_flutter/presentation/widgets/movie_list_widget.dart';
 import 'package:k31_watch_flutter/presentation/widgets/tv_series_list.dart';
 
-Widget showMovieCardLogic(RequestState state, List<Movie> data) {
+Widget showMovieCardLogic(state, List<Movie> data) {
   switch (state) {
     case RequestState.loading:
       return const Center(
