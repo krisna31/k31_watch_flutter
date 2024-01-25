@@ -5,12 +5,20 @@ import 'package:http/io_client.dart';
 
 class SSLPinning {
   static Future<http.Client> get myHttpsClient async {
-    final sslCert = await rootBundle.load('certificates/certificates.pem');
+    // load certificate
+    final sslCerticate = await rootBundle.load('certificates/certificates.pem');
+
+    // create security context
     SecurityContext securityContext = SecurityContext(withTrustedRoots: false);
-    securityContext.setTrustedCertificatesBytes(sslCert.buffer.asInt8List());
+    securityContext
+        .setTrustedCertificatesBytes(sslCerticate.buffer.asInt8List());
+
+    // create HttpClient
     HttpClient client = HttpClient(context: securityContext);
     client.badCertificateCallback =
         (X509Certificate cert, String host, int port) => false;
+
+    // return IOClient
     return IOClient(client);
   }
 }
