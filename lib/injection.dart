@@ -1,9 +1,10 @@
-import 'package:http/http.dart' as http;
+// import 'package:http/http.dart' as http;
 import 'package:k31_watch_flutter/data/datasources/db/db_helper_movies.dart';
 import 'package:k31_watch_flutter/data/datasources/db/db_helper_tv_series.dart';
 import 'package:k31_watch_flutter/data/datasources/local_data_tv_series_source.dart';
 import 'package:k31_watch_flutter/data/datasources/movie_local_data_source.dart';
 import 'package:k31_watch_flutter/data/datasources/movie_remote_data_source.dart';
+import 'package:k31_watch_flutter/data/utils/ssl_pinning.dart';
 import 'package:k31_watch_flutter/domain/use_case/get_recommendations_tv_series.dart';
 import 'package:k31_watch_flutter/data/repositories_impl/movie_repository_impl.dart';
 import 'package:k31_watch_flutter/domain/use_case/get_now_playing_movies.dart';
@@ -47,7 +48,9 @@ import 'package:k31_watch_flutter/presentation/bloc/tv_watchlist_status_bloc.dar
 import 'package:k31_watch_flutter/presentation/bloc/watch_list_movie_bloc.dart';
 import 'package:k31_watch_flutter/presentation/bloc/watch_list_tv_series_bloc.dart';
 final locator = GetIt.instance;
-void init() {
+
+Future<void> init() async {
+  var ioClient = await SSLPinning.myHttpsClient;
   // bloc
   locator.registerFactory(
     () => WatchListMovieBloc(
@@ -199,5 +202,6 @@ void init() {
   locator.registerLazySingleton<DbHelperMovies>(() => DbHelperMovies());
   locator.registerLazySingleton<DbHelperTvSeries>(() => DbHelperTvSeries());
   // external
-  locator.registerLazySingleton(() => http.Client());
+  // locator.registerLazySingleton(() => http.Client());
+  locator.registerLazySingleton(() => ioClient);
 }

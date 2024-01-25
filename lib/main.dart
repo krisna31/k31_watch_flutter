@@ -36,8 +36,9 @@ import 'package:k31_watch_flutter/presentation/pages/watchlist_tv_series_page.da
 import 'package:provider/provider.dart';
 import 'package:k31_watch_flutter/injection.dart' as di;
 
-void main() {
-  di.init();
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await di.init();
   runApp(const MyApp());
 }
 
