@@ -1,5 +1,6 @@
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:k31_watch_flutter/common/request_state.dart';
-import 'package:k31_watch_flutter/presentation/providers/tv_series_popular_notifier.dart';
+import 'package:k31_watch_flutter/presentation/bloc/tv_series_popular_bloc.dart';
 import 'package:provider/provider.dart';
 
 import 'package:k31_watch_flutter/presentation/widgets/tv_series_list_widget.dart';
@@ -22,29 +23,34 @@ class _TvSeriesPopularPageState extends State<TvSeriesPopularPage> {
   void initState() {
     super.initState();
     Future.microtask(
-      () => Provider.of<TvSeriesPopularNotifier>(context, listen: false)
-        ..fetchPopularTvSeriesFromNotifier(),
+      () => context.read<TvSeriesPopularBloc>().add(
+            FetchTvSeriesPopularEvent(),
+          ),
     );
   }
 
-  Widget showTvSeriesListWidgetLogic(TvSeriesPopularNotifier data) {
-    if (data.popularTvSeriesState == RequestState.loading) {
+  Widget showTvSeriesListWidgetLogic(TvSeriesPopularState data) {
+    if (data is TvSeriesPopularLoading) {
       return const Center(
         child: CircularProgressIndicator(),
       );
-    } else if (data.popularTvSeriesState == RequestState.loaded) {
+    } else if (data is TvSeriesPopularHasData) {
       return ListView.builder(
         itemBuilder: (context, index) {
           // return MovieCard(data.popularTvSeries[index]);
-          var tvData = data.popularTvSeries[index];
+          var tvData = data.tvSeries[index];
           return TvSeriesListWidget(tvData: tvData);
         },
-        itemCount: data.popularTvSeries.length,
+        itemCount: data.tvSeries.length,
+      );
+    } else if (data is TvSeriesPopularError) {
+      return Center(
+        child: Text(data.message),
       );
     } else {
-      return Center(
-        key: const Key('error_message'),
-        child: Text(data.message),
+      return const Center(
+        key: Key('this-is-error'),
+        child: Text("SOmehting went wrong"),
       );
     }
   }
@@ -55,9 +61,9 @@ class _TvSeriesPopularPageState extends State<TvSeriesPopularPage> {
       appBar: _buildAppBarTvSeriesPopular(),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
-        child: Consumer<TvSeriesPopularNotifier>(
-          builder: (context, data, child) {
-            return showTvSeriesListWidgetLogic(data);
+        child: BlocBuilder<TvSeriesPopularBloc, TvSeriesPopularState>(
+          builder: (context, state) {
+            return showTvSeriesListWidgetLogic(state);
           },
         ),
       ),

@@ -1,5 +1,6 @@
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:k31_watch_flutter/common/request_state.dart';
-import 'package:k31_watch_flutter/presentation/providers/tv_series_top_rated_notifier.dart';
+import 'package:k31_watch_flutter/presentation/bloc/tv_series_top_rated_bloc.dart';
 import 'package:provider/provider.dart';
 
 import 'package:k31_watch_flutter/presentation/widgets/tv_series_list_widget.dart';
@@ -22,8 +23,9 @@ class _TvSeriesTopRatedPageState extends State<TvSeriesTopRatedPage> {
   void initState() {
     super.initState();
     Future.microtask(
-      () => Provider.of<TvSeriesTopRatedNotifier>(context, listen: false)
-        ..fetchTopRatedTvSeriesFromNotifier(),
+      () => context.read<TvSeriesTopRatedBloc>().add(
+          FetchTvSeriesTopRatedEvent(),
+        )
     );
   }
 
@@ -33,25 +35,30 @@ class _TvSeriesTopRatedPageState extends State<TvSeriesTopRatedPage> {
     );
   }
 
-  Widget showTvSeriesListWidgetLogic(TvSeriesTopRatedNotifier data) {
-    if (data.topRatedTvSeriesState == RequestState.loading) {
-      return const Center(
-        child: CircularProgressIndicator(),
-      );
-    } else if (data.topRatedTvSeriesState == RequestState.loaded) {
-      return ListView.builder(
-        itemBuilder: (context, index) {
-          // return MovieCard(data.popularTvSeries[index]);
-          var tvData = data.topRatedTvSeries[index];
-          return TvSeriesListWidget(tvData: tvData);
-        },
-        itemCount: data.topRatedTvSeries.length,
-      );
-    } else {
-      return Center(
-        key: const Key('error_message'),
-        child: Text(data.message),
-      );
+  Widget showTvSeriesListWidgetLogic(TvSeriesTopRatedState data) {
+    switch (data) {
+      case TvSeriesTopRatedLoading():
+        return const Center(
+          child: CircularProgressIndicator(),
+        );
+      case TvSeriesTopRatedHasData():
+        return ListView.builder(
+          itemBuilder: (context, index) {
+            // return MovieCard(data.popularTvSeries[index]);
+            var tvData = data.tvSeries[index];
+            return TvSeriesListWidget(tvData: tvData);
+          },
+          itemCount: data.tvSeries.length,
+        );
+      case TvSeriesTopRatedError():
+        return Center(
+          child: Text(data.message),
+        );
+      default:
+        return const Center(
+          key: Key('this-is-error'),
+          child: Text("SOmehting went wrong"),
+        );
     }
   }
 
@@ -61,8 +68,8 @@ class _TvSeriesTopRatedPageState extends State<TvSeriesTopRatedPage> {
       appBar: _buildAppBarTvSeriesTopRated(),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
-        child: Consumer<TvSeriesTopRatedNotifier>(
-          builder: (context, data, child) {
+        child: BlocBuilder<TvSeriesTopRatedBloc, TvSeriesTopRatedState>(
+          builder: (context, data) {
             return showTvSeriesListWidgetLogic(data);
           },
         ),

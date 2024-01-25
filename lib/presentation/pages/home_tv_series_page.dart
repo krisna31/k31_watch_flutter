@@ -1,12 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:k31_watch_flutter/presentation/bloc/tv_series_now_playing_bloc.dart';
+import 'package:k31_watch_flutter/presentation/bloc/tv_series_popular_bloc.dart';
+import 'package:k31_watch_flutter/presentation/bloc/tv_series_top_rated_bloc.dart';
 import 'package:k31_watch_flutter/presentation/common/utils.dart';
 import 'package:k31_watch_flutter/presentation/pages/search_page_tv.dart';
 import 'package:k31_watch_flutter/presentation/pages/tv_series_now_play_page.dart';
 import 'package:k31_watch_flutter/presentation/pages/tv_series_popular_page.dart';
 import 'package:k31_watch_flutter/presentation/pages/tv_series_top_rated_page.dart';
-import 'package:k31_watch_flutter/presentation/providers/tv_series_list_notifier.dart';
 import 'package:k31_watch_flutter/presentation/widgets/my_drawer.dart';
 import 'package:k31_watch_flutter/presentation/widgets/subtitle_widget.dart';
+import 'package:k31_watch_flutter/presentation/widgets/tv_series_list.dart';
 import 'package:provider/provider.dart';
 
 class HomeTvSeriesPage extends StatefulWidget {
@@ -24,12 +28,17 @@ class _HomeTvSeriesPageState extends State<HomeTvSeriesPage> {
   @override
   void initState() {
     super.initState();
-    Future.microtask(
-      () => Provider.of<TvSeriesListNotifier>(context, listen: false)
-        ..fetchNowPlayingTvSeries()
-        ..fetchPopularTvSeries()
-        ..fetchTopRatedTvSeries(),
-    );
+    Future.microtask(() {
+      context.read<TvSeriesNowPlayingBloc>().add(
+            FetchTvSeriesNowPlayingEvent(),
+          );
+      context.read<TvSeriesPopularBloc>().add(
+            FetchTvSeriesPopularEvent(),
+          );
+      context.read<TvSeriesTopRatedBloc>().add(
+            FetchTvSeriesTopRatedEvent(),
+          );
+    });
   }
 
   @override
@@ -60,11 +69,23 @@ class _HomeTvSeriesPageState extends State<HomeTvSeriesPage> {
                   TvSeriesNowPlayPage.ROUTE_NAME,
                 ),
               ),
-              Consumer<TvSeriesListNotifier>(
-                builder: (context, data, child) => showTvSeriesCardLogic(
-                  data.nowPlayingState,
-                  data.nowPlayingTvSeries,
-                ),
+              BlocBuilder<TvSeriesNowPlayingBloc, TvSeriesNowPlayingState>(
+                builder: (context, state) {
+                  switch (state) {
+                    case TvSeriesNowPlayingLoading():
+                      return const Center(
+                        child: CircularProgressIndicator(),
+                      );
+                    case TvSeriesNowPlayingHasData():
+                      return TvSeriesList(state.tvSeries);
+                    case TvSeriesNowPlayingError():
+                      return Center(
+                        child: Text(state.message),
+                      );
+                    default:
+                      return const Text('Failed');
+                  }
+                },
               ),
               SubtitleWidget(
                 title: 'Popular Tv Series',
@@ -73,11 +94,23 @@ class _HomeTvSeriesPageState extends State<HomeTvSeriesPage> {
                   TvSeriesPopularPage.ROUTE_NAME,
                 ),
               ),
-              Consumer<TvSeriesListNotifier>(
-                builder: (context, data, child) => showTvSeriesCardLogic(
-                  data.popularTvSeriesState,
-                  data.popularTvSeries,
-                ),
+              BlocBuilder<TvSeriesPopularBloc, TvSeriesPopularState>(
+                builder: (context, state) {
+                  switch (state) {
+                    case TvSeriesPopularLoading():
+                      return const Center(
+                        child: CircularProgressIndicator(),
+                      );
+                    case TvSeriesPopularHasData():
+                      return TvSeriesList(state.tvSeries);
+                    case TvSeriesPopularError():
+                      return Center(
+                        child: Text(state.message),
+                      );
+                    default:
+                      return const Text('Failed');
+                  }
+                },
               ),
               SubtitleWidget(
                 title: 'Top Rated Tv Series',
@@ -86,11 +119,23 @@ class _HomeTvSeriesPageState extends State<HomeTvSeriesPage> {
                   TvSeriesTopRatedPage.ROUTE_NAME,
                 ),
               ),
-              Consumer<TvSeriesListNotifier>(
-                builder: (context, data, child) => showTvSeriesCardLogic(
-                  data.topRatedTvSeriesState,
-                  data.topRatedTvSeries,
-                ),
+              BlocBuilder<TvSeriesTopRatedBloc, TvSeriesTopRatedState>(
+                builder: (context, state) {
+                  switch (state) {
+                    case TvSeriesTopRatedLoading():
+                      return const Center(
+                        child: CircularProgressIndicator(),
+                      );
+                    case TvSeriesTopRatedHasData():
+                      return TvSeriesList(state.tvSeries);
+                    case TvSeriesTopRatedError():
+                      return Center(
+                        child: Text(state.message),
+                      );
+                    default:
+                      return const Text('Failed');
+                  }
+                },
               ),
             ],
           ),

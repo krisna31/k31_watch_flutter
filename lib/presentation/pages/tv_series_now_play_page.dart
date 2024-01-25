@@ -1,6 +1,5 @@
-import 'package:k31_watch_flutter/common/request_state.dart';
-import 'package:k31_watch_flutter/presentation/providers/tv_series_now_play_notifier.dart';
-import 'package:provider/provider.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:k31_watch_flutter/presentation/bloc/tv_series_now_playing_bloc.dart';
 
 import 'package:k31_watch_flutter/presentation/widgets/tv_series_list_widget.dart';
 
@@ -22,8 +21,9 @@ class _TvSeriesNowPlayPageState extends State<TvSeriesNowPlayPage> {
   void initState() {
     super.initState();
     Future.microtask(
-      () => Provider.of<TvSeriesNowPlayNotifier>(context, listen: false)
-        ..fetchNowPlayingTvSeriesFromNotifier(),
+      () => context.read<TvSeriesNowPlayingBloc>().add(
+            FetchTvSeriesNowPlayingEvent(),
+          ),
     );
   }
 
@@ -33,24 +33,28 @@ class _TvSeriesNowPlayPageState extends State<TvSeriesNowPlayPage> {
     );
   }
 
-  Widget showTvSeriesListWidgetLogic(TvSeriesNowPlayNotifier data) {
-    if (data.nowPlayingState == RequestState.loading) {
+  Widget showTvSeriesListWidgetLogic(TvSeriesNowPlayingState state) {
+    if (state is TvSeriesNowPlayingLoading) {
       return const Center(
         child: CircularProgressIndicator(),
       );
-    } else if (data.nowPlayingState == RequestState.loaded) {
+    } else if (state is TvSeriesNowPlayingHasData) {
       return ListView.builder(
         itemBuilder: (context, index) {
           // return MovieCard(data.popularTvSeries[index]);
-          var tvData = data.nowPlayingTvSeries[index];
+          var tvData = state.tvSeries[index];
           return TvSeriesListWidget(tvData: tvData);
         },
-        itemCount: data.nowPlayingTvSeries.length,
+        itemCount: state.tvSeries.length,
+      );
+    } else if (state is TvSeriesNowPlayingError) {
+      return Center(
+        child: Text(state.message),
       );
     } else {
-      return Center(
-        key: const Key('this-is-error'),
-        child: Text(data.message),
+      return const Center(
+        key: Key('this-is-error'),
+        child: Text("SOmehting went wrong"),
       );
     }
   }
@@ -61,9 +65,9 @@ class _TvSeriesNowPlayPageState extends State<TvSeriesNowPlayPage> {
       appBar: _buildAppBarTvSeriesTopRated(),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
-        child: Consumer<TvSeriesNowPlayNotifier>(
-          builder: (context, data, child) {
-            return showTvSeriesListWidgetLogic(data);
+        child: BlocBuilder<TvSeriesNowPlayingBloc, TvSeriesNowPlayingState>(
+          builder: (context, state) {
+            return showTvSeriesListWidgetLogic(state);
           },
         ),
       ),

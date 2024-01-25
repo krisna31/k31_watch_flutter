@@ -1,3 +1,4 @@
+import 'package:bloc_test/bloc_test.dart';
 import 'package:dartz/dartz.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:k31_watch_flutter/common/failure_child/server_failure.dart';
@@ -41,34 +42,39 @@ void main() {
       expect(topRatedMovieBloc.state, equals(TopRatedMovieInitial()));
     });
 
-    test(
-        "should emit [TopRatedMovieLoading, TopRatedMovieHasData] when data is response successfully",
-        () {
-      when(mockGetTopRatedMovies.execute())
-          .thenAnswer((_) async => Right(<Movie>[tMovie]));
-      expectLater(
-        topRatedMovieBloc.stream,
-        emitsInOrder([
-          TopRatedMovieLoading(),
-          TopRatedMovieHasData(<Movie>[tMovie]),
-        ]),
-      );
-      topRatedMovieBloc.add(FetchTopRatedMovieFromBloc());
-    });
+    blocTest("shoudl emit loading and has data when response succesfully",
+        build: () {
+          when(mockGetTopRatedMovies.execute())
+              .thenAnswer((_) async => Right(<Movie>[tMovie]));
+          return topRatedMovieBloc;
+        },
+        act: (bloc) => bloc.add(FetchTopRatedMovieFromBloc()),
+        expect: () {
+          return [
+            TopRatedMovieLoading(),
+            TopRatedMovieHasData(<Movie>[tMovie]),
+          ];
+        },
+        verify: (bloc) {
+          verify(mockGetTopRatedMovies.execute());
+        });
 
-    test(
+    blocTest(
         "should emit [TopRatedMovieLoading, TopRatedMovieError] when data is response successfully",
-        () {
-      when(mockGetTopRatedMovies.execute())
-          .thenAnswer((_) async => const Left(ServerFailure("Server Failure")));
-      expectLater(
-        topRatedMovieBloc.stream,
-        emitsInOrder([
-          TopRatedMovieLoading(),
-          const TopRatedMovieError("Server Failure"),
-        ]),
-      );
-      topRatedMovieBloc.add(FetchTopRatedMovieFromBloc());
-    });
+        build: () {
+          when(mockGetTopRatedMovies.execute()).thenAnswer(
+              (_) async => const Left(ServerFailure("Server Failure")));
+          return topRatedMovieBloc;
+        },
+        act: (bloc) => bloc.add(FetchTopRatedMovieFromBloc()),
+        expect: () {
+          return [
+            TopRatedMovieLoading(),
+            const TopRatedMovieError("Server Failure"),
+          ];
+        },
+        verify: (bloc) {
+          verify(mockGetTopRatedMovies.execute());
+        });
   });
 }

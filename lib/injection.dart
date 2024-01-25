@@ -40,12 +40,11 @@ import 'package:k31_watch_flutter/presentation/bloc/search_movie_bloc.dart';
 import 'package:k31_watch_flutter/presentation/bloc/search_tv_series_bloc.dart';
 import 'package:k31_watch_flutter/presentation/bloc/top_rated_movie_bloc.dart';
 import 'package:k31_watch_flutter/presentation/bloc/tv_recommendations_bloc.dart';
+import 'package:k31_watch_flutter/presentation/bloc/tv_series_now_playing_bloc.dart';
+import 'package:k31_watch_flutter/presentation/bloc/tv_series_popular_bloc.dart';
+import 'package:k31_watch_flutter/presentation/bloc/tv_series_top_rated_bloc.dart';
 import 'package:k31_watch_flutter/presentation/bloc/tv_watchlist_status_bloc.dart';
 import 'package:k31_watch_flutter/presentation/providers/watch_list_tv_series_notifier.dart';
-import 'package:k31_watch_flutter/presentation/providers/tv_series_list_notifier.dart';
-import 'package:k31_watch_flutter/presentation/providers/tv_series_now_play_notifier.dart';
-import 'package:k31_watch_flutter/presentation/providers/tv_series_popular_notifier.dart';
-import 'package:k31_watch_flutter/presentation/providers/tv_series_top_rated_notifier.dart';
 import 'package:k31_watch_flutter/presentation/providers/watch_list_movie_notifier.dart';
 final locator = GetIt.instance;
 void init() {
@@ -58,28 +57,6 @@ void init() {
   locator.registerFactory(
     () => WatchlistMovieNotifier(
       getWatchlistMovies: locator(),
-    ),
-  );
-  locator.registerFactory(
-    () => TvSeriesListNotifier(
-      getNowPlayingTvSeries: locator(),
-      getPopularTvSeries: locator(),
-      getTopRatedTvSeries: locator(),
-    ),
-  );
-  locator.registerFactory(
-    () => TvSeriesNowPlayNotifier(
-      getNowPlayingTvSeries: locator(),
-    ),
-  );
-  locator.registerFactory(
-    () => TvSeriesTopRatedNotifier(
-      getTopRatedTvSeries: locator(),
-    ),
-  );
-  locator.registerFactory(
-    () => TvSeriesPopularNotifier(
-      getPopularTvSeries: locator(),
     ),
   );
 
@@ -140,6 +117,22 @@ void init() {
   );
   locator.registerFactory(
     () => MovieRecommendationsBloc(
+      locator(),
+    ),
+  );
+  
+  locator.registerFactory(
+    () => TvSeriesNowPlayingBloc(
+      locator(),
+    ),
+  );
+  locator.registerFactory(
+    () => TvSeriesPopularBloc(
+      locator(),
+    ),
+  );
+  locator.registerFactory(
+    () => TvSeriesTopRatedBloc(
       locator(),
     ),
   );
