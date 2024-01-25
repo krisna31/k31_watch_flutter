@@ -31,6 +31,9 @@ import 'package:k31_watch_flutter/domain/use_case/save_watch_list.dart';
 import 'package:k31_watch_flutter/domain/use_case/save_watch_list_tv.dart';
 import 'package:k31_watch_flutter/domain/use_case/search_movies.dart';
 import 'package:k31_watch_flutter/presentation/bloc/detail_tv_series_bloc.dart';
+import 'package:k31_watch_flutter/presentation/bloc/movie_detail_bloc.dart';
+import 'package:k31_watch_flutter/presentation/bloc/movie_recommendations_bloc.dart';
+import 'package:k31_watch_flutter/presentation/bloc/movie_watchlist_status_bloc.dart';
 import 'package:k31_watch_flutter/presentation/bloc/now_playing_movie_bloc.dart';
 import 'package:k31_watch_flutter/presentation/bloc/popular_movie_bloc.dart';
 import 'package:k31_watch_flutter/presentation/bloc/search_movie_bloc.dart';
@@ -38,7 +41,6 @@ import 'package:k31_watch_flutter/presentation/bloc/search_tv_series_bloc.dart';
 import 'package:k31_watch_flutter/presentation/bloc/top_rated_movie_bloc.dart';
 import 'package:k31_watch_flutter/presentation/bloc/tv_recommendations_bloc.dart';
 import 'package:k31_watch_flutter/presentation/bloc/tv_watchlist_status_bloc.dart';
-import 'package:k31_watch_flutter/presentation/providers/movie_detail_notifier.dart';
 import 'package:k31_watch_flutter/presentation/providers/watch_list_tv_series_notifier.dart';
 import 'package:k31_watch_flutter/presentation/providers/tv_series_list_notifier.dart';
 import 'package:k31_watch_flutter/presentation/providers/tv_series_now_play_notifier.dart';
@@ -51,15 +53,6 @@ void init() {
   locator.registerFactory(
     () => WatchlistTvSeriesNotifier(
       getWatchlistTv: locator(),
-    ),
-  );
-  locator.registerFactory(
-    () => MovieDetailNotifier(
-      getMovieDetail: locator(),
-      getMovieRecommendations: locator(),
-      getWatchListStatus: locator(),
-      saveWatchlist: locator(),
-      removeWatchlist: locator(),
     ),
   );
   locator.registerFactory(
@@ -130,6 +123,23 @@ void init() {
   );
   locator.registerFactory(
     () => NowPlayingMovieBloc(
+      locator(),
+    ),
+  );
+  locator.registerFactory(
+    () => MovieDetailBloc(
+      locator(),
+    ),
+  );
+  locator.registerFactory(
+    () => MovieWatchlistStatusBloc(
+      locator(),
+      locator(),
+      locator(),
+    ),
+  );
+  locator.registerFactory(
+    () => MovieRecommendationsBloc(
       locator(),
     ),
   );

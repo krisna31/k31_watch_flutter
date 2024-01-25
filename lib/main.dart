@@ -3,6 +3,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:k31_watch_flutter/common/constants.dart';
 import 'package:k31_watch_flutter/common/route_observer.dart';
 import 'package:k31_watch_flutter/presentation/bloc/detail_tv_series_bloc.dart';
+import 'package:k31_watch_flutter/presentation/bloc/movie_detail_bloc.dart';
+import 'package:k31_watch_flutter/presentation/bloc/movie_recommendations_bloc.dart';
+import 'package:k31_watch_flutter/presentation/bloc/movie_watchlist_status_bloc.dart';
 import 'package:k31_watch_flutter/presentation/bloc/now_playing_movie_bloc.dart';
 import 'package:k31_watch_flutter/presentation/bloc/popular_movie_bloc.dart';
 import 'package:k31_watch_flutter/presentation/bloc/search_movie_bloc.dart';
@@ -24,7 +27,6 @@ import 'package:k31_watch_flutter/presentation/pages/tv_series_top_rated_page.da
 import 'package:k31_watch_flutter/presentation/pages/tv_series_popular_page.dart';
 import 'package:k31_watch_flutter/presentation/pages/watchlist_movie_page.dart';
 import 'package:k31_watch_flutter/presentation/pages/watchlist_tv_series_page.dart';
-import 'package:k31_watch_flutter/presentation/providers/movie_detail_notifier.dart';
 import 'package:k31_watch_flutter/presentation/providers/tv_series_list_notifier.dart';
 import 'package:k31_watch_flutter/presentation/providers/tv_series_now_play_notifier.dart';
 import 'package:k31_watch_flutter/presentation/providers/tv_series_popular_notifier.dart';
@@ -48,9 +50,6 @@ class MyApp extends StatelessWidget {
       providers: [
         ChangeNotifierProvider(
           create: (_) => di.locator<WatchlistTvSeriesNotifier>(),
-        ),
-        ChangeNotifierProvider(
-          create: (_) => di.locator<MovieDetailNotifier>(),
         ),
         ChangeNotifierProvider(
           create: (_) => di.locator<WatchlistMovieNotifier>(),
@@ -92,6 +91,15 @@ class MyApp extends StatelessWidget {
         ),
         BlocProvider(
           create: (_) => di.locator<NowPlayingMovieBloc>(),
+        ),
+        BlocProvider(
+          create: (_) => di.locator<MovieDetailBloc>(),
+        ),
+        BlocProvider(
+          create: (_) => di.locator<MovieRecommendationsBloc>(),
+        ),
+        BlocProvider(
+          create: (_) => di.locator<MovieWatchlistStatusBloc>(),
         ),
         
       ],
