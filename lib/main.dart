@@ -6,6 +6,7 @@ import 'package:k31_watch_flutter/presentation/bloc/detail_tv_series_bloc.dart';
 import 'package:k31_watch_flutter/presentation/bloc/popular_movie_bloc.dart';
 import 'package:k31_watch_flutter/presentation/bloc/search_movie_bloc.dart';
 import 'package:k31_watch_flutter/presentation/bloc/search_tv_series_bloc.dart';
+import 'package:k31_watch_flutter/presentation/bloc/top_rated_movie_bloc.dart';
 import 'package:k31_watch_flutter/presentation/bloc/tv_recommendations_bloc.dart';
 import 'package:k31_watch_flutter/presentation/bloc/tv_watchlist_status_bloc.dart';
 import 'package:k31_watch_flutter/presentation/pages/about_app_page.dart';
@@ -24,7 +25,6 @@ import 'package:k31_watch_flutter/presentation/pages/watchlist_movie_page.dart';
 import 'package:k31_watch_flutter/presentation/pages/watchlist_tv_series_page.dart';
 import 'package:k31_watch_flutter/presentation/providers/movie_detail_notifier.dart';
 import 'package:k31_watch_flutter/presentation/providers/movie_list_notifier.dart';
-import 'package:k31_watch_flutter/presentation/providers/top_rated_movie_notifier.dart';
 import 'package:k31_watch_flutter/presentation/providers/tv_series_list_notifier.dart';
 import 'package:k31_watch_flutter/presentation/providers/tv_series_now_play_notifier.dart';
 import 'package:k31_watch_flutter/presentation/providers/tv_series_popular_notifier.dart';
@@ -54,9 +54,6 @@ class MyApp extends StatelessWidget {
         ),
         ChangeNotifierProvider(
           create: (_) => di.locator<MovieListNotifier>(),
-        ),
-        ChangeNotifierProvider(
-          create: (_) => di.locator<TopRatedMoviesNotifier>(),
         ),
         ChangeNotifierProvider(
           create: (_) => di.locator<WatchlistMovieNotifier>(),
@@ -93,6 +90,10 @@ class MyApp extends StatelessWidget {
         BlocProvider(
           create: (_) => di.locator<PopularMovieBloc>(),
         ),
+        BlocProvider(
+          create: (_) => di.locator<TopRatedMovieBloc>(),
+        ),
+        
       ],
       child: MaterialApp(
         theme: ThemeData.dark().copyWith(

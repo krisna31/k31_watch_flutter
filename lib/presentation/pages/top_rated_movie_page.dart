@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:k31_watch_flutter/common/request_state.dart';
-import 'package:k31_watch_flutter/presentation/providers/top_rated_movie_notifier.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:k31_watch_flutter/presentation/bloc/top_rated_movie_bloc.dart';
 import 'package:k31_watch_flutter/presentation/widgets/movie_card_list.dart';
-import 'package:provider/provider.dart';
 
 class TopRatedMoviesPage extends StatefulWidget {
   // ignore: constant_identifier_names
@@ -19,9 +18,9 @@ class _TopRatedMoviesPageState extends State<TopRatedMoviesPage> {
   @override
   void initState() {
     super.initState();
-    Future.microtask(() =>
-        Provider.of<TopRatedMoviesNotifier>(context, listen: false)
-          .fetchTopRatedMovies(),
+    Future.microtask(() => context.read<TopRatedMovieBloc>().add(
+          FetchTopRatedMovieFromBloc(),
+        )
     );
   }
 
@@ -33,25 +32,30 @@ class _TopRatedMoviesPageState extends State<TopRatedMoviesPage> {
       ),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
-        child: Consumer<TopRatedMoviesNotifier>(
-          builder: (context, data, child) {
-            switch (data.state) {
-              case RequestState.loading:
+        child: BlocBuilder<TopRatedMovieBloc, TopRatedMovieState>(
+          builder: (context, state) {
+            switch (state) {
+              case TopRatedMovieLoading():
                 return const Center(
                   child: CircularProgressIndicator(),
                 );
-              case RequestState.loaded:
+              case TopRatedMovieHasData():
                 return ListView.builder(
                   itemBuilder: (context, index) {
-                    final movie = data.movies[index];
+                    final movie = state.movies[index];
                     return MovieCard(movie);
                   },
-                  itemCount: data.movies.length,
+                  itemCount: state.movies.length,
+                );
+              case TopRatedMovieError():
+                return Center(
+                  key: const Key('error_message_formm_bloc'),
+                  child: Text(state.message),
                 );
               default:
-                return Center(
-                  key: const Key('error_message'),
-                  child: Text(data.message),
+                return const Center(
+                  key: Key('error_message'),
+                  child: Text("SOmething went wrong"),
                 );
             }
           },
