@@ -16,6 +16,8 @@ import 'package:k31_watch_flutter/presentation/bloc/tv_series_now_playing_bloc.d
 import 'package:k31_watch_flutter/presentation/bloc/tv_series_popular_bloc.dart';
 import 'package:k31_watch_flutter/presentation/bloc/tv_series_top_rated_bloc.dart';
 import 'package:k31_watch_flutter/presentation/bloc/tv_watchlist_status_bloc.dart';
+import 'package:k31_watch_flutter/presentation/bloc/watch_list_movie_bloc.dart';
+import 'package:k31_watch_flutter/presentation/bloc/watch_list_tv_series_bloc.dart';
 import 'package:k31_watch_flutter/presentation/pages/about_app_page.dart';
 import 'package:k31_watch_flutter/presentation/pages/detail_tv_series_page.dart';
 import 'package:k31_watch_flutter/presentation/pages/movie_page.dart';
@@ -30,8 +32,6 @@ import 'package:k31_watch_flutter/presentation/pages/tv_series_top_rated_page.da
 import 'package:k31_watch_flutter/presentation/pages/tv_series_popular_page.dart';
 import 'package:k31_watch_flutter/presentation/pages/watchlist_movie_page.dart';
 import 'package:k31_watch_flutter/presentation/pages/watchlist_tv_series_page.dart';
-import 'package:k31_watch_flutter/presentation/providers/watch_list_movie_notifier.dart';
-import 'package:k31_watch_flutter/presentation/providers/watch_list_tv_series_notifier.dart';
 
 import 'package:provider/provider.dart';
 import 'package:k31_watch_flutter/injection.dart' as di;
@@ -47,14 +47,13 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider(
-          create: (_) => di.locator<WatchlistTvSeriesNotifier>(),
-        ),
-        ChangeNotifierProvider(
-          create: (_) => di.locator<WatchlistMovieNotifier>(),
-        ),
-
         // bloc
+        BlocProvider(
+          create: (_) => di.locator<WatchListTvSeriesBloc>(),
+        ),
+        BlocProvider(
+          create: (_) => di.locator<WatchListMovieBloc>(),
+        ),
         BlocProvider(
           create: (_) => di.locator<SearchTvSeriesBloc>(),
         ),

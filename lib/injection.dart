@@ -44,23 +44,21 @@ import 'package:k31_watch_flutter/presentation/bloc/tv_series_now_playing_bloc.d
 import 'package:k31_watch_flutter/presentation/bloc/tv_series_popular_bloc.dart';
 import 'package:k31_watch_flutter/presentation/bloc/tv_series_top_rated_bloc.dart';
 import 'package:k31_watch_flutter/presentation/bloc/tv_watchlist_status_bloc.dart';
-import 'package:k31_watch_flutter/presentation/providers/watch_list_tv_series_notifier.dart';
-import 'package:k31_watch_flutter/presentation/providers/watch_list_movie_notifier.dart';
+import 'package:k31_watch_flutter/presentation/bloc/watch_list_movie_bloc.dart';
+import 'package:k31_watch_flutter/presentation/bloc/watch_list_tv_series_bloc.dart';
 final locator = GetIt.instance;
 void init() {
-  // provider
-  locator.registerFactory(
-    () => WatchlistTvSeriesNotifier(
-      getWatchlistTv: locator(),
-    ),
-  );
-  locator.registerFactory(
-    () => WatchlistMovieNotifier(
-      getWatchlistMovies: locator(),
-    ),
-  );
-
   // bloc
+  locator.registerFactory(
+    () => WatchListMovieBloc(
+      locator(),
+    ),
+  );
+  locator.registerFactory(
+    () => WatchListTvSeriesBloc(
+      locator(),
+    ),
+  );
   locator.registerFactory(
     () => SearchTvSeriesBloc(
       locator(),

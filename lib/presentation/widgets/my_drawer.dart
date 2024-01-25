@@ -19,8 +19,8 @@ class MyDrawer extends StatelessWidget {
             currentAccountPicture: CircleAvatar(
               backgroundImage: AssetImage('assets/logo-circle.jpg'),
             ),
-            accountName: Text('Ditonton'),
-            accountEmail: Text('ditonton@dicoding.com'),
+            accountName: Text('K31 Watch'),
+            accountEmail: Text('k31@k31watch.com'),
           ),
           ListTile(
             leading: const Icon(Icons.tv),
