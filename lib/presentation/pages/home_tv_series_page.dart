@@ -3,7 +3,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:k31_watch_flutter/presentation/bloc/tv_series_now_playing_bloc.dart';
 import 'package:k31_watch_flutter/presentation/bloc/tv_series_popular_bloc.dart';
 import 'package:k31_watch_flutter/presentation/bloc/tv_series_top_rated_bloc.dart';
-import 'package:k31_watch_flutter/presentation/common/utils.dart';
 import 'package:k31_watch_flutter/presentation/pages/search_page_tv.dart';
 import 'package:k31_watch_flutter/presentation/pages/tv_series_now_play_page.dart';
 import 'package:k31_watch_flutter/presentation/pages/tv_series_popular_page.dart';

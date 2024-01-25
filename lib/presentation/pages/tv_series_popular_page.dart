@@ -1,7 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:k31_watch_flutter/common/request_state.dart';
 import 'package:k31_watch_flutter/presentation/bloc/tv_series_popular_bloc.dart';
-import 'package:provider/provider.dart';
 
 import 'package:k31_watch_flutter/presentation/widgets/tv_series_list_widget.dart';
 
